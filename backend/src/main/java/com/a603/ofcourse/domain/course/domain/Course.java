@@ -14,7 +14,11 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table(name = "course")
+@Table(
+        name = "course",
+        uniqueConstraints = {
+                @UniqueConstraint( columnNames = "hash_key")
+        })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Course {
     @Id
