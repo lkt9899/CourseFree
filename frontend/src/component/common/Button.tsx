@@ -9,6 +9,7 @@ interface T_Button extends ComponentProps<'button'> {
   full?: boolean
   disabled?: boolean
   bgColor?: Colors
+  color?: Colors
 }
 /**
  * @param full boolean
@@ -21,7 +22,6 @@ const Button = styled.button<T_Button>(
     fontWeight: 'bold',
     borderRadius: '6px',
     padding: '10px',
-    color: 'white',
     minWidth: '50px',
   },
 
@@ -41,8 +41,9 @@ const Button = styled.button<T_Button>(
       `
   },
   // props로 받은 색에 따라서 색깔 변화
-  ({ bgColor = 'pink300' }) => css`
+  ({ bgColor = 'pink300', color = 'white' }) => css`
     background-color: ${colors[bgColor]};
+    color: ${colors[color]};
   `,
 )
 export default Button
