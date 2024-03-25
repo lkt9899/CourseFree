@@ -88,6 +88,7 @@ public class JwtTokenService {
      * @return String memberId
      */
     public Claims getPayload(String token){
+        log.info("페이로드에서 클레임 뽑아내기");
         try{
             //1. 토큰을 파싱하여 토큰의 페이로드에서 서브젝트(사용자 식별 정보)를 추출
             return Jwts.parserBuilder()
