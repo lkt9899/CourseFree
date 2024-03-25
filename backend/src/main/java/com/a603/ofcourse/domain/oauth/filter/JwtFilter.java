@@ -49,10 +49,10 @@ public class JwtFilter extends GenericFilterBean {
 
         //3. 토큰이 존재하고 유효하면
         if (StringUtils.hasText(jwt) && jwtTokenService.validateToken(jwt)) {
-            //3-1. 토큰 payload에 있는 socialId 가져오기
-            Long socialId = (Long)jwtTokenService.getPayload(jwt).get("social_id");
-            //3-2. socialId로 member 객체 가져오기
-            Member member = memberRepository.findBySocialId(socialId)
+            //3-1. 토큰 payload에 있는 memberId 가져오기
+            Long memberId = (Long)jwtTokenService.getPayload(jwt).get("member_id");
+            //3-2. memberId로 member 객체 가져오기
+            Member member = memberRepository.findBySocialId(memberId)
                     .orElseThrow(() ->
                             new MemberException(MemberErrorCode.MEMBER_DOES_NOT_EXISTS));
             //3-3. profile 객체 가져오기

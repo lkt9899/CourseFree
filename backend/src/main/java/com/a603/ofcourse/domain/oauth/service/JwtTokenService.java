@@ -7,6 +7,7 @@ import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
 import io.jsonwebtoken.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ JWT 토큰 생성, 조회 관련 서비스
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class JwtTokenService {
     @Value("${jwt.access.token.expiration.seconds}")
     private long accessTokenExpirationInSeconds;
@@ -65,7 +67,7 @@ public class JwtTokenService {
         //1. 현재 시간 나타내는 Date 객체 생성 (토큰의 발급 시간)
         Date now = new Date();
         //2. 현재시간에 만료기간을 더해 토큰의 유효기간 객체 생성
-        Date validity = new Date(now.getTime() + expireLength);
+        Date validity = new Date(now.getTime() + expireLength * 1000);
         //3. 토큰을 build (페이로드 클레임, 발급 시간, 만료 시간)
         return Jwts.builder()
                 //header 설정 (토큰 타입)
@@ -98,6 +100,7 @@ public class JwtTokenService {
             // 만료된 토큰의 서브젝트를 반환 (만료되었더라도 만료 전에 설정한 서브젝트를 반환하기 위함 -> 정보를 최대한 활용하기 위함으로 만료된 토큰에서 사용자의 아이디나 권한 등을 가져와서 작업 수행이 가능함)
             return e.getClaims();
         }catch(JwtException e){
+            log.info("토큰에서 멤버아이디 가져올 때 에러 발생");
             //예외 방생 시 예외 알리기
             throw new OauthException(OauthErrorCode.UNAUTHORIZED);
         }
