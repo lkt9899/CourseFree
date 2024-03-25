@@ -1,6 +1,7 @@
 package com.a603.ofcourse.domain.member.domain;
 
 import com.a603.ofcourse.domain.couple.domain.Couple;
+import com.a603.ofcourse.domain.couple.domain.MemberCouple;
 import com.a603.ofcourse.domain.course.domain.CourseReview;
 import com.a603.ofcourse.domain.course.domain.MyCourse;
 import com.a603.ofcourse.domain.member.domain.enums.Role;
@@ -34,14 +35,15 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<MyCourse> myCourseList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Profile profile;
 
-    @OneToOne(mappedBy = "member")
-    private Couple coupleAsMember;
+    @OneToOne(mappedBy = "member",fetch = FetchType.LAZY)
+    private MemberCouple memberCouple;
 
-    @OneToOne(mappedBy = "mate")
-    private Couple coupleAsMate;
+    public void updateMemberCouple(MemberCouple memberCouple){
+        this.memberCouple = memberCouple;
+    }
 
     @Builder
     public Member(

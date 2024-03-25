@@ -101,7 +101,6 @@ class CourseReviewControllerTest {
     @DisplayName("리뷰 수정 테스트")
     void updateCourseReview() throws Exception {
 
-
     }
 
     @Test

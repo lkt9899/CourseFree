@@ -58,11 +58,8 @@ public class OauthService {
      * @param refreshToken
      * @return accessToken
      */
-    public String refreshAccessToken(String clientAccessToken){
-        //1. accessToken에서 멤버아이디 가져오기
-        Integer memberId = (Integer) jwtTokenService.getPayload(clientAccessToken).get("member_id");
-
-        //2. redis에서 리프레시 토큰 가져오기
+    public String refreshAccessToken(Integer memberId, String clientAccessToken){
+        //redis에서 리프레시 토큰 가져오기
         return authRepository.findById(memberId)
                 //리프레시 토큰이 유효하면 유저 정보로 액세스 토큰 생성
                 .map(RefreshToken -> jwtTokenService.createAccessToken(memberId))

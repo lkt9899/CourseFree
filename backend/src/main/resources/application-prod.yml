@@ -75,3 +75,7 @@ springdoc:
 
 server:
   port: 8081
+
+invite:
+  link:
+    start: http://j10a603.p.ssafy.io/couple/connect/

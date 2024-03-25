@@ -68,12 +68,11 @@ public class KakaoOauthService {
     /*
     작성자 : 김은비
     작성내용 : 카카오API에서 가져온 유저정보를 이미 회원이면 그냥 반환, 아직 회원이 아니면 DB에 저장
-     * @param String accest
+     * @param String accessToken
      * @return Member
      */
     public Member getMemberProfileByToken(String accessToken){
         Map<String, Object> memberAttributesByToken = getMemberAttributesByToken(accessToken);
-        System.out.println("길이는 " + memberAttributesByToken.size());
         KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(memberAttributesByToken);
         Long longSocialId = kakaoUserInfo.getId();
         Optional<Member> member = memberRepository.findBySocialId(longSocialId);

@@ -6,10 +6,9 @@ import com.a603.ofcourse.domain.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table(name = "couple")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Couple {
     @Id
@@ -27,30 +25,23 @@ public class Couple {
 
     @Size(max = 10)
     @Column(name = "couple_nickname", length = 10)
+    @ColumnDefault("")
     private String coupleNickname;
 
     @Column(name = "d_day")
-    private Integer dDay;
+    private int dDay;
 
     @OneToMany(mappedBy = "couple", fetch = FetchType.LAZY)
     private List<Schedule> scheduleList = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @OneToMany(mappedBy = "couple",fetch = FetchType.LAZY)
+    private List<MemberCouple> memberCoupleList = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mate_id")
-    private Member mate;
-
+    @Builder
     public Couple(
             String coupleNickname,
-            Integer dDay,
-            Member member,
-            Member mate) {
+            int dDay) {
         this.coupleNickname = coupleNickname;
         this.dDay = dDay;
-        this.member = member;
-        this.mate = mate;
     }
 }
