@@ -21,7 +21,7 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ColumnDefault("todo")
+    @Column(columnDefinition = "VARCHAR(10) DEFAULT 'todo'")
     @Enumerated(EnumType.STRING)
     private ScheduleState scheduleState;
 

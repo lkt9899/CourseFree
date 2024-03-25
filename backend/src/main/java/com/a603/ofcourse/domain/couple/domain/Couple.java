@@ -25,7 +25,6 @@ public class Couple {
 
     @Size(max = 10)
     @Column(name = "couple_nickname", length = 10)
-    @ColumnDefault("")
     private String coupleNickname;
 
     @Column(name = "d_day")
