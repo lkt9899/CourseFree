@@ -23,8 +23,10 @@ public class CoupleController {
     작성자 : 김은비
     작성내용 : 초대 링크 생성
      */
-    @PostMapping("/generate-link/{memberId}")
-    public ResponseEntity<String> generateInviteLink(@PathVariable Integer memberId) {
+    @PostMapping("/generate-link")
+    public ResponseEntity<String> generateInviteLink(@RequestHeader(AUTHORIZATION_HEADER) String accessToken) {
+        //1. accessToken에서 멤버아이디 가져오기
+        Integer memberId = (Integer) jwtTokenService.getPayload(accessToken.substring(7)).get("member_id");
         return ResponseEntity.ok(coupleService.generateInviteLink(memberId));
     }
 

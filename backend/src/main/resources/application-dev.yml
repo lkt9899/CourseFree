@@ -10,7 +10,8 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
+#      host: ${REDIS_HOST}
+      host: localhost
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
 
@@ -29,7 +30,7 @@ spring:
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
             client-secret: ${KAKAO_CLIENT_SECRET}
-            redirect-uri: "http://localhost:8080/kakao/login"
+            redirect-uri: "http://localhost:8081/api/login/oauth/kakao"
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             scope:

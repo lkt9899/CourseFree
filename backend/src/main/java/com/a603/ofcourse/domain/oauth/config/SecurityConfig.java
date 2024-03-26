@@ -51,8 +51,8 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain configure(final HttpSecurity http) throws Exception{
-        //1. CORS 설정을 활성화하고 기본값을 사용
-        return http.cors(withDefaults())
+        //1. CORS 설정을 비활성화
+        return http.cors(AbstractHttpConfigurer::disable)
 
                 //2. CSRF 보호를 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
