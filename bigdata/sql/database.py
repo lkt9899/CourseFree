@@ -1,8 +1,8 @@
-import pymysql
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
+from config.config import read_config
 
-DB_URL = 'mysql+pymysql://root:qtwe153@j10a603.p.ssafy.io:3306/coursefree'
+DB_URL = read_config("DB", "URL")
 
 
 class EngineConn:
