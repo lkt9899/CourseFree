@@ -1,5 +1,6 @@
 package com.a603.ofcourse.domain.oauth.controller;
 
+import com.a603.ofcourse.domain.oauth.dto.MemberExistWithAccessToken;
 import com.a603.ofcourse.domain.oauth.redis.RefreshToken;
 import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
 import com.a603.ofcourse.domain.oauth.service.KakaoOauthService;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,12 +35,22 @@ public class OauthController {
         HttpHeaders headers = new HttpHeaders();
         //1. 인가코드로 카카오 액세스 토큰 반환
         String kakaoAccessToken = kakaoOauthService.getKakaoAccessTokenByCode(code);
+
         //2, 카카오 액세스 토큰으로 우리 서버 토큰 발급
-        String accessToken = oauthService.loginWithKakao(kakaoAccessToken);
+        MemberExistWithAccessToken memberExistWithAccessToken = oauthService.loginWithKakao(kakaoAccessToken);
+
+        String accessToken = memberExistWithAccessToken.getAccessToken();
         //3. 헤더에 넣어서 프론트로 보내기
         headers.set(AUTHORIZATION_HEADER, "Bearer " + accessToken);
 
-        return ResponseEntity.ok().headers(headers).build();
+        //기존 회원이면
+        if(memberExistWithAccessToken.isExist()){
+            return ResponseEntity.ok().headers(headers).build();
+        }
+        //신규 회원이면
+        else{
+            return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
+        }
     }
 
     /*

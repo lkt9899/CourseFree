@@ -62,9 +62,9 @@ class OauthControllerTest {
                 BDDMockito.anyString()
         )).willReturn(BDDMockito.anyString());
 
-        BDDMockito.given(oauthService.loginWithKakao(
-                BDDMockito.anyString()
-        )).willReturn(BDDMockito.anyString());
+//        BDDMockito.given(oauthService.loginWithKakao(
+//                BDDMockito.anyString()
+//        )).willReturn(BDDMockito.anyString());
 
         //when
         mockMvc.perform(MockMvcRequestBuilders.post("/login/oauth/kakao")

@@ -1,5 +1,7 @@
 package com.a603.ofcourse.domain.oauth.service;
 
+import com.a603.ofcourse.domain.oauth.dto.MemberExistWithAccessToken;
+import com.a603.ofcourse.domain.oauth.dto.MemberWithIsExist;
 import com.a603.ofcourse.domain.oauth.redis.RefreshToken;
 import com.a603.ofcourse.domain.oauth.repository.AuthRepository;
 import com.a603.ofcourse.domain.oauth.exception.OauthException;
@@ -23,16 +25,16 @@ public class OauthService {
     /*
     작성자 : 김은비
     작성내용 : 카카오 로그인
-     * @param String
-     * @param HttpServletReponse
-     * @return accessToken
+     * @param kakaoAccessToken
+     * @return MemberExistWithAccessToken
      */
-    public String loginWithKakao(String accessToken){
+    public MemberExistWithAccessToken loginWithKakao(String kakaoAccessToken){
         //이미 가입돼 있는 회원 or 신규회원 멤버
-        Member member = kakaoOauthService.getMemberProfileByToken(accessToken);
-
+        MemberWithIsExist memberWithIsExist = kakaoOauthService.getMemberProfileByToken(kakaoAccessToken);
+        Member member = memberWithIsExist.getMember();
+        String accessToken = getTokens(member.getId());
         //accessToken 반환
-        return getTokens(member.getId());
+        return MemberExistWithAccessToken.from(accessToken, memberWithIsExist.isExist());
     }
 
     /*

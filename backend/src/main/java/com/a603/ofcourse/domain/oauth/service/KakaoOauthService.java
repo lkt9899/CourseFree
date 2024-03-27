@@ -5,6 +5,8 @@ import com.a603.ofcourse.domain.member.domain.enums.Role;
 import com.a603.ofcourse.domain.member.domain.enums.Type;
 import com.a603.ofcourse.domain.member.repository.MemberRepository;
 import com.a603.ofcourse.domain.oauth.dto.KakaoUserInfo;
+import com.a603.ofcourse.domain.oauth.dto.MemberExistWithAccessToken;
+import com.a603.ofcourse.domain.oauth.dto.MemberWithIsExist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -69,19 +71,27 @@ public class KakaoOauthService {
     작성자 : 김은비
     작성내용 : 카카오API에서 가져온 유저정보를 이미 회원이면 그냥 반환, 아직 회원이 아니면 DB에 저장
      * @param String accessToken
-     * @return Member
+     * @return MemberWithIsExist
      */
-    public Member getMemberProfileByToken(String accessToken){
+    public MemberWithIsExist getMemberProfileByToken(String accessToken){
+        //기존 회원인지 신규 가입인지
+        boolean isExist = true;
+
         Map<String, Object> memberAttributesByToken = getMemberAttributesByToken(accessToken);
         KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(memberAttributesByToken);
         Long longSocialId = kakaoUserInfo.getId();
         Optional<Member> member = memberRepository.findBySocialId(longSocialId);
+
         //회원이면 반환, 회원 아니면 DB저장 후 반환
-        return member.orElseGet(() -> memberRepository.save(Member.builder()
-                .socialId(longSocialId)
-                .type(Type.KAKAO)
-                .role(Role.MEMBER)
-                .build()));
+        return member.map(m -> MemberWithIsExist.from(m, isExist))
+                .orElseGet(() -> {
+                    Member newMember = memberRepository.save(Member.builder()
+                            .socialId(longSocialId)
+                            .type(Type.KAKAO)
+                            .role(Role.MEMBER)
+                            .build());
+                    return MemberWithIsExist.from(newMember, !isExist);
+                });
     }
 
     /*
