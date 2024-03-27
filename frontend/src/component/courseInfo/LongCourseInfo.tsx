@@ -2,6 +2,7 @@ import PlaceInfo from './PlaceInfo'
 
 import KakaoMap from '@component/kakaoMap/KakaoMap'
 import TextBox from '@component/common/TextBox'
+import KakaoMap from '@component/kakaoMap/KakaoMap'
 import FlexBox from '@component/layout/FlexBox'
 
 export default function CourseInfo() {

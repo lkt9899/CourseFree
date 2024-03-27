@@ -35,7 +35,9 @@
       "@style/*": ["./src/style/*"],
       "node_modules/*": ["./node_modules/*"],
       "@styled/*": ["./src/styled/*"],
-      "@mocks/*": ["./src/mocks/*"]
+      "@mocks/*": ["./src/mocks/*"],
+      "@data/*": ["./src/data/*"],
+      "@context/*": ["./src/context/*"]
     }
   },
   "include": ["src"],

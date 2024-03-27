@@ -9,7 +9,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
-        enabled: true,
+        enabled: false,
       },
       manifest: {
         name: '코스프리',
@@ -55,6 +55,8 @@ export default defineConfig({
       { find: '@style', replacement: '/src/style' },
       { find: '@styled', replacement: '/src/styled' },
       { find: '@mocks', replacement: '/src/mocks' },
+      { find: '@context', replacement: '/src/context' },
+      { find: '@data', replacement: '/src/data' },
       { find: 'node_modules', replacement: '/node_modules' },
     ],
   },

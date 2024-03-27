@@ -1,14 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import initMockAPI from './mocks'
-
 import ArticleDetailPage from '@page/ArticleDetailPage'
 import HomePage from '@page/HomePage'
 import DiscoverArticle from '@page/HomePage/DiscoverArticle'
 import HotArticle from '@page/HomePage/HotArticle'
+import KakaoLoginPage from '@page/KakaoLoginPage'
+import LandingPage from '@page/LandingPage'
 import MakeCoursePage from '@page/MakeCoursePage'
 import SelectMakingWay from '@page/MakeCoursePage/SelectMakingWay'
 import MyCoursePage from '@page/MyCoursePage'
+import OnBoardingPage from '@page/OnBoardingPage'
+import SetInfo from '@page/OnBoardingPage/SetInfo'
+import SetNickName from '@page/OnBoardingPage/SetNickName'
+import Welcome from '@page/OnBoardingPage/Welcome'
 import RecommendPage from '@page/RecommendPage'
 import RecommendResult from '@page/RecommendPage/RecommendResult'
 import RecommendSearch from '@page/RecommendPage/RecommendSearch'
@@ -21,7 +25,7 @@ import Log from '@page/MyPage/log'
 import Memory from '@page/MyPage/memory'
 import Setting from '@page/MyPage/setting'
 
-initMockAPI()
+// initMockAPI()
 
 function App() {
   function setScreenSize() {
@@ -43,27 +47,28 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/">
-              <Route index element={<>LandingPage</>}></Route>
-
-              <Route path="onBoarding" element={<>onBoardingPage</>}></Route>
+              <Route path="onBoarding" element={<OnBoardingPage />}>
+                <Route index element={<SetNickName />} />
+                <Route path="info" element={<SetInfo />} />
+                <Route path="welcome" element={<Welcome />} />
+              </Route>
+              <Route index element={<LandingPage />}></Route>
+              <Route path="oauth/kakao" element={<KakaoLoginPage />}></Route>
 
               <Route path="home" element={<HomePage />}>
                 <Route index element={<HotArticle />} />
                 <Route path="discover" element={<DiscoverArticle />} />
               </Route>
-
               <Route path="article" element={<ArticleDetailPage />} />
-
               <Route path="myCourse" element={<MyCoursePage />} />
-
               <Route path="makeCourse" element={<MakeCoursePage />}>
                 <Route index element={<SelectMakingWay />} />
-
+                {/* 추천을 통해 제작 */}
                 <Route path="recommend" element={<RecommendPage />}>
                   <Route index element={<RecommendSearch />} />
                   <Route path="result" element={<RecommendResult />} />
                 </Route>
-
+                {/* 직접 제작 */}
                 <Route path="selfMake" element={<SelfMakePage />}>
                   <Route index element={<SelfMakeSearch />} />
                   <Route path="current" element={<SelfMakeCurrent />} />

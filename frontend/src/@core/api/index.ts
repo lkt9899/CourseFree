@@ -1,15 +1,18 @@
 import axios from 'axios'
 
 import interceptor from './interceptor'
-import URL from './url'
+import API_URI from './url'
 
 export const baseAxios = axios.create({
-  baseURL: URL.BASE,
+  baseURL: API_URI.BASE,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
-export const authAxios = () => {
-  const instance = axios.create({
-    baseURL: URL.BASE,
-  })
-  interceptor(instance)
-  return instance
-}
+export const authAxios = axios.create({
+  baseURL: API_URI.BASE,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+interceptor(authAxios)

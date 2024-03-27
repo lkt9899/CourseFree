@@ -8,5 +8,16 @@ export const addStyle = css`
       outline: none;
       border-bottom: 1px solid hotpink;
     }
+    progress {
+      -webkit-appearance: none;
+    }
+
+    progress::-webkit-progress-bar {
+      background-color: var(--grey);
+    }
+
+    progress::-webkit-progress-value {
+      background-color: var(--primary);
+    }
   }
 `
