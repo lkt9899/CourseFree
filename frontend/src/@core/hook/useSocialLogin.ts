@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 
-import { requestAuthorizationCode } from '@api/User/socialLogin'
+import { requestAuthorizationCode } from '@api/request/member'
 
 import { authState } from '@recoil/authAtom'
 
@@ -18,15 +18,15 @@ export default function useSocialLogin(type) {
   const KAKAO_CODE = PARAMS.get('code')
 
   // Access Token 받아오기
-  function getAccessToken() {
+  async function getAccessToken() {
     try {
-      const response: Promise<AxiosResponse<any, any>> =
-        requestAuthorizationCode(KAKAO_CODE, type)
+      const response: AxiosResponse<any, any> = await requestAuthorizationCode(
+        KAKAO_CODE,
+        type,
+      )
       // 받아온 액세스 토큰와 리프레시 토큰을 스토리지에 담기
-      const accessToken = response.data.accessToken
-      const refreshToken = response.data.refreshToken
+      const accessToken = response.headers.authorization.split(' ')[1]
       sessionStorage.setItem('jwt_token', accessToken)
-      sessionStorage.setItem('refresh_token', refreshToken)
 
       // 여기까지 오류 없이 왔다면 상태 업데이트
       setUserInfo(null)

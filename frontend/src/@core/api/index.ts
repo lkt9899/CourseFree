@@ -5,13 +5,14 @@ import API_URI from './url'
 
 export const baseAxios = axios.create({
   baseURL: API_URI.BASE,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
-export const authAddAxios = () => {
-  const instance = axios.create({
-    baseURL: API_URI.BASE,
-  })
-  interceptor(instance)
-  return instance
-}
-
-export const authAxios = authAddAxios()
+export const authAxios = axios.create({
+  baseURL: API_URI.BASE,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+interceptor(authAxios)
