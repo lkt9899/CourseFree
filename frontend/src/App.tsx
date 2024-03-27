@@ -20,6 +20,10 @@ import SelfMakePage from '@page/SelfMakePage'
 import SelfMakeCurrent from '@page/SelfMakePage/SelfMakeCurrent'
 import SelfMakePlaceSearch from '@page/SelfMakePage/SelfMakePlaceSearch'
 import SelfMakeSearch from '@page/SelfMakePage/SelfMakeSearch'
+import MyPage from '@page/MyPage/index'
+import Log from '@page/MyPage/log'
+import Memory from '@page/MyPage/memory'
+import Setting from '@page/MyPage/setting'
 
 // initMockAPI()
 
@@ -75,6 +79,14 @@ function App() {
               {/* MyPage */}
 
               {/* Favorite */}
+            </Route>
+            <Route path="/mypage" element={<MyPage/>}>
+            </Route>
+            <Route path="/mypage/log" element={<Log/>}>
+            </Route>
+            <Route path="/mypage/memory" element={<Memory/>}>
+            </Route>
+            <Route path="/mypage/setting" element={<Setting/>}>
             </Route>
           </Routes>
         </BrowserRouter>
