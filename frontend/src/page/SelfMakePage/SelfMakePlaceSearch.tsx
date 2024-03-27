@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import { positions } from '@mocks/dummy'
 import { useState } from 'react'
 
+import KakaoMap from '@component/kakaoMap/KakaoMap'
 import SearchBar from '@component/common/SearchBar'
 import TextBox from '@component/common/TextBox'
 import CategorySlider from '@component/kakaoMap/CategorySlider'

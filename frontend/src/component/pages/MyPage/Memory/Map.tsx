@@ -1,5 +1,5 @@
 import FlexBox from '@component/layout/FlexBox';
-import KakaoMap from '@component/common/KakaoMap';
+import KakaoMap from '@component/kakaoMap/KakaoMap';
 import { useState } from 'react';
 import { positions } from '@mocks/dummy';
 import { Container, SectionDate, SectionPlace, GroupWrapper, ItemWrapper, Image, Button, Tag, CommentContainer, Comment, AddCommentInput, AddCommentButton, AddCommentContainer, AddTagContainer, AddTagInput, AddTagButton,NoSelected,Section } from '@styled/component/pages/MyPage/Memory/Map'
