@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ProfileRepository extends JpaRepository<Profile, Integer> {
     Profile findByMemberId(int memberId);
+    Boolean existsByNickname(String nickName);
 }
