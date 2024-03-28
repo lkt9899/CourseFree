@@ -1,11 +1,12 @@
 package com.a603.ofcourse.domain.oauth.controller;
 
+import com.a603.ofcourse.domain.couple.service.CoupleService;
 import com.a603.ofcourse.domain.oauth.dto.MemberExistWithAccessToken;
 import com.a603.ofcourse.domain.oauth.dto.request.OauthRequest;
-import com.a603.ofcourse.domain.oauth.redis.RefreshToken;
 import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
 import com.a603.ofcourse.domain.oauth.service.KakaoOauthService;
 import com.a603.ofcourse.domain.oauth.service.OauthService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -23,6 +24,7 @@ public class OauthController {
     private final OauthService oauthService;
     private final JwtTokenService jwtTokenService;
     private final KakaoOauthService kakaoOauthService;
+    private final CoupleService coupleService;
 
     /*
     작성자 : 김은비
@@ -63,12 +65,26 @@ public class OauthController {
      */
     @PostMapping("/auto")
     public HttpEntity<Void> autoLogin(@RequestHeader(AUTHORIZATION_HEADER) String clientAccessToken){
-        //1. accessToken에서 멤버아이디 가져오기
-        Integer memberId = (Integer) jwtTokenService.getPayload(clientAccessToken.substring(7)).get("member_id");
-        //2. HttpHeaders 객체에 리프레시 토큰으로 갱신된 액세스 토큰 넣기
+        Claims claims = jwtTokenService.getPayload(clientAccessToken.substring(7));
+        //1. accessToken의 페이로드에 저장돼있는 id 가져오기
+        Integer memberId = jwtTokenService.getMemberIdFromClaims(claims);
+        //2. 리프레시 토큰으로 갱신된 액세스 토큰 넣을 HttpHeaders
         HttpHeaders headers = new HttpHeaders();
-        headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessToken(memberId));
-
+        //토큰에 커플아이디가 있으면
+        if(jwtTokenService.hasCoupleId(claims)){
+            Integer coupleId = jwtTokenService.getCoupleIdFromClaims(claims);
+            headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessTokenWithCoupleId(memberId, coupleId));
+        }
+        //토큰에 커플 아이디 없으면
+        else{
+            //커플인지 확인
+            coupleService.getMemberCouple(memberId).ifPresentOrElse(
+                    //커플이면
+                    memberCouple -> headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessTokenWithCoupleId(memberId, memberCouple.getCouple().getId())),
+                    //커플 아니면
+                    () -> headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessToken(memberId))
+            );
+        }
         return ResponseEntity.ok().headers(headers).build();
     }
 }

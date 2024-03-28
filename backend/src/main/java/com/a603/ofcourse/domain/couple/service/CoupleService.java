@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -76,6 +77,16 @@ public class CoupleService {
      */
     public boolean isCouple(Integer memberId){
         return memberCoupleRepository.existsByMemberId(memberId);
+    }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 멤버아이디로 커플 연동 여부 조회
+     * @param memberId
+     * @return boolean (커플이면 true, 아니면 false 반환)
+     */
+    public Optional<MemberCouple> getMemberCouple(Integer memberId){
+        return memberCoupleRepository.findByMemberId(memberId);
     }
 
     /*

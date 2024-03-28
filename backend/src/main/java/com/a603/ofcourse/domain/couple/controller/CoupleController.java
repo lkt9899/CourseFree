@@ -47,4 +47,11 @@ public class CoupleController {
 
         return ResponseEntity.ok().build();
     }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 커플 연동 끊기
+     * @param :
+     * @return : 
+     */
 }
