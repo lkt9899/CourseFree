@@ -61,6 +61,13 @@ export default defineConfig({
     ],
   },
   server: {
+    proxy: {
+      '/api': {
+        target: 'https://j10a603.p.ssafy.io',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     watch: {
       usePolling: true,
     },

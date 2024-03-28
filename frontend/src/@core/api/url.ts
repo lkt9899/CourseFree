@@ -1,5 +1,5 @@
 const API_URI = {
-  BASE: 'http://j10a603.p.ssafy.io/api',
+  BASE: '/api',
   LOGIN: '',
   SINGUP: '',
   KAKAO_LOGIN: '/login/oauth',

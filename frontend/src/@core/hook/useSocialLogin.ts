@@ -24,6 +24,7 @@ export default function useSocialLogin(type) {
         KAKAO_CODE,
         type,
       )
+      console.log(response)
       // 받아온 액세스 토큰와 리프레시 토큰을 스토리지에 담기
       const accessToken = response.headers.authorization.split(' ')[1]
       sessionStorage.setItem('jwt_token', accessToken)
