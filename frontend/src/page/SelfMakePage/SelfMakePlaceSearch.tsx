@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { positions } from '@mocks/dummy'
+// import { positions } from '@mocks/dummy'
 import { useState } from 'react'
 
 import SearchBar from '@component/common/SearchBar'
@@ -39,7 +39,6 @@ export default function SelfMakePlaceSearch() {
           <KakaoMap
             width="100%"
             height="100vh"
-            data={positions}
             onClickMarkerHandler={onClickMarkerHandler}
           />
         </FlexBox>

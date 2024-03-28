@@ -9,6 +9,10 @@ import LandingPage from '@page/LandingPage'
 import MakeCoursePage from '@page/MakeCoursePage'
 import SelectMakingWay from '@page/MakeCoursePage/SelectMakingWay'
 import MyCoursePage from '@page/MyCoursePage'
+import MyPage from '@page/MyPage/index'
+import Log from '@page/MyPage/log'
+import Memory from '@page/MyPage/memory'
+import Setting from '@page/MyPage/setting'
 import OnBoardingPage from '@page/OnBoardingPage'
 import SetInfo from '@page/OnBoardingPage/SetInfo'
 import SetNickName from '@page/OnBoardingPage/SetNickName'
@@ -81,19 +85,10 @@ function App() {
 
               {/* Favorite */}
             </Route>
-            
-            <Route path="/mypage" element={<MyPage />}>
-            </Route>
-            <Route path="/mypage/log" element={<Log />}>
-            </Route>
-            <Route path="/mypage/memory" element={<Memory />}>
-            </Route>
-            <Route path="/mypage/setting" element={<Setting />}>
-            </Route>
-
-            
-            <Route path="/search" element={<Search />}>
-            </Route>
+            <Route path="/mypage" element={<MyPage />}></Route>
+            <Route path="/mypage/log" element={<Log />}></Route>
+            <Route path="/mypage/memory" element={<Memory />}></Route>
+            <Route path="/mypage/setting" element={<Setting />}></Route>
           </Routes>
         </BrowserRouter>
       </div>
