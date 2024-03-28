@@ -66,6 +66,7 @@ export default defineConfig({
         target: 'https://j10a603.p.ssafy.io',
         changeOrigin: true,
         secure: false,
+        ws: true,
       },
     },
     watch: {

@@ -11,9 +11,7 @@ import API_URI from '@api/url'
  */
 export const requestAuthorizationCode = (code: string, type: string) => {
   if (type === 'kakao')
-    return baseAxios.post(`${API_URI.KAKAO_LOGIN}/${type}`, {
-      AuthorizationCode: code,
-    })
+    return baseAxios.post(`${API_URI.KAKAO_LOGIN}/${type}`, code)
 }
 
 export const requestNickNameValidCheck = (name: string) => {
