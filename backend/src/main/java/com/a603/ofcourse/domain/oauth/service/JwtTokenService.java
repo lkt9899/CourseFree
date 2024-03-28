@@ -148,7 +148,8 @@ public class JwtTokenService {
             // 만료된 토큰의 서브젝트를 반환 (만료되었더라도 만료 전에 설정한 서브젝트를 반환하기 위함 -> 정보를 최대한 활용하기 위함으로 만료된 토큰에서 사용자의 아이디나 권한 등을 가져와서 작업 수행이 가능함)
             return e.getClaims();
         }catch(JwtException e){
-            //예외 방생 시 예외 알리기
+            //예외 발생 시 예외 알리기
+            log.info("페이로드 반환 시 예외 발생");
             throw new OauthException(OauthErrorCode.UNAUTHORIZED);
         }
     }

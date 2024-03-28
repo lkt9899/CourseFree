@@ -40,7 +40,7 @@ public class OauthService {
         //만약 커플이면 커플 아이디를 포함한 액세스토큰을 발행하고
         //커플이 아니면 멤버 아이디만 포함한 액세스 토큰을 발행한다
         String accessToken = memberCoupleRepository.findByMember(member)
-                .map(mc -> getTokensWithCoupleId(member.getId(), mc.getId()))
+                .map(mc -> getTokensWithCoupleId(member.getId(), mc.getCouple().getId()))
                 .orElseGet( () -> getTokens(member.getId()));
 
         //accessToken 반환

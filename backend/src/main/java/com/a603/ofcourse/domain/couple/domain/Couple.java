@@ -15,20 +15,23 @@ import java.util.List;
 
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Couple {
     @Id
-    @Column(name = "couple_id", nullable = false)
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(max = 10)
-    @Column(name = "couple_nickname", length = 10)
+    @Column(nullable = false, length = 20)
     private String coupleNickname;
 
-    @Column(name = "d_day")
+    @Column(nullable = false)
     private int dDay;
+
+    @Column(nullable = false)
+    private boolean notCouple;
 
     @OneToMany(mappedBy = "couple", fetch = FetchType.LAZY)
     private List<Schedule> scheduleList = new ArrayList<>();
@@ -37,10 +40,7 @@ public class Couple {
     private List<MemberCouple> memberCoupleList = new ArrayList<>();
 
     @Builder
-    public Couple(
-            String coupleNickname,
-            int dDay) {
+    public Couple(String coupleNickname) {
         this.coupleNickname = coupleNickname;
-        this.dDay = dDay;
     }
 }

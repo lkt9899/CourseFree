@@ -72,8 +72,16 @@ public class OauthController {
         HttpHeaders headers = new HttpHeaders();
         //토큰에 커플아이디가 있으면
         if(jwtTokenService.hasCoupleId(claims)){
-            Integer coupleId = jwtTokenService.getCoupleIdFromClaims(claims);
-            headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessTokenWithCoupleId(memberId, coupleId));
+            //커플인지 확인
+            coupleService.getMemberCouple(memberId).ifPresentOrElse(
+                    //커플이면
+                    memberCouple -> {
+                        Integer coupleId = jwtTokenService.getCoupleIdFromClaims(claims);
+                        headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessTokenWithCoupleId(memberId, coupleId));
+                    },
+                    //커플 아니면
+                    () -> headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessToken(memberId))
+            );
         }
         //토큰에 커플 아이디 없으면
         else{
