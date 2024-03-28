@@ -82,6 +82,7 @@ function App() {
               </Route>
 
               {/* MyPage */}
+            <Route path="/search" element={<Search/>}></Route>
 
               {/* Favorite */}
             </Route>
@@ -89,7 +90,6 @@ function App() {
             <Route path="/mypage/log" element={<Log />}></Route>
             <Route path="/mypage/memory" element={<Memory />}></Route>
             <Route path="/mypage/setting" element={<Setting />}></Route>
-            <Route path="/mypage/search" element={<Search/>}></Route>
           </Routes>
         </BrowserRouter>
       </div>
