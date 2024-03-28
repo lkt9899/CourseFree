@@ -14,10 +14,12 @@ export const DataSet = styled.div`
 
 export const Photo = styled.img`
     margin-right: 20px;
-    height:100%;
-    width:30%;
+    margin-left: 7px;
+    margin-top: 7px;
+    height:100px;
+    width:130px;
+    background-color: lightgreen;
 `;
-
 export const Content = styled.div`
     display: flex;
     flex-direction: column;

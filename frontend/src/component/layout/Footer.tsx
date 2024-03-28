@@ -1,7 +1,6 @@
 import {
   faHeart,
   faHouse,
-  faPen,
   faSearch,
   faUser,
 } from '@fortawesome/free-solid-svg-icons'
@@ -19,7 +18,6 @@ export default function Footer() {
         <FooterLinkWithIcon icon={faHouse} to="/home" title="Home" />
         <FooterLinkWithIcon icon={faSearch} to="/search" title="Search" />
         <FooterLinkWithIcon icon={faHeart} to="/myCourse" title="Course" />
-        <FooterLinkWithIcon icon={faPen} to="/favorite" title="Favorite" />
         <FooterLinkWithIcon icon={faUser} to="/myPage" title="MyPage" />
       </FlexBox>
     </Container>

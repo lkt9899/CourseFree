@@ -24,8 +24,11 @@ import SelfMakePage from '@page/SelfMakePage'
 import SelfMakeCurrent from '@page/SelfMakePage/SelfMakeCurrent'
 import SelfMakePlaceSearch from '@page/SelfMakePage/SelfMakePlaceSearch'
 import SelfMakeSearch from '@page/SelfMakePage/SelfMakeSearch'
-
-// const HomePage = React.lazy(()=>import("@page/HomePage"))
+import MyPage from '@page/MyPage/index'
+import Log from '@page/MyPage/log'
+import Memory from '@page/MyPage/memory'
+import Setting from '@page/MyPage/setting'
+import Search from '@page/SearchPage'
 
 // initMockAPI()
 
