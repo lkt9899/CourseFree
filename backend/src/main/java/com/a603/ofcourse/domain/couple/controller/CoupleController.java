@@ -29,7 +29,7 @@ public class CoupleController {
     @PostMapping("/generate-link")
     public ResponseEntity<String> generateInviteLink(@RequestHeader(AUTHORIZATION_HEADER) String accessToken) {
         //1. accessToken에서 멤버아이디 가져오기
-        Integer memberId = (Integer) jwtTokenService.getPayload(accessToken.substring(7)).get("member_id");
+        Integer memberId = (Integer) jwtTokenService.getPayload(accessToken).get("member_id");
         return ResponseEntity.ok(coupleService.generateInviteLink(memberId));
     }
 
@@ -41,7 +41,7 @@ public class CoupleController {
     @PostMapping("/connect/exist/{uuid}")
     public ResponseEntity<Void> connectCoupleWithMember(@PathVariable("uuid") String uuid, @RequestHeader(AUTHORIZATION_HEADER) String accessToken){
         //1. accessToken에서 초대받은 멤버아이디 가져오기
-        Integer visitorId = (Integer) jwtTokenService.getPayload(accessToken.substring(7)).get("member_id");
+        Integer visitorId = (Integer) jwtTokenService.getPayload(accessToken).get("member_id");
         //2. 초대한 사람의 멤버 아이디 가져오기
         Integer inviterId = coupleService.getInviterIdFromLink(uuid);
         //2. 커플 연동하고 커플 아이디 받아오기
@@ -63,7 +63,7 @@ public class CoupleController {
     @PostMapping("/disconnect")
     public ResponseEntity<Void> disconnectCouple(@RequestHeader(AUTHORIZATION_HEADER) String accessToken){
         //1. 클레임 가져오기
-        Claims claims = jwtTokenService.getPayload(accessToken.substring(7));
+        Claims claims = jwtTokenService.getPayload(accessToken);
         //2. 커플 아이디 뽑아오기
         Integer coupleId = jwtTokenService.getCoupleIdFromClaims(claims);
         log.info("coupleId : {}", coupleId);

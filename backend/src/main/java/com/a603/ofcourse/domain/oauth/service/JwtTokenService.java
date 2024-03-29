@@ -136,12 +136,13 @@ public class JwtTokenService {
      * @return Claims
      */
     public Claims getPayload(String token){
+        String accessToken = token.substring(7);
         try{
             //1. 토큰을 파싱하여 토큰의 페이로드에서 서브젝트(사용자 식별 정보)를 추출
             return Jwts.parserBuilder()
                     .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                     .build()
-                    .parseClaimsJws(token)
+                    .parseClaimsJws(accessToken)
                     .getBody();
             //2. 토큰이 만료되었을 경우
         }catch (ExpiredJwtException e){
@@ -216,5 +217,15 @@ public class JwtTokenService {
      */
     public Integer getMemberIdFromClaims(Claims claims){
         return (Integer) claims.get("member_id");
+    }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 액세스토큰에서 memberId 뽑아서 반환
+     * @param accessToken
+     * @return memberId
+     */
+    public Integer getMemberId(String accessToken){
+        return getMemberIdFromClaims(getPayload(accessToken));
     }
 }

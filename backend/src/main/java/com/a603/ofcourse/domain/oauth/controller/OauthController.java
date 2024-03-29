@@ -65,7 +65,7 @@ public class OauthController {
      */
     @PostMapping("/auto")
     public HttpEntity<Void> autoLogin(@RequestHeader(AUTHORIZATION_HEADER) String clientAccessToken){
-        Claims claims = jwtTokenService.getPayload(clientAccessToken.substring(7));
+        Claims claims = jwtTokenService.getPayload(clientAccessToken);
         //1. accessToken의 페이로드에 저장돼있는 id 가져오기
         Integer memberId = jwtTokenService.getMemberIdFromClaims(claims);
         //2. 리프레시 토큰으로 갱신된 액세스 토큰 넣을 HttpHeaders
