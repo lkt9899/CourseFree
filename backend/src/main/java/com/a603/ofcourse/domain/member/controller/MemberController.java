@@ -1,6 +1,8 @@
 package com.a603.ofcourse.domain.member.controller;
 
+import com.a603.ofcourse.domain.member.domain.Member;
 import com.a603.ofcourse.domain.member.dto.request.ProfileInfoRequest;
+import com.a603.ofcourse.domain.member.service.MemberService;
 import com.a603.ofcourse.domain.member.service.ProfileService;
 import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
 import io.jsonwebtoken.Claims;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     private final ProfileService profileService;
-    private final JwtTokenService jwtTokenService;
+    private final MemberService memberService;
 
     /*
     작성자 : 김은비
@@ -58,8 +60,9 @@ public class MemberController {
     @PostMapping("/profile-info")
     public ResponseEntity<Void> saveMemberProfile(@RequestHeader(AUTHORIZATION_HEADER) String accessToken, @RequestBody ProfileInfoRequest profileInfoRequest){
         //1.멤버아이디 가져오기
-        Integer memberId = (Integer) jwtTokenService.getPayload(accessToken).get("member_id");
+        Member member = memberService.getMemberByToken(accessToken);
 
+        profileService.saveMemberProfile(member, profileInfoRequest);
         return ResponseEntity.ok().build();
     }
 }

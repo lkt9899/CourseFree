@@ -2,6 +2,7 @@ package com.a603.ofcourse.domain.course.controller;
 
 import com.a603.ofcourse.domain.course.dto.request.AddCourseRequestDto;
 import com.a603.ofcourse.domain.course.service.CourseService;
+import com.a603.ofcourse.domain.member.domain.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,7 +55,7 @@ class CourseControllerTest {
                 ));
 
         // stub
-        BDDMockito.given(courseService.addCourse(BDDMockito.anyString(), BDDMockito.any(AddCourseRequestDto.class))).willReturn(BDDMockito.anyInt());
+        BDDMockito.given(courseService.addCourse(BDDMockito.any(Member.class), BDDMockito.any(AddCourseRequestDto.class))).willReturn(BDDMockito.anyInt());
 
         // when
         mockMvc.perform(MockMvcRequestBuilders.post("/api/course/add")
@@ -65,6 +66,6 @@ class CourseControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         // then
-        BDDMockito.verify(courseService).addCourse(BDDMockito.anyString(), BDDMockito.any(AddCourseRequestDto.class));
+        BDDMockito.verify(courseService).addCourse(BDDMockito.any(Member.class), BDDMockito.any(AddCourseRequestDto.class));
     }
 }

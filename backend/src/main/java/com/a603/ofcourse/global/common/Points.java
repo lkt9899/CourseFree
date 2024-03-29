@@ -35,4 +35,24 @@ public class Points {
         return calculatePoints(distance, true);
     }
 
+
+
+    /**
+     * @author 손현조
+     * @date 2024-03-19
+     * @description 주 좌표의 거리를 구하는 함수, 하버사인 공식 사용
+     **/
+    public static double getDistance(Points p1, Points p2) {
+        double dLat = Math.toRadians(p2.getLat() - p1.getLat());
+        double dLon = Math.toRadians(p2.getLng() - p1.getLng());
+
+        double tmp1 = Math.sin(dLat/2)
+                * Math.sin(dLat/2)
+                + Math.cos(Math.toRadians(p1.getLat()))
+                * Math.cos(Math.toRadians(p2.getLat()))
+                * Math.sin(dLon/2)
+                * Math.sin(dLon/2);
+        double tmp2 = 2 * Math.atan2(Math.sqrt(tmp1), Math.sqrt(1-tmp1));
+        return Points.EARTH_RADIUS * tmp2;    // Distance in m
+    }
 }

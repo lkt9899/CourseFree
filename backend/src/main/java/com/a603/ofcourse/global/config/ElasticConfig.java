@@ -27,6 +27,9 @@ import javax.net.ssl.SSLContext;
 })
 public class ElasticConfig {
 
+    @Value("${spring.elasticsearch.host}")
+    private String host;
+
     @Value("${spring.elasticsearch.username}")
     private String username;
 
@@ -47,7 +50,7 @@ public class ElasticConfig {
         credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(username, password));
         try {
             RestClient restClient = RestClient
-                    .builder(new HttpHost("elasticsearch", 9200, "https"))
+                    .builder(new HttpHost(host, 9200, "https"))
                     .setDefaultHeaders(new Header[]{
                             new BasicHeader("Authorization", "ApiKey " + apiKey)
                     })

@@ -1,10 +1,13 @@
 package com.a603.ofcourse.domain.place.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public enum PlaceCategory {
     RESTAURANT("식당"),
     CAFE("카페"),
@@ -13,5 +16,5 @@ public enum PlaceCategory {
     PC_ROOM("피씨방"),
     MALL("쇼핑몰");
 
-    private final String value;
+    private String value;
 }

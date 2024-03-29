@@ -150,6 +150,9 @@ dependencies {
 
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // Provider 사용 용도
+    implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
 }
 
 tasks.named('test') {

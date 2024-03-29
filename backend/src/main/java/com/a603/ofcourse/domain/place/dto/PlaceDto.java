@@ -1,6 +1,7 @@
 package com.a603.ofcourse.domain.place.dto;
 
 import com.a603.ofcourse.domain.place.domain.Place;
+import com.a603.ofcourse.global.common.Points;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,15 +11,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class PlaceDto {
+    private Integer id;
     private String name;
-    private String imageUrl;
-    private Integer reviewCount;
+    private String address;
+    private String url;
+    private String placeType;
+    private String placeCategory;
+    private Points points;
 
     public static PlaceDto of(Place place) {
         return new PlaceDto(
+                place.getId(),
                 place.getName(),
-                place.getImageUrl(),
-                place.getReviewCount()
+                place.getAddress(),
+                place.getUrl(),
+                place.getPlaceType(),
+                place.getPlaceCategory().getValue(),
+                place.getPoints()
         );
     }
 }

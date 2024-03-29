@@ -16,6 +16,7 @@ spring:
       password: ${REDIS_PASSWORD}
 
   elasticsearch:
+    host: elasticsearch
     username: ${ELASTIC_USERNAME}
     password: ${ELASTIC_PASSWORD}
     fingerprint: ${ELASTIC_FINGERPRINT}
@@ -38,7 +39,7 @@ spring:
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
             client-secret: ${KAKAO_CLIENT_SECRET}
-            redirect-uri: "https://j10a603.p.ssafy.io/member-page"
+            redirect-uri: "http://localhost:5173/oauth/kakao"
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             scope:
@@ -85,3 +86,7 @@ server:
 invite:
   link:
     start: http://j10a603.p.ssafy.io/api/couple/connect/
+
+course:
+  recommendation:
+    url: ${RECOMMENDATION_URL}

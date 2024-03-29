@@ -32,7 +32,7 @@ public class MemberPrincipal implements UserDetails {
 
     public static MemberPrincipal create(Member member, Profile profile){
         List<GrantedAuthority> authorities =
-                Collections.singletonList(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
+                Collections.singletonList(new SimpleGrantedAuthority(Role.MEMBER.toString()));
 
         return new MemberPrincipal(
                 member.getId(),

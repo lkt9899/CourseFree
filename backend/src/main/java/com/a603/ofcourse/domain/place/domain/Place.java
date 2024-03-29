@@ -22,6 +22,8 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String url;
+
     private String name;
 
     @Embedded
@@ -29,12 +31,14 @@ public class Place {
 
     private String address;
 
-    private String imageUrl;
+    private String placeType;
 
     @Enumerated(EnumType.STRING)
     private PlaceCategory placeCategory;
 
     private Integer reviewCount;
+
+    private String vector;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     private List<CoursePlace> coursePlaceList = new ArrayList<>();
@@ -46,17 +50,23 @@ public class Place {
     private List<SchedulePlace> schedulePlaceList = new ArrayList<>();
 
     @Builder
+
     public Place(
+            String url,
             String name,
             Points points,
             String address,
-            String imageUrl,
-            PlaceCategory placeCategory) {
-        this.reviewCount = 0;
+            String placeType,
+            PlaceCategory placeCategory,
+            Integer reviewCount,
+            String vector) {
+        this.url = url;
         this.name = name;
         this.points = points;
         this.address = address;
-        this.imageUrl = imageUrl;
+        this.placeType = placeType;
         this.placeCategory = placeCategory;
+        this.reviewCount = reviewCount;
+        this.vector = vector;
     }
 }
