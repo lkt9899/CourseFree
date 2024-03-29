@@ -19,7 +19,6 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class ProfileService {
     private final ProfileRepository profileRepository;
-    private final MemberRepository memberRepository;
     private final NicknameHashMap nicknameHashMap;
 
     private static final double HALF_AS_MANY = 1.5;
@@ -68,6 +67,8 @@ public class ProfileService {
                 .nickname(profileInfoRequest.getNickName())
                 .build();
         profileRepository.save(profile);
+        //저장 후 해쉬맵의 값 삭제
+        nicknameHashMap.deleteNicknameFromHashMap(profileInfoRequest.getNickName());
     }
 
     /**

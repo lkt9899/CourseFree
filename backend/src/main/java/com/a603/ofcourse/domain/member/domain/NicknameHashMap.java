@@ -20,6 +20,7 @@ public class NicknameHashMap {
     public boolean isExistInHashMap(String nickname){
         return nicknameMap.containsKey(nickname);
     }
+
     /*
     작성자 : 김은비
     작성내용 : 해쉬맵에 닉네임 저장
@@ -36,5 +37,14 @@ public class NicknameHashMap {
         }
         //저장 실패
         return false;
+    }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 해쉬맵의 닉네임 삭제
+     * @param nickname
+     */
+    public void deleteNicknameFromHashMap(String nickname){
+        nicknameMap.remove(nickname);
     }
 }
