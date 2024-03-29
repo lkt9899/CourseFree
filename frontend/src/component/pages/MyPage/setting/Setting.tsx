@@ -1,6 +1,7 @@
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Title, InfoContainer, Name, NickName, Age, Couple, Phone, MainContainer, BottomContainer } from '@styled/component/pages/MyPage/Setting/Setting';
+import { Container, Title, InfoContainer, Name, NickName, Age, Icon, Couple, Phone, MainContainer, BottomContainer } from '@styled/component/pages/MyPage/Setting/Setting';
+
 
 
 const user = { 'name': '박희준', 'nickname': '역삼동 정현규', 'age': 28, 'gender': '남', 'couple': '@@@', 'phone': '010-1234-5678' }
@@ -13,9 +14,18 @@ const setting = () => {
         <hr />
       </Title>
       <InfoContainer>
+        <Icon>
+          <FontAwesomeIcon icon={faUserCircle} size='5x' />
+        </Icon>
         <Name>
           <p>{user.name}</p>
         </Name>
+        <NickName>
+          <p>{user.nickname}</p>
+        </NickName>
+        <Phone>
+          <FontAwesomeIcon icon={faPhone} />  {user.phone}
+        </Phone>
         <Age>
           <p>{user.age} {user.gender}</p>
         </Age>
@@ -23,14 +33,13 @@ const setting = () => {
           <p>{user.couple}님과 커플이예요</p>
         </Couple>
       </InfoContainer>
-      <NickName>
-        <p>닉네임 : {user.nickname}</p>
-      </NickName>
-      <Phone>
-        전화번호 : <FontAwesomeIcon icon={faPhone} /> {user.phone}
-      </Phone>
       <MainContainer>
-
+        <p></p>
+        <p></p>
+        <p>공지 사항</p>
+        <p>서비스 정보 및 약관</p>
+        <p></p>
+        <p></p>
       </MainContainer>
       <BottomContainer>
         <p>회원 탈퇴</p>

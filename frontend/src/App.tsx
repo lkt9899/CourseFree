@@ -1,31 +1,32 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import ArticleDetailPage from '@page/ArticleDetailPage';
-import HomePage from '@page/HomePage';
-import DiscoverArticle from '@page/HomePage/DiscoverArticle';
-import HotArticle from '@page/HomePage/HotArticle';
-import KakaoLoginPage from '@page/KakaoLoginPage';
-import LandingPage from '@page/LandingPage';
-import MakeCoursePage from '@page/MakeCoursePage';
-import SelectMakingWay from '@page/MakeCoursePage/SelectMakingWay';
-import MyCoursePage from '@page/MyCoursePage';
-import OnBoardingPage from '@page/OnBoardingPage';
-import SetInfo from '@page/OnBoardingPage/SetInfo';
-import SetNickName from '@page/OnBoardingPage/SetNickName';
-import Welcome from '@page/OnBoardingPage/Welcome';
-import RecommendPage from '@page/RecommendPage';
-import RecommendResult from '@page/RecommendPage/RecommendResult';
-import RecommendSearch from '@page/RecommendPage/RecommendSearch';
-import SelfMakePage from '@page/SelfMakePage';
-import SelfMakeCurrent from '@page/SelfMakePage/SelfMakeCurrent';
-import SelfMakePlaceSearch from '@page/SelfMakePage/SelfMakePlaceSearch';
-import SelfMakeSearch from '@page/SelfMakePage/SelfMakeSearch';
-import MyPage from '@page/MyPage/index';
-import Log from '@page/MyPage/log';
-import Memory from '@page/MyPage/memory';
-import Setting from '@page/MyPage/setting';
-import Search from '@page/SearchPage';
-
+import ArticleDetailPage from '@page/ArticleDetailPage'
+import HomePage from '@page/HomePage'
+import DiscoverArticle from '@page/HomePage/DiscoverArticle'
+import HotArticle from '@page/HomePage/HotArticle'
+import KakaoLoginPage from '@page/KakaoLoginPage'
+import LandingPage from '@page/LandingPage'
+import MakeCoursePage from '@page/MakeCoursePage'
+import SelectMakingWay from '@page/MakeCoursePage/SelectMakingWay'
+import MyCoursePage from '@page/MyCoursePage'
+import MyPage from '@page/MyPage/index'
+import Log from '@page/MyPage/log'
+import Memory from '@page/MyPage/memory'
+import Setting from '@page/MyPage/setting'
+import OnBoardingPage from '@page/OnBoardingPage'
+import SetInfo from '@page/OnBoardingPage/SetInfo'
+import SetNickName from '@page/OnBoardingPage/SetNickName'
+import Welcome from '@page/OnBoardingPage/Welcome'
+import RecommendPage from '@page/RecommendPage'
+import RecommendResult from '@page/RecommendPage/RecommendResult'
+import RecommendSearch from '@page/RecommendPage/RecommendSearch'
+import SelfMakePage from '@page/SelfMakePage'
+import SelfMakeCurrent from '@page/SelfMakePage/SelfMakeCurrent'
+import SelfMakePlaceSearch from '@page/SelfMakePage/SelfMakePlaceSearch'
+import SelfMakeSearch from '@page/SelfMakePage/SelfMakeSearch'
+import Search from '@page/SearchPage'
+import FavoritePage from '@page/FavoritePage'
+import FavoriteDetail from '@page/FavoritePage/FavoriteDetail'
 
 // initMockAPI()
 
@@ -77,16 +78,22 @@ function App() {
                   <Route path="search" element={<SelfMakePlaceSearch />} />
                 </Route>
               </Route>
+              </Route>
 
-              {/* MyPage */}
-            <Route path="/search" element={<Search/>}></Route>
-
-              {/* Favorite */}
+            <Route path="/favorite" element={<FavoritePage/>}>
             </Route>
-            <Route path="/mypage" element={<MyPage />}></Route>
-            <Route path="/mypage/log" element={<Log />}></Route>
-            <Route path="/mypage/memory" element={<Memory />}></Route>
-            <Route path="/mypage/setting" element={<Setting />}></Route>
+            <Route path="/favorite/:courseId" element={<FavoriteDetail />} />
+
+            <Route path="/mypage" element={<MyPage/>}>
+            </Route>
+            <Route path="/mypage/log" element={<Log/>}>
+            </Route>
+            <Route path="/mypage/memory" element={<Memory/>}>
+            </Route>
+            <Route path="/mypage/setting" element={<Setting/>}>
+            </Route>
+            <Route path="/search" element={<Search/>}>
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>

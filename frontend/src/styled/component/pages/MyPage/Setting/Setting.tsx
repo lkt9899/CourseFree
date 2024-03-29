@@ -15,7 +15,7 @@ margin-bottom: 1em;
 `;
 export const InfoContainer = styled.div`
   background-color: lightpink;
-  width: 70vw;
+  width: 70%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -41,6 +41,9 @@ export const Age = styled.div`
 color:gray;
 font-weight: bold;
 `;
+export const Icon = styled.div`
+margin-bottom: 0.5em;
+`;
 export const Couple = styled.div`
 color: #ff1493;
 font-weight: bold;
@@ -53,10 +56,15 @@ export const Phone = styled.div`
   ;
 export const MainContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   content-align: center;
-  min-height: 45vh;
+  min-height: 25vh;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom : 5px;
 `;
 export const BottomContainer = styled.div`
   display: flex;
