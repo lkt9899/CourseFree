@@ -3,6 +3,7 @@ package com.a603.ofcourse.domain.member.controller;
 import com.a603.ofcourse.domain.member.dto.request.ProfileInfoRequest;
 import com.a603.ofcourse.domain.member.service.ProfileService;
 import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +24,9 @@ public class MemberController {
      * @return 사용 가능하면 OK, 불가하면 CONFLICK
      */
     @GetMapping("/check/nickname")
-    public ResponseEntity<Void> checkNickName(@RequestParam("nickName") String nickName) {
-        if(profileService.checkNickName(nickName)){
+    public ResponseEntity<Void> checkNickName(@RequestParam("nickname") String nickname) {
+        //저장 불가하면
+        if(profileService.isDuplicateNickName(nickname)){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.ok().build();
@@ -33,10 +35,18 @@ public class MemberController {
     /*
     작성자 : 김은비
     내용 : 닉네임을 해쉬맵에 잠시 저장
-     * @param
-     * @return
+     * @param nickname
+     * @param accessToken
+     * @return 저장 성공하면 OK, 실패하면 CONFLICK
      */
-//    @GetMapping("/transient-save/nickname")
+    @GetMapping("/transient-save/nickname")
+    public ResponseEntity<Void> saveNicknameToHashMap(@RequestParam("nickname") String nickname, @RequestHeader(AUTHORIZATION_HEADER) String accessToken){
+        Integer memberId = jwtTokenService.getMemberId(accessToken);
+        if(!profileService.saveNicknameToHashMap(nickname, memberId)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.ok().build();
+    }
 
 
     /*
@@ -48,7 +58,7 @@ public class MemberController {
     @PostMapping("/profile-info")
     public ResponseEntity<Void> saveMemberProfile(@RequestHeader(AUTHORIZATION_HEADER) String accessToken, @RequestBody ProfileInfoRequest profileInfoRequest){
         //1.멤버아이디 가져오기
-        Integer memberId = (Integer) jwtTokenService.getPayload(accessToken.substring(7)).get("member_id");
+        Integer memberId = (Integer) jwtTokenService.getPayload(accessToken).get("member_id");
 
         return ResponseEntity.ok().build();
     }
