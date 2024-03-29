@@ -5,9 +5,12 @@ import com.a603.ofcourse.domain.course.domain.Course;
 import com.a603.ofcourse.domain.schedule.domain.enums.ScheduleState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +37,7 @@ public class Schedule {
     private String appointmentPlace;
 
     @Column(name = "shedule_date")
-    private String scheduleDate;
-    //TODO: String 할까, DateTime 할까
+    private LocalDateTime scheduleDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
@@ -53,7 +55,7 @@ public class Schedule {
             ScheduleState scheduleState,
             String scheduleTitle,
             String appointmentPlace,
-            String scheduleDate,
+            LocalDateTime scheduleDate,
             Course course,
             Couple couple) {
         this.scheduleState = scheduleState;

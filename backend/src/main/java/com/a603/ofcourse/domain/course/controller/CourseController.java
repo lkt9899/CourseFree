@@ -3,7 +3,6 @@ package com.a603.ofcourse.domain.course.controller;
 import com.a603.ofcourse.domain.course.dto.request.AddCourseRequestDto;
 import com.a603.ofcourse.domain.course.service.CourseService;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

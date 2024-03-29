@@ -1,9 +1,9 @@
 package com.a603.ofcourse.domain.oauth.service;
 
+import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
+import com.a603.ofcourse.domain.oauth.exception.OauthException;
 import com.a603.ofcourse.domain.oauth.redis.RefreshToken;
 import com.a603.ofcourse.domain.oauth.repository.AuthRepository;
-import com.a603.ofcourse.domain.oauth.exception.OauthException;
-import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
 import io.jsonwebtoken.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -150,6 +150,7 @@ public class JwtTokenService {
         }catch(JwtException e){
             //예외 발생 시 예외 알리기
             log.info("페이로드 반환 시 예외 발생");
+            log.error(e.getMessage());
             throw new OauthException(OauthErrorCode.UNAUTHORIZED);
         }
     }

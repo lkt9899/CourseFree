@@ -1,14 +1,8 @@
 package com.a603.ofcourse.domain.couple.domain;
 
-import com.a603.ofcourse.domain.member.domain.Member;
-import com.a603.ofcourse.domain.place.domain.PlaceReview;
 import com.a603.ofcourse.domain.schedule.domain.Schedule;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.ArrayList;
 import java.util.List;

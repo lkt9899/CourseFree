@@ -1,6 +1,5 @@
 package com.a603.ofcourse.domain.couple.controller;
 
-import com.a603.ofcourse.domain.couple.redis.InviteLink;
 import com.a603.ofcourse.domain.couple.service.CoupleService;
 import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
 import com.a603.ofcourse.domain.oauth.service.OauthService;
@@ -8,9 +7,7 @@ import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,12 +38,12 @@ public class CoupleController {
     작성내용 : 커플 연동해주기
      * @param accessToken
      */
-    @PostMapping("/connect/exist/{UUID}")
-    public ResponseEntity<Void> connectCoupleWithMember(@PathVariable("UUID") String UUID, @RequestHeader(AUTHORIZATION_HEADER) String accessToken){
+    @PostMapping("/connect/exist/{uuid}")
+    public ResponseEntity<Void> connectCoupleWithMember(@PathVariable("uuid") String uuid, @RequestHeader(AUTHORIZATION_HEADER) String accessToken){
         //1. accessToken에서 초대받은 멤버아이디 가져오기
         Integer visitorId = (Integer) jwtTokenService.getPayload(accessToken.substring(7)).get("member_id");
         //2. 초대한 사람의 멤버 아이디 가져오기
-        Integer inviterId = coupleService.getInviterIdFromLink(UUID);
+        Integer inviterId = coupleService.getInviterIdFromLink(uuid);
         //2. 커플 연동하고 커플 아이디 받아오기
         Integer coupleId = coupleService.connectCouple(visitorId, inviterId);
 

@@ -4,9 +4,8 @@ import com.a603.ofcourse.domain.place.dto.request.SearchPlaceByPointsRequestDto;
 import com.a603.ofcourse.domain.place.dto.response.SearchPlaceResponseDto;
 import com.a603.ofcourse.domain.place.service.PlaceService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,7 +1,7 @@
 package com.a603.ofcourse.domain.course.domain;
 
 import com.a603.ofcourse.domain.course.dto.response.CourseReviewResponseDto;
-import com.a603.ofcourse.global.domain.BaseEntity;
+import com.a603.ofcourse.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,7 +22,6 @@ public class CourseReview extends BaseEntity {
     @Lob
     @Column(name = "content")
     private String content;
-    // TODO: 게시글 수정 기능용 setter 방식 정해야함
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")

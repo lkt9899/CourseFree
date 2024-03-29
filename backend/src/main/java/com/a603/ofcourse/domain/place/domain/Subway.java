@@ -1,6 +1,6 @@
 package com.a603.ofcourse.domain.place.domain;
 
-import com.a603.ofcourse.global.domain.Points;
+import com.a603.ofcourse.global.common.Points;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

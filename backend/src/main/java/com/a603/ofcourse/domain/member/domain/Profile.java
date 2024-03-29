@@ -1,9 +1,11 @@
 package com.a603.ofcourse.domain.member.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
@@ -23,10 +25,6 @@ public class Profile {
     @Column(name = "age_range", length = 8)
     private String ageRange;
 
-    @Size(max = 8)
-    @Column(name = "mbti", length = 8)
-    private String mbti;
-
     @Size(max = 256)
     @Column(name = "image", length = 256)
     private String image;
@@ -39,12 +37,10 @@ public class Profile {
     public Profile(
             String nickname,
             String ageRange,
-            String mbti,
             String image,
             Member member) {
         this.nickname = nickname;
         this.ageRange = ageRange;
-        this.mbti = mbti;
         this.image = image;
         this.member = member;
     }

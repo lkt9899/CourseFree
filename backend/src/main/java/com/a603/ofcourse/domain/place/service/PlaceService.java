@@ -7,9 +7,9 @@ import com.a603.ofcourse.domain.place.dto.response.SearchPlaceResponseDto;
 import com.a603.ofcourse.domain.place.exception.PlaceErrorCode;
 import com.a603.ofcourse.domain.place.exception.PlaceException;
 import com.a603.ofcourse.domain.place.repository.PlaceRepository;
-import com.a603.ofcourse.global.domain.Points;
-import org.springframework.stereotype.Service;
+import com.a603.ofcourse.global.common.Points;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

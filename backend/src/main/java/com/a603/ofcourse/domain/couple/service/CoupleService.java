@@ -1,6 +1,5 @@
 package com.a603.ofcourse.domain.couple.service;
 
-import ch.qos.logback.core.testUtil.RandomUtil;
 import com.a603.ofcourse.domain.couple.domain.Couple;
 import com.a603.ofcourse.domain.couple.domain.MemberCouple;
 import com.a603.ofcourse.domain.couple.exception.CoupleErrorCode;
@@ -12,8 +11,6 @@ import com.a603.ofcourse.domain.couple.repository.MemberCoupleRepository;
 import com.a603.ofcourse.domain.member.exception.MemberErrorCode;
 import com.a603.ofcourse.domain.member.exception.MemberException;
 import com.a603.ofcourse.domain.member.repository.MemberRepository;
-import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
-import com.a603.ofcourse.domain.oauth.service.OauthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +45,7 @@ public class CoupleService {
         String uuidStr = uuid.toString().replace("-", "").toLowerCase();
         //3. 레디스에 저장
         inviteLinkRepository.save(InviteLink.builder()
-                        .UUID(uuidStr)
+                        .uuid(uuidStr)
                         .memberId(memberId)
                         .build());
         //4, 링크 생성 후 반환
@@ -65,7 +62,7 @@ public class CoupleService {
         //1. uuidStr로 초대 링크의 초대주체 찾기
         return inviteLinkRepository.findById(uuidStr)
                 //2. inviteLink 객체가 존재하면 멤버아이디 반환
-                .map(InviteLink -> InviteLink.getMemberId())
+                .map(InviteLink::getMemberId)
                 //3. 존재하지 않으면 오류 반환
                 .orElseThrow(() -> new CoupleException(CoupleErrorCode.INVALID_INVITE_LINK));
     }
@@ -98,7 +95,8 @@ public class CoupleService {
     */
     public Integer connectCouple(Integer visitorId, Integer inviterId){
         //둘의 아이디가 같으면 에러
-        if(visitorId == inviterId){new CoupleException(CoupleErrorCode.SAME_MEMBER);}
+        if(visitorId.equals(inviterId))
+            throw new CoupleException(CoupleErrorCode.SAME_MEMBER);
 
         //초대된 사람과 초대한 사람이 모두 커플이 아닐 때
         if(!isCouple(visitorId) && !isCouple(inviterId)){
@@ -117,7 +115,9 @@ public class CoupleService {
             throw new CoupleException(CoupleErrorCode.ALREADY_COUPLE_MEMBER);
         }
 
-        return memberCoupleRepository.findByMemberId(visitorId).get().getCouple().getId();
+        return memberCoupleRepository.findByMemberId(visitorId)
+                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_DOES_NOT_EXISTS))
+                .getCouple().getId();
     }
 
     /*

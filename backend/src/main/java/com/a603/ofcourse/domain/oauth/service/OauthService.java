@@ -1,16 +1,12 @@
 package com.a603.ofcourse.domain.oauth.service;
 
-import com.a603.ofcourse.domain.couple.domain.MemberCouple;
 import com.a603.ofcourse.domain.couple.repository.MemberCoupleRepository;
+import com.a603.ofcourse.domain.member.domain.Member;
 import com.a603.ofcourse.domain.oauth.dto.MemberExistWithAccessToken;
 import com.a603.ofcourse.domain.oauth.dto.MemberWithIsExist;
-import com.a603.ofcourse.domain.oauth.redis.RefreshToken;
-import com.a603.ofcourse.domain.oauth.repository.AuthRepository;
-import com.a603.ofcourse.domain.oauth.exception.OauthException;
 import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
-import com.a603.ofcourse.domain.member.domain.Member;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import com.a603.ofcourse.domain.oauth.exception.OauthException;
+import com.a603.ofcourse.domain.oauth.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

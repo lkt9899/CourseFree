@@ -1,11 +1,10 @@
 package com.a603.ofcourse.domain.oauth.config;
 
-import com.a603.ofcourse.domain.member.domain.enums.Role;
-import com.a603.ofcourse.domain.oauth.filter.JwtFilter;
-import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
-import com.a603.ofcourse.domain.oauth.exception.ExceptionHandlerFilter;
 import com.a603.ofcourse.domain.member.repository.MemberRepository;
 import com.a603.ofcourse.domain.member.repository.ProfileRepository;
+import com.a603.ofcourse.domain.oauth.exception.ExceptionHandlerFilter;
+import com.a603.ofcourse.domain.oauth.filter.JwtFilter;
+import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 /*
 Spring Security 설정
