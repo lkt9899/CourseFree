@@ -53,6 +53,15 @@ public class ProfileService {
         return nicknameHashMap.saveNicknameInHashMap(nickname, memberId);
     }
 
+    /*
+    작성자 : 김은비
+    작성내용 : 닉네임 해쉬맵에서 삭제
+     * @prama nickname
+     */
+    public void deleteNicknameFromHashMap(String nickname){
+        nicknameHashMap.deleteNicknameFromHashMap(nickname);
+    }
+
     /**
      * @author 손현조
      * @date 2024-03-27

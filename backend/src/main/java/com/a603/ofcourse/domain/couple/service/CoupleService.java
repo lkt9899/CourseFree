@@ -142,12 +142,4 @@ public class CoupleService {
         //커플이 아닌 상태로 변경
         couple.setNotCouple(true);
     }
-
-    /*
-    작성자 : 김은비
-    작성내용 : 커플 끊은 사람 액세스토큰으로 갱신
-     */
-    public void updateTokenToNotCouple(Integer memberId){
-
-    }
 }
