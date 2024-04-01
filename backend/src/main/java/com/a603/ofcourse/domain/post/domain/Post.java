@@ -36,7 +36,6 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<PostContent> postContentList = new ArrayList<>();
 
-    @Builder
     public Post(
             String title,
             Course course,

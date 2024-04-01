@@ -28,7 +28,6 @@ public class PostContent {
     @JoinColumn(name="post_id")
     private Post post;
 
-    @Builder
     public PostContent(
             String title,
             String content

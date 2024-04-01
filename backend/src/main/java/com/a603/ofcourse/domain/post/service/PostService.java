@@ -47,27 +47,24 @@ public class PostService {
                 () -> new InternalException("예외 처리 예정")
         );
 
-        Post post = postRepository.save(Post
-                .builder()
-                .member(member)
-                .title(requestDto.getPostTitle())
-                .course(course)
-                .build()
+        Post post = new Post(
+                requestDto.getPostTitle(),
+                course,
+                member
         );
 
         requestDto.getPostContentInfoList().forEach(p ->
                 {
-                    PostContent postContent = PostContent
-                            .builder()
-                            .title(p.getTitle())
-                            .content(p.getContent())
-                            .build();
+                    PostContent postContent = new PostContent(
+                            p.getTitle(),
+                            p.getContent()
+                    );
 
                     postContent.savePost(post);
                 }
         );
 
-        return post.getId();
+        return postRepository.save(post).getId();
     }
 
 
