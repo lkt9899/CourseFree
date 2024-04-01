@@ -1,10 +1,14 @@
 package com.a603.ofcourse.domain.place.domain;
 
-import com.a603.ofcourse.global.common.BaseEntity;
+import com.a603.ofcourse.global.domain.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.Instant;
 
 @Getter
 @Entity

@@ -45,6 +45,9 @@ public class Course {
     @JoinColumn(name = "course_characteristic_id")
     private CourseCharacteristic courseCharacteristic;
 
+    @Column(name="use_count")
+    private Integer useCount;
+
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<MyCourse> myCourseList = new ArrayList<>();
 

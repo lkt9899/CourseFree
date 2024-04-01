@@ -3,7 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'jacoco'
-    id "org.sonarqube" version "4.4.1.3373"
+    id "org.sonarqube" version "3.0"
 }
 
 group = 'com.a603'
@@ -13,45 +13,23 @@ java {
     sourceCompatibility = '17'
 }
 
-sonarqube {
-    properties {
-        property("sonar.sourceEncoding", "UTF-8")
-        property("sonar.projectKey", "S10P22A603")
-        property("sonar.host.url", "https://sonarqube.ssafy.com")
-        property("sonar.login", "b44c7b1716bb2d09854acdc70d608f7153ffefdc")
-    }
-}
-
 jacoco {
     toolVersion = "0.8.10"
 }
 
 jacocoTestReport {
     dependsOn test
-    mustRunAfter test
     reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+        html.required = true
+        xml.required = true
+
+        html.destination file("/build/jacoco/")
     }
 
-    afterEvaluate {
-        classDirectories.setFrom(
-                files(classDirectories.files.collect {
-                    fileTree(dir: it, excludes: [
-                            '**/OfcourseApplication*',
-                            '**/ControllerAdvice*',
-                            '**/*Config*',
-
-                    ])
-                })
-        )
-    }
+    finalizedBy(jacocoTestCoverageVerification)
 }
 
 jacocoTestCoverageVerification {
-    mustRunAfter jacocoTestReport
-
     violationRules {
         rule {
             enabled = true
@@ -59,47 +37,21 @@ jacocoTestCoverageVerification {
             element = 'CLASS'
 
             limit {
-                counter = 'BRANCH'
-                value = 'COVEREDRATIO'
-                minimum = 0.70
-            }
-
-            limit {
-                counter = 'LINE'
+                counter='LINE'
                 value = 'COVEREDRATIO'
                 minimum = 0.80
             }
-
-            limit {
-                counter = 'METHOD'
-                value = 'COVEREDRATIO'
-                minimum = 0.80
-            }
-        }
-
-        rule {
-            element = 'METHOD'
 
             excludes = [
-                    "*"
-            ]
 
-            limit {
-                counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 200
-            }
+            ]
         }
     }
 }
 
-tasks.register('testCoverage', Test) {
-    group 'verification'
-    description 'Runs the unit tests with coverage'
-
-    dependsOn('test',
-            'jacocoTestReport',
-            'jacocoTestCoverageVerification')
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 configurations {
@@ -150,9 +102,6 @@ dependencies {
 
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-
-    // Provider 사용 용도
-    implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
 }
 
 tasks.named('test') {

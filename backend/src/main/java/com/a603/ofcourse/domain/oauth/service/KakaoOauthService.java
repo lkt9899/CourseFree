@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -83,7 +84,9 @@ public class KakaoOauthService {
 
         Map<String, Object> memberAttributesByToken = getMemberAttributesByToken(accessToken);
 
-        memberAttributesByToken.forEach((key, val) -> log.info("{} : {}", key, val));
+        memberAttributesByToken.forEach((key, val) -> {
+            System.out.println(key + ":" + val);
+        });
 
         KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(memberAttributesByToken);
         Long longSocialId = kakaoUserInfo.getId();

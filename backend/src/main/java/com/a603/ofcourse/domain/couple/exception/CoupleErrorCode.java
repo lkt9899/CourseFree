@@ -7,8 +7,7 @@ import lombok.Getter;
 public enum CoupleErrorCode implements ErrorCode {
     ALREADY_COUPLE_MEMBER(400, "COUPLE01", "이미 커플인 회원입니다."),
     INVALID_INVITE_LINK(400, "COUPLE02", "만료되거나 존재하지 않는 초대 링크입니다."),
-    SAME_MEMBER(400, "COUPLE03", "같은 사용자끼리 연동은 불가합니다."),
-    NOT_FOUND_ID(400, "COUPLE04", "찾을 수 없는 커플아이디입니다.");
+    SAME_MEMBER(400, "COUPLE03", "같은 사용자끼리 연동은 불가합니다.");
 
     private final int statusCode;
     private final String errorCode;

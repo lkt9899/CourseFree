@@ -1,10 +1,14 @@
 package com.a603.ofcourse.domain.schedule.domain;
 
 import com.a603.ofcourse.domain.place.domain.Place;
+import com.a603.ofcourse.domain.place.domain.PlaceReview;
 import jakarta.persistence.*;
+import jakarta.validation.Path;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;

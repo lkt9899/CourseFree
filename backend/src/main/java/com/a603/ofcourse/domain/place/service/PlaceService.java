@@ -7,9 +7,9 @@ import com.a603.ofcourse.domain.place.dto.response.SearchPlaceResponseDto;
 import com.a603.ofcourse.domain.place.exception.PlaceErrorCode;
 import com.a603.ofcourse.domain.place.exception.PlaceException;
 import com.a603.ofcourse.domain.place.repository.PlaceRepository;
-import com.a603.ofcourse.global.common.Points;
-import lombok.RequiredArgsConstructor;
+import com.a603.ofcourse.global.domain.Points;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class PlaceService {
         List<Place> placeListInBoundary = findPlaceListInBoundary(request);
         List<PlaceDto> placeDtoList = new ArrayList<>();
         for (Place place : placeListInBoundary) {
-            double dist = Points.getDistance(request.getCenterPoints(), place.getPoints());
+            double dist = getDistance(request.getCenterPoints(), place.getPoints());
             if (dist <= request.getLimitDist()) {
                 placeDtoList.add(PlaceDto.of(place));
             }
@@ -56,6 +56,25 @@ public class PlaceService {
                 maxPoints.getLat(),
                 maxPoints.getLng()
         );
+    }
+
+    /**
+     * @author 손현조
+     * @date 2024-03-19
+     * @description 주 좌표의 거리를 구하는 함수, 하버사인 공식 사용
+     **/
+    private double getDistance(Points p1, Points p2) {
+        double dLat = Math.toRadians(p2.getLat() - p1.getLat());
+        double dLon = Math.toRadians(p2.getLng() - p1.getLng());
+
+        double tmp1 = Math.sin(dLat/2)
+                * Math.sin(dLat/2)
+                + Math.cos(Math.toRadians(p1.getLat()))
+                * Math.cos(Math.toRadians(p2.getLat()))
+                * Math.sin(dLon/2)
+                * Math.sin(dLon/2);
+        double tmp2 = 2 * Math.atan2(Math.sqrt(tmp1), Math.sqrt(1-tmp1));
+        return Points.EARTH_RADIUS * tmp2;    // Distance in m
     }
 
     public Place findById(Integer placeId) {

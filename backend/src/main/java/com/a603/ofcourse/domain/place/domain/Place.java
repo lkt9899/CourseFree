@@ -2,7 +2,7 @@ package com.a603.ofcourse.domain.place.domain;
 
 import com.a603.ofcourse.domain.course.domain.CoursePlace;
 import com.a603.ofcourse.domain.schedule.domain.SchedulePlace;
-import com.a603.ofcourse.global.common.Points;
+import com.a603.ofcourse.global.domain.Points;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,8 +22,6 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String url;
-
     private String name;
 
     @Embedded
@@ -31,14 +29,12 @@ public class Place {
 
     private String address;
 
-    private String placeType;
-
     private String imageUrl;
 
     @Enumerated(EnumType.STRING)
     private PlaceCategory placeCategory;
 
-    private String vectors;
+    private Integer reviewCount;
 
     @OneToMany(mappedBy = "place", fetch = FetchType.LAZY)
     private List<CoursePlace> coursePlaceList = new ArrayList<>();
@@ -51,21 +47,16 @@ public class Place {
 
     @Builder
     public Place(
-            String url,
             String name,
             Points points,
             String address,
-            String placeType,
             String imageUrl,
-            PlaceCategory placeCategory,
-            String vectors) {
-        this.url = url;
+            PlaceCategory placeCategory) {
+        this.reviewCount = 0;
         this.name = name;
         this.points = points;
         this.address = address;
-        this.placeType = placeType;
         this.imageUrl = imageUrl;
         this.placeCategory = placeCategory;
-        this.vectors = vectors;
     }
 }

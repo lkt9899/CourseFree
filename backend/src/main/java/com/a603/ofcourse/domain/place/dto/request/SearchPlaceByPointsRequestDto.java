@@ -1,6 +1,6 @@
 package com.a603.ofcourse.domain.place.dto.request;
 import com.a603.ofcourse.domain.place.domain.PlaceCategory;
-import com.a603.ofcourse.global.common.Points;
+import com.a603.ofcourse.global.domain.Points;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

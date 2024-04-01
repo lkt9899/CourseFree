@@ -6,6 +6,7 @@ import com.a603.ofcourse.domain.oauth.dto.request.OauthRequest;
 import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
 import com.a603.ofcourse.domain.oauth.service.KakaoOauthService;
 import com.a603.ofcourse.domain.oauth.service.OauthService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -44,7 +45,7 @@ public class OauthController {
 
         String accessToken = memberExistWithAccessToken.getAccessToken();
         //3. 헤더에 넣어서 프론트로 보내기
-        headers.setBearerAuth(accessToken);
+        headers.set(AUTHORIZATION_HEADER, "Bearer " + accessToken);
 
         //기존 회원이면
         if(memberExistWithAccessToken.isExist()){
@@ -64,22 +65,15 @@ public class OauthController {
      */
     @PostMapping("/auto")
     public HttpEntity<Void> autoLogin(@RequestHeader(AUTHORIZATION_HEADER) String clientAccessToken){
+        Claims claims = jwtTokenService.getPayload(clientAccessToken.substring(7));
         //1. accessToken의 페이로드에 저장돼있는 id 가져오기
-        Integer memberId = jwtTokenService.getMemberId(clientAccessToken);
+        Integer memberId = jwtTokenService.getMemberIdFromClaims(claims);
         //2. 리프레시 토큰으로 갱신된 액세스 토큰 넣을 HttpHeaders
         HttpHeaders headers = new HttpHeaders();
         //토큰에 커플아이디가 있으면
-        if(jwtTokenService.hasCoupleId(clientAccessToken)){
-            //커플인지 확인
-            coupleService.getMemberCouple(memberId).ifPresentOrElse(
-                    //커플이면
-                    memberCouple -> {
-                        Integer coupleId = jwtTokenService.getCoupleId(clientAccessToken);
-                        headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessTokenWithCoupleId(memberId, coupleId));
-                    },
-                    //커플 아니면
-                    () -> headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessToken(memberId))
-            );
+        if(jwtTokenService.hasCoupleId(claims)){
+            Integer coupleId = jwtTokenService.getCoupleIdFromClaims(claims);
+            headers.set(AUTHORIZATION_HEADER, "Bearer " + oauthService.refreshAccessTokenWithCoupleId(memberId, coupleId));
         }
         //토큰에 커플 아이디 없으면
         else{

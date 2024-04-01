@@ -1,12 +1,16 @@
 package com.a603.ofcourse.domain.oauth.service;
 
+import com.a603.ofcourse.domain.couple.domain.MemberCouple;
 import com.a603.ofcourse.domain.couple.repository.MemberCoupleRepository;
-import com.a603.ofcourse.domain.member.domain.Member;
 import com.a603.ofcourse.domain.oauth.dto.MemberExistWithAccessToken;
 import com.a603.ofcourse.domain.oauth.dto.MemberWithIsExist;
-import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
-import com.a603.ofcourse.domain.oauth.exception.OauthException;
+import com.a603.ofcourse.domain.oauth.redis.RefreshToken;
 import com.a603.ofcourse.domain.oauth.repository.AuthRepository;
+import com.a603.ofcourse.domain.oauth.exception.OauthException;
+import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
+import com.a603.ofcourse.domain.member.domain.Member;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +40,7 @@ public class OauthService {
         //만약 커플이면 커플 아이디를 포함한 액세스토큰을 발행하고
         //커플이 아니면 멤버 아이디만 포함한 액세스 토큰을 발행한다
         String accessToken = memberCoupleRepository.findByMember(member)
-                .map(mc -> getTokensWithCoupleId(member.getId(), mc.getCouple().getId()))
+                .map(mc -> getTokensWithCoupleId(member.getId(), mc.getId()))
                 .orElseGet( () -> getTokens(member.getId()));
 
         //accessToken 반환
@@ -85,7 +89,7 @@ public class OauthService {
         //redis에서 리프레시 토큰 가져오기
         return authRepository.findById(memberId)
                 //리프레시 토큰이 유효하면 유저 정보로 액세스 토큰 갱신 + 리프레시 토큰 갱신
-                .map(refreshToken -> getTokens(memberId))
+                .map(RefreshToken -> getTokens(memberId))
                 //refreshToken이 없으면 에러 코드 전송
                 .orElseThrow(() -> new OauthException(OauthErrorCode.INVALID_REFRESH_TOKEN));
     }
@@ -100,7 +104,7 @@ public class OauthService {
         //redis에서 리프레시 토큰 가져오기
         return authRepository.findById(memberId)
                 //리프레시 토큰이 유효하면 유저 정보로 액세스 토큰 갱신 + 리프레시 토큰 갱신
-                .map(refreshToken -> getTokensWithCoupleId(memberId, coupleId))
+                .map(RefreshToken -> getTokensWithCoupleId(memberId, coupleId))
                 //refreshToken이 없으면 에러 코드 전송
                 .orElseThrow(() -> new OauthException(OauthErrorCode.INVALID_REFRESH_TOKEN));
     }

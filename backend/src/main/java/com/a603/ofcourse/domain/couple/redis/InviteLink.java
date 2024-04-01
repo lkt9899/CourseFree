@@ -12,13 +12,13 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash(value = "inviteLink", timeToLive = 86400)
 public class InviteLink {
     @Id
-    private String uuid;
+    private String UUID;
 
     private Integer memberId;
 
     @Builder
-    public InviteLink(String uuid, Integer memberId) {
-        this.uuid = uuid;
+    public InviteLink(String UUID, Integer memberId) {
+        this.UUID = UUID;
         this.memberId = memberId;
     }
 }

@@ -1,5 +1,6 @@
 package com.a603.ofcourse.domain.couple.service;
 
+import ch.qos.logback.core.testUtil.RandomUtil;
 import com.a603.ofcourse.domain.couple.domain.Couple;
 import com.a603.ofcourse.domain.couple.domain.MemberCouple;
 import com.a603.ofcourse.domain.couple.exception.CoupleErrorCode;
@@ -11,12 +12,13 @@ import com.a603.ofcourse.domain.couple.repository.MemberCoupleRepository;
 import com.a603.ofcourse.domain.member.exception.MemberErrorCode;
 import com.a603.ofcourse.domain.member.exception.MemberException;
 import com.a603.ofcourse.domain.member.repository.MemberRepository;
+import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
+import com.a603.ofcourse.domain.oauth.service.OauthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,7 +47,7 @@ public class CoupleService {
         String uuidStr = uuid.toString().replace("-", "").toLowerCase();
         //3. 레디스에 저장
         inviteLinkRepository.save(InviteLink.builder()
-                        .uuid(uuidStr)
+                        .UUID(uuidStr)
                         .memberId(memberId)
                         .build());
         //4, 링크 생성 후 반환
@@ -62,7 +64,7 @@ public class CoupleService {
         //1. uuidStr로 초대 링크의 초대주체 찾기
         return inviteLinkRepository.findById(uuidStr)
                 //2. inviteLink 객체가 존재하면 멤버아이디 반환
-                .map(InviteLink::getMemberId)
+                .map(InviteLink -> InviteLink.getMemberId())
                 //3. 존재하지 않으면 오류 반환
                 .orElseThrow(() -> new CoupleException(CoupleErrorCode.INVALID_INVITE_LINK));
     }
@@ -89,20 +91,21 @@ public class CoupleService {
 
     /*
     작성자 : 김은비
-    작성내용 : 초대된 사람(visitor)과 초대한 사람(inviter)을 커플로 연동시켜주고 생성된 커플 객체 아이디 반환
-    * @param 초대된 사람 아이디, 초대한 사람 아이디
-    * @return 커플아이디
+    작성내용 : 초대된 사람(visitor)과 초대한 사람(inviter)을 커플로 연동시켜주기
+    * @param
+    * @return
     */
-    public Integer connectCouple(Integer visitorId, Integer inviterId){
+    public void connectCouple(Integer visitorId, Integer inviterId){
         //둘의 아이디가 같으면 에러
-        if(visitorId.equals(inviterId))
-            throw new CoupleException(CoupleErrorCode.SAME_MEMBER);
+        if(visitorId == inviterId){new CoupleException(CoupleErrorCode.SAME_MEMBER);}
 
         //초대된 사람과 초대한 사람이 모두 커플이 아닐 때
         if(!isCouple(visitorId) && !isCouple(inviterId)){
             //커플 객체 저장 후 해당 객체 아이디 반환
             Couple couple = coupleRepository.save(Couple.builder()
-                            .coupleNickname(visitorId + "and" + inviterId).build());
+                            .coupleNickname(visitorId + "and" + inviterId)
+                            .dDay(0)
+                    .build());
             //초대받은 사람
             memberCoupleRepository.save(new MemberCouple(couple, memberRepository.findById(visitorId)
                     .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_DOES_NOT_EXISTS))));
@@ -114,32 +117,5 @@ public class CoupleService {
         else{
             throw new CoupleException(CoupleErrorCode.ALREADY_COUPLE_MEMBER);
         }
-
-        return memberCoupleRepository.findByMemberId(visitorId)
-                .orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_DOES_NOT_EXISTS))
-                .getCouple().getId();
-    }
-
-    /*
-    작성자 : 김은비
-    작성내용 : 커플 연동 끊기
-     * @param coupleId
-     */
-    public void disconnectCouple(Integer coupleId){
-        //1. 멤버커플 객체 2개 가져오기
-        List<Optional<MemberCouple>> memberCoupleList = memberCoupleRepository.findMemberCouplesByCoupleId(coupleId);
-        for(Optional<MemberCouple> memberCouple : memberCoupleList){
-            memberCouple.ifPresentOrElse(
-                    //있으면 삭제
-                    memberCoupleRepository::delete,
-                    () -> {
-                        throw new CoupleException(CoupleErrorCode.NOT_FOUND_ID);
-                    });
-        }
-        //2. 커플 객체 상태 변경
-        Couple couple = coupleRepository.findById(coupleId)
-                .orElseThrow(() -> new CoupleException(CoupleErrorCode.NOT_FOUND_ID));
-        //커플이 아닌 상태로 변경
-        couple.setNotCouple(true);
     }
 }

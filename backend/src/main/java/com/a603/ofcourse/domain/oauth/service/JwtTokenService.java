@@ -1,9 +1,9 @@
 package com.a603.ofcourse.domain.oauth.service;
 
-import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
-import com.a603.ofcourse.domain.oauth.exception.OauthException;
 import com.a603.ofcourse.domain.oauth.redis.RefreshToken;
 import com.a603.ofcourse.domain.oauth.repository.AuthRepository;
+import com.a603.ofcourse.domain.oauth.exception.OauthException;
+import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
 import io.jsonwebtoken.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +17,11 @@ import java.util.Date;
 /*
 JWT 토큰 생성, 조회 관련 서비스
  */
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class JwtTokenService {
-    private static final String MEMBER_ID = "member_id";
-    private static final String COUPLE_ID = "couple_id";
-
     @Value("${jwt.access.token.expiration.seconds}")
     private long accessTokenExpirationInSeconds;
 
@@ -97,7 +94,7 @@ public class JwtTokenService {
                 //header 설정 (토큰 타입)
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 //페이로드를 포함한 클레임
-                .claim(MEMBER_ID, payload)
+                .claim("member_id", payload)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 //설정한 정보로 토큰을 서명.(key 사용, 서명 알고리즘 선택)
@@ -123,8 +120,8 @@ public class JwtTokenService {
                 //header 설정 (토큰 타입)
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 //페이로드를 포함한 클레임
-                .claim(MEMBER_ID, memberId)
-                .claim(COUPLE_ID, coupleId)
+                .claim("member_id", memberId)
+                .claim("couple_id", coupleId)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 //설정한 정보로 토큰을 서명.(key 사용, 서명 알고리즘 선택)
@@ -144,16 +141,14 @@ public class JwtTokenService {
             return Jwts.parserBuilder()
                     .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                     .build()
-                    .parseClaimsJws(token.substring(7))
+                    .parseClaimsJws(token)
                     .getBody();
             //2. 토큰이 만료되었을 경우
         }catch (ExpiredJwtException e){
             // 만료된 토큰의 서브젝트를 반환 (만료되었더라도 만료 전에 설정한 서브젝트를 반환하기 위함 -> 정보를 최대한 활용하기 위함으로 만료된 토큰에서 사용자의 아이디나 권한 등을 가져와서 작업 수행이 가능함)
             return e.getClaims();
         }catch(JwtException e){
-            //예외 발생 시 예외 알리기
-            log.info("페이로드 반환 시 예외 발생");
-            log.error(e.getMessage());
+            //예외 방생 시 예외 알리기
             throw new OauthException(OauthErrorCode.UNAUTHORIZED);
         }
     }
@@ -197,27 +192,27 @@ public class JwtTokenService {
      * @param Claims
      * @return 있으면 true, 없으면 false
      */
-    public boolean hasCoupleId(String accessToken){
-        return getPayload(accessToken).containsKey(COUPLE_ID);
+    public boolean hasCoupleId(Claims claims){
+        return claims.containsKey("couple_id");
     }
 
     /*
     작성자 : 김은비
-    작성내용 : 액세스토큰에서 memberId 뽑아서 반환
-     * @param accessToken
-     * @return memberId
+    작성내용 : 클레임에서 커플아이디 추출
+     * @param Claims
+     * @return coupleId
      */
-    public Integer getMemberId(String accessToken){
-        return (Integer) getPayload(accessToken).get(MEMBER_ID);
+    public Integer getCoupleIdFromClaims(Claims claims){
+        return (Integer) claims.get("couple_id");
     }
 
-    /**
-     * 커플 ID 추출 함수
-     * @author 이경태
-     * @param accessToken   accessToken of current user
-     * @return coupleId     exported from accessToken
+    /*
+    작성자 : 김은비
+    작성내용 : 클레임에서 멤버아이디 추출
+     * @param Claims
+     * @return coupleId
      */
-    public Integer getCoupleId(String accessToken) {
-        return (Integer) getPayload(accessToken).get(COUPLE_ID);
+    public Integer getMemberIdFromClaims(Claims claims){
+        return (Integer) claims.get("member_id");
     }
 }

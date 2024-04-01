@@ -4,6 +4,7 @@ package com.a603.ofcourse.domain.oauth.dto;
 import com.a603.ofcourse.domain.member.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.With;
 
 @Getter
 @Setter
