@@ -1,18 +1,29 @@
 package com.a603.ofcourse.domain.member.service;
 
+import com.a603.ofcourse.domain.course.domain.Course;
+import com.a603.ofcourse.domain.course.domain.CoursePlace;
+import com.a603.ofcourse.domain.course.domain.MyCourse;
+import com.a603.ofcourse.domain.course.repository.CoursePlaceRepository;
+import com.a603.ofcourse.domain.course.repository.CourseRepository;
+import com.a603.ofcourse.domain.course.repository.MyCourseRepository;
 import com.a603.ofcourse.domain.member.domain.Member;
 import com.a603.ofcourse.domain.member.domain.Profile;
 import com.a603.ofcourse.domain.member.domain.enums.Gender;
+import com.a603.ofcourse.domain.member.dto.MyFavoriteCourse;
+import com.a603.ofcourse.domain.member.dto.CoursePlaceDetails;
 import com.a603.ofcourse.domain.member.dto.request.Preference;
 import com.a603.ofcourse.domain.member.domain.NicknameHashMap;
 import com.a603.ofcourse.domain.member.dto.request.ProfileInfoRequest;
-import com.a603.ofcourse.domain.member.repository.MemberRepository;
 import com.a603.ofcourse.domain.member.repository.ProfileRepository;
+import com.a603.ofcourse.domain.place.domain.Place;
+import com.a603.ofcourse.domain.place.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -20,10 +31,15 @@ import java.util.Arrays;
 public class ProfileService {
     private final ProfileRepository profileRepository;
     private final NicknameHashMap nicknameHashMap;
+    private final MyCourseRepository myCourseRepository;
+    private final CourseRepository courseRepository;
+    private final CoursePlaceRepository coursePlaceRepository;
+    private final PlaceRepository placeRepository;
 
     private static final double HALF_AS_MANY = 1.5;
     private static final double ONCE = 1.0;
     private static final double HALF = 0.5;
+
     /*
     작성자 : 김은비
     작성내용 : 닉네임 중복 체크
@@ -39,7 +55,7 @@ public class ProfileService {
         if(!profileRepository.existsByNickname(nickName) && !nicknameHashMap.isExistInHashMap(nickName)){
             return false;
         }
-        return false;
+        return true;
     }
 
     /*
@@ -60,6 +76,55 @@ public class ProfileService {
      */
     public void deleteNicknameFromHashMap(String nickname){
         nicknameHashMap.deleteNicknameFromHashMap(nickname);
+    }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 내가 찜한 코스 리스트 반환
+     * @param memberId
+     */
+    public List<MyFavoriteCourse> getMyFavoriteCourseList(Integer memberId){
+            List<MyFavoriteCourse> myFavoriteCourseList = new ArrayList<>();
+
+            List<MyCourse> myCourseList = myCourseRepository.findAllByMemberId(memberId);
+            for(MyCourse myCourse : myCourseList){
+                Course course = myCourse.getCourse();
+
+                myFavoriteCourseList.add(
+                        MyFavoriteCourse.from(
+                                course.getId(),
+                                course.getTitle(),
+                                course.getImageUrl()
+                        )
+                );
+            }
+
+            return myFavoriteCourseList;
+        }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 내가 찜한 코스 상세 내용 리스트 반환
+     * @param courseId
+     */
+    public List<CoursePlaceDetails> getCoursePlaceDetailsList(int courseId){
+        List<CoursePlaceDetails> coursePlaceDetailsList = new ArrayList<>();
+
+        List<CoursePlace> coursePlaceList = coursePlaceRepository.findAllByCourseId(courseId);
+        for(CoursePlace coursePlace : coursePlaceList){
+            Place place = coursePlace.getPlace();
+
+            coursePlaceDetailsList.add(
+                    CoursePlaceDetails.from(
+                            place.getPlaceCategory().getValue(),
+                            place.getAddress(),
+                            place.getImageUrl(),
+                            place.getUrl()
+                    )
+            );
+        }
+
+        return coursePlaceDetailsList;
     }
 
     /**

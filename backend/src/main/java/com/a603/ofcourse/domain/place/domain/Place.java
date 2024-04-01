@@ -33,6 +33,8 @@ public class Place {
 
     private String placeType;
 
+    private String imageUrl;
+
     @Enumerated(EnumType.STRING)
     private PlaceCategory placeCategory;
 
@@ -48,13 +50,13 @@ public class Place {
     private List<SchedulePlace> schedulePlaceList = new ArrayList<>();
 
     @Builder
-
     public Place(
             String url,
             String name,
             Points points,
             String address,
             String placeType,
+            String imageUrl,
             PlaceCategory placeCategory,
             String vectors) {
         this.url = url;
@@ -62,6 +64,7 @@ public class Place {
         this.points = points;
         this.address = address;
         this.placeType = placeType;
+        this.imageUrl = imageUrl;
         this.placeCategory = placeCategory;
         this.vectors = vectors;
     }
