@@ -47,11 +47,13 @@ public class PostService {
                 () -> new InternalException("예외 처리 예정")
         );
 
-        Post post = Post.builder()
+        Post post = postRepository.save(Post
+                .builder()
                 .member(member)
                 .title(requestDto.getPostTitle())
                 .course(course)
-                .build();
+                .build()
+        );
 
         requestDto.getPostContentInfoList().forEach(p ->
                 {
@@ -61,12 +63,11 @@ public class PostService {
                             .content(p.getContent())
                             .build();
 
-                    post.getPostContentList().add(postContent);
                     postContent.savePost(post);
                 }
         );
 
-        return postRepository.save(post).getId();
+        return post.getId();
     }
 
 

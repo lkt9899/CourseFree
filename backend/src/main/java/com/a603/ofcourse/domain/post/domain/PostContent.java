@@ -39,6 +39,7 @@ public class PostContent {
 
     public void savePost(Post post){
         this.post = post;
+        post.getPostContentList().add(this);
     }
 
 }
