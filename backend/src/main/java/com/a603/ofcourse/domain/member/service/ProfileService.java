@@ -117,6 +117,7 @@ public class ProfileService {
             coursePlaceDetailsList.add(
                     CoursePlaceDetails.from(
                             place.getPlaceCategory().getValue(),
+                            place.getName(),
                             place.getAddress(),
                             place.getImageUrl(),
                             place.getUrl()
