@@ -54,12 +54,16 @@ public class PostService {
                 .build();
 
         requestDto.getPostContentInfoList().forEach(p ->
-                post.savePostContent(PostContent
-                                .builder()
-                                .title(p.getTitle())
-                                .content(p.getContent())
-                                .build()
-                )
+                {
+                    PostContent postContent = PostContent
+                            .builder()
+                            .title(p.getTitle())
+                            .content(p.getContent())
+                            .build();
+
+                    post.getPostContentList().add(postContent);
+                    postContent.savePost(post);
+                }
         );
 
         return postRepository.save(post).getId();
