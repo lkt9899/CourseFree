@@ -46,4 +46,9 @@ public class Post extends BaseEntity {
         this.member = member;
     }
 
+    public void addPostContent(PostContent postContent){
+        this.postContentList.add(postContent);
+        postContent.savePost(this);
+    }
+
 }

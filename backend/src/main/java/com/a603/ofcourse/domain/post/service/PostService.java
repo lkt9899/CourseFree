@@ -60,7 +60,7 @@ public class PostService {
                             p.getContent()
                     );
 
-                    postContent.savePost(post);
+                    post.addPostContent(postContent);
                 }
         );
 
