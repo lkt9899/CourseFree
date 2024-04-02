@@ -23,7 +23,7 @@ import arrangeUserFavInfo from '@util/Member/arrangeUserFavInfo'
 export default function SetInfo() {
   const navigate = useNavigate()
   const { step, setStep, nickname } = useContext(SignUpStepContext)
-  const [gender, setGender] = useState('man')
+  const [gender, setGender] = useState('MALE')
   const {
     checkboxStates: categories,
     selectCount,
@@ -34,7 +34,7 @@ export default function SetInfo() {
     const info = arrangeUserFavInfo(categories, onBoardingQuestions)
 
     const requestData: UserData = {
-      name: nickname,
+      nickName: nickname,
       gender: gender,
       preference: info as UserFavoriteInfo,
     }
@@ -43,7 +43,7 @@ export default function SetInfo() {
       const { status } = await requestUserData(requestData)
       if (status === 200) {
         setStep(step + 1)
-        navigate('../welcome')
+        navigate('./welcome')
       }
     } catch (error) {
       alert(error)
@@ -51,6 +51,7 @@ export default function SetInfo() {
   }
 
   const changeGender = (clickedGender: string) => {
+    console.log(clickedGender)
     if (gender !== clickedGender) setGender(clickedGender)
   }
   return (

@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { Station } from '@type/course'
+import { Station } from '@type/subway'
 import { Link } from 'react-router-dom'
 
 import SubwayLineIcon from './SubwayLineIcon'
@@ -10,24 +10,40 @@ import FlexBox from '@component/layout/FlexBox'
 const Container = css`
   padding: 20px;
 `
-const MOCK: Station = {
-  stationName: '역삼',
-  line: ['2호선', '경의중앙선'],
-  point: { lat: 37.5, lng: 127.03 },
+type Props = {
+  type: 'self' | 'recommend'
+  data: Station
+  onClick?: (station: Station) => void
 }
 /** @jsxImportSource @emotion/react */
-export default function SearchResult() {
-  return (
-    <FlexBox a="center" h="30px" css={Container}>
-      <TextBox
-        typography="t6"
-        onClick={() => {
-          sessionStorage.setItem('station', JSON.stringify(MOCK))
-        }}
-      >
-        <Link to="current">역삼</Link>
-      </TextBox>
-      <SubwayLineIcon line="7">2</SubwayLineIcon>
-    </FlexBox>
-  )
+export default function SearchResult({ data, type, onClick }: Props) {
+  if (type === 'self')
+    return (
+      <FlexBox a="center" h="30px" css={Container}>
+        <TextBox
+          typography="t6"
+          onClick={() => {
+            sessionStorage.setItem('station', JSON.stringify(data))
+          }}
+        >
+          <Link to="current">{data.stationName}</Link>
+        </TextBox>
+        <SubwayLineIcon line={data.line[0]}>{data.line[0]}</SubwayLineIcon>
+      </FlexBox>
+    )
+  else if (type == 'recommend')
+    return (
+      <FlexBox a="center" h="30px" css={Container}>
+        <TextBox
+          typography="t6"
+          onClick={() => {
+            // post 요청. 성공 시 화면 전환 후 받은 데이터를 페이지에 뿌려준다.
+            onClick(data)
+          }}
+        >
+          <button>{data.stationName}</button>
+        </TextBox>
+        <SubwayLineIcon line={data.line[0]}>{data.line[0]}</SubwayLineIcon>
+      </FlexBox>
+    )
 }

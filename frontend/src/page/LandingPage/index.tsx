@@ -1,10 +1,11 @@
-import logo from '@asset/logo_demo.jpg'
+import CourseFree from '@asset/CourseFree.png'
+import Flower from '@asset/Flower.json'
 import { Image } from '@chakra-ui/react'
+import Lottie from 'lottie-react'
 
 import Button from '@component/common/Button'
 import TextBox from '@component/common/TextBox'
 import FlexBox from '@component/layout/FlexBox'
-import Spacing from '@component/layout/Spacing'
 
 /** @jsxImportSource @emotion/react */
 export default function LandingPage() {
@@ -18,7 +19,15 @@ export default function LandingPage() {
   }
   return (
     <>
-      <FlexBox d="column" p="1.2rem" j="center" a="center">
+      <Lottie
+        animationData={Flower}
+        style={{
+          position: 'absolute',
+          top: '0',
+        }}
+      ></Lottie>
+      <FlexBox d="column" p="1.2rem" a="center" j="space-between" h="100vh">
+        {/* Header */}
         <FlexBox w="100%" d="column">
           <TextBox typography="t2" fontWeight="bold">
             데이트는
@@ -30,12 +39,11 @@ export default function LandingPage() {
             와 함께.
           </TextBox>
         </FlexBox>
-        <Image src={logo} boxSize="300px" margin={'auto'} />
-        <TextBox typography="t1" fontWeight="bold" color="pink500">
-          CourseFree.
-        </TextBox>
+        <FlexBox d="column" a="center">
+          <TextBox fontWeight="bold">성향 기반 데이트 코스 추천 서비스</TextBox>
+          <Image src={CourseFree} />
+        </FlexBox>
 
-        <Spacing size="150px" />
         <Button color="black" bgColor="yellow" full onClick={handleLogin}>
           카카오로 시작하기
         </Button>

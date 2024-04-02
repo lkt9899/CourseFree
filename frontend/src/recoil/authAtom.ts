@@ -4,7 +4,6 @@ const authState = atom({
   key: 'authState',
   default: {
     accessToken: '',
-    refreshToken: '',
   },
 })
 

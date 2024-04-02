@@ -16,9 +16,19 @@ export interface DateCourse {
   courseTitle: string
   placeList: Place[]
 }
+export interface DateCourseDetail {
+  title: string
+  placeDtoList: Place[]
+  useCount: number
+}
 
 export interface RequestPlaceInfo {
   place_category: string
   center_points: LatLng
   limit_dist: number
+}
+export interface RecommendData {
+  points: LatLng
+  limitDist: number
+  categoryList: Categories[]
 }

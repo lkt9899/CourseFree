@@ -1,23 +1,33 @@
-import kiss from '@asset/kiss.jfif'
+import Logo from '@asset/CourseFree.png'
 import { Image } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Place } from '@type/course'
 
 import TextBox from '@component/common/TextBox'
 import FlexBox from '@component/layout/FlexBox'
 
-export default function PlaceInfo() {
+type Props = {
+  place: Place
+}
+
+export default function PlaceInfo({ place }: Props) {
+  console.log(place)
   return (
     <FlexBox w="100%" p="10px" a="center">
       {/* 가게 이미지 */}
-      <Image src={kiss} boxSize="100px" borderRadius="10px" />
+      <Image src={Logo} boxSize="100px" borderRadius="10px" />
       {/* 가게 설명 */}
       <FlexBox d="column" p="10px">
-        <TextBox color="pink300" fontWeight="bold" typography="t4">
-          <Link to="">밸런스포케</Link>
+        <TextBox
+          color="pink300"
+          fontWeight="bold"
+          typography="t4"
+          onClick={() => {
+            if (place.url !== ' ') window.open(place.url)
+          }}
+        >
+          {place.name}
         </TextBox>
-        <TextBox>주소 : 서울 강남구 강남대로 94길 75</TextBox>
-        <TextBox>영업시간 : 10:00 ~ 23:00</TextBox>
-        <TextBox>브레이크 타임 : 16:00</TextBox>
+        <TextBox>주소 : {place.address}</TextBox>
       </FlexBox>
     </FlexBox>
   )

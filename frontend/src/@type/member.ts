@@ -13,7 +13,10 @@ export interface UserFavoriteInfo {
 }
 
 export interface UserData {
-  name: string
+  nickName: string
   gender: string
   preference: UserFavoriteInfo
+}
+export interface SubmitUserData {
+  profileInfoRequest: UserData
 }

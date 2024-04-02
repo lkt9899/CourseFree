@@ -15,18 +15,18 @@ export default function GenderSelectBox({ gender, changeGender }: Props) {
         boxSize="100px"
         color="black"
         onClick={() => {
-          changeGender('man')
+          changeGender('MALE')
         }}
-        backgroundColor={gender === 'man' ? 'pink' : 'lightGray'}
+        backgroundColor={gender === 'MALE' ? 'pink' : 'lightGray'}
       />
       <Avatar
         name="여"
         boxSize="100px"
         color="black"
         onClick={() => {
-          changeGender('woman')
+          changeGender('FEMALE')
         }}
-        backgroundColor={gender === 'woman' ? 'pink' : 'lightGray'}
+        backgroundColor={gender === 'FEMALE' ? 'pink' : 'lightGray'}
       />
     </FlexBox>
   )

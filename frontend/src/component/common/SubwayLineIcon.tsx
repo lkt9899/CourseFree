@@ -6,9 +6,9 @@ import { subwayColorMap } from '@style/subwayColorMap'
 
 const Container = css`
   border-radius: 20px;
-  font-size: 10px;
-  height: 18px;
-  width: 18px;
+  font-size: 12px;
+  padding: 10px;
+  height: 25px;
   color: white;
   margin-left: 5px;
 `

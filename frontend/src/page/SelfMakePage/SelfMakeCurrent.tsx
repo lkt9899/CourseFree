@@ -15,7 +15,7 @@ import FlexBox from '@component/layout/FlexBox'
 import Spacing from '@component/layout/Spacing'
 import SelectedPlaceList from '@component/pages/SelfMakePage/SelectedPlaceList'
 
-import useMeasure from '@hook/useMeasure'
+import { requestSubmitDateCourse } from '@api/request/course'
 
 import { requestSubmitDateCourse } from '@api/request/course'
 
@@ -40,7 +40,6 @@ export default function SelfMakeCurrent() {
       level: 2,
     })
   }
-  const { widthState, ref: measureRef } = useMeasure()
 
   const mutation = useMutation({
     mutationFn: (dateCourse: DateCourse) => requestSubmitDateCourse(dateCourse),
@@ -52,9 +51,11 @@ export default function SelfMakeCurrent() {
   const cancelRef = useRef()
   return (
     <>
-      <FlexBox j="center" d="column" p="10px" w="100%" ref={measureRef}>
+      <FlexBox j="center" d="column" p="10px" w="100%">
+        {/* station */}
         <TextBox typography="t2">역삼</TextBox>
         <FlexBox a="center" j="space-between">
+          {/* courseTitle Input */}
           <TextBox fontWeight="bold">
             코스 이름 :
             <Input
@@ -68,7 +69,6 @@ export default function SelfMakeCurrent() {
               }}
             />
           </TextBox>
-
           <Button
             bgColor="pink400"
             onClick={() => {
@@ -85,16 +85,8 @@ export default function SelfMakeCurrent() {
             코스 완성
           </Button>
         </FlexBox>
-        <Button
-          css={css`
-            position: fixed;
-            bottom: 5rem;
-            width: ${widthState - 20}px;
-          `}
-        >
-          <Link to="../search">장소 추가하러 가기</Link>
-        </Button>
       </FlexBox>
+      {/* KakaoMap */}
       <FlexBox css={StickyMap}>
         <KakaoMap
           width="100%"
@@ -114,6 +106,9 @@ export default function SelfMakeCurrent() {
         onClickPlaceBox={onClickPlaceBox}
       />
       <Spacing size="50px" />
+      <Button full>
+        <Link to="../search">장소 추가하러 가기</Link>
+      </Button>
       <AlertModal
         isOpen={isOpen}
         onClose={onClose}

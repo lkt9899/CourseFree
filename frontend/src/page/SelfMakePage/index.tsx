@@ -16,6 +16,7 @@ export default function SelfMakePage() {
       <MakingCourseContext.Provider value={{ dateCourse, setDateCourse }}>
         <TitleBar hasBackPage hasBottomLine title="직접 만들기" />
         {/* <Spacing size="10px" /> */}
+
         <Outlet />
       </MakingCourseContext.Provider>
     </>

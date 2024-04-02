@@ -22,7 +22,7 @@ function useInput<T>({ data, setDebounce = null }: Params<T>) {
     setState('')
   }
   if (setDebounce) {
-    const debounceChange = debounce(onChange)
+    const debounceChange = debounce(onChange, 200)
     return { state, debounceChange, reset }
   }
   return { state, onChange, reset }

@@ -17,13 +17,11 @@ export const requestAuthorizationCode = (code: string, type: string) => {
 export const requestNickNameValidCheck = (name: string) => {
   return authAxios.get(`${API_URI.VALID_CHECK}`, {
     params: {
-      nickName: name,
+      nickname: name,
     },
   })
 }
 
 export const requestUserData = (data: UserData) => {
-  return authAxios.post(`${API_URI.USER_INFO}`, {
-    ProfileInfoRequest: data,
-  })
+  return authAxios.post(`${API_URI.USER_INFO}`, data)
 }

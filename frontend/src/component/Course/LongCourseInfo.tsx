@@ -1,20 +1,22 @@
+import { DateCourseDetail, Place } from '@type/course'
+
 import PlaceInfo from './PlaceInfo'
 
 import TextBox from '@component/common/TextBox'
-import KakaoMap from '@component/kakaoMap/KakaoMap'
 import FlexBox from '@component/layout/FlexBox'
 
-export default function LongCourseInfo() {
+type Props = {
+  courseData: DateCourseDetail
+}
+export default function LongCourseInfo({ courseData }: Props) {
   return (
     <FlexBox d="column" a="center">
       <TextBox fontWeight="bold" padding="10px" typography="t5">
-        역삼역 내향인 커플 데이트
+        {courseData.title}
       </TextBox>
-      <KakaoMap width="100%" height="300px" />
-      <PlaceInfo />
-      <PlaceInfo />
-      <PlaceInfo />
-      <PlaceInfo />
+      {courseData.placeDtoList.map((place: Place) => {
+        return <PlaceInfo place={place} />
+      })}
     </FlexBox>
   )
 }

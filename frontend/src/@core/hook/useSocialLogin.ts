@@ -24,15 +24,20 @@ export default function useSocialLogin(type) {
         KAKAO_CODE,
         type,
       )
-      console.log(response)
+
       // 받아온 액세스 토큰와 리프레시 토큰을 스토리지에 담기
       const accessToken = response.headers.authorization.split(' ')[1]
       sessionStorage.setItem('jwt_token', accessToken)
 
       // 여기까지 오류 없이 왔다면 상태 업데이트
-      setUserInfo(null)
+
+      setUserInfo({
+        accessToken: accessToken,
+      })
+
       // 그리고 페이지 전환
-      navigate('/home')
+      if (response.status === 201) navigate('/onBoarding')
+      if (response.status === 200) navigate('/home')
     } catch (error) {
       alert(error)
     }

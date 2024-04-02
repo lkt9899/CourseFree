@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import SearchAutoComplete from '@component/common/SearchAutoComplete'
 import SearchBar from '@component/common/SearchBar'
 
+import { useStationAutoCompleteQuery } from '@hook/ReactQuery/useStationAutoCompleteQuery'
 import useInput from '@hook/useInput'
 
 export default function SelfMakeSearch() {
@@ -10,13 +11,16 @@ export default function SelfMakeSearch() {
     data: '',
     setDebounce: true,
   })
-  useEffect(() => {
-    //react쿼리로 api 요청 보내기
-  }, [searchText])
+
+  const { stationList } = useStationAutoCompleteQuery(searchText)
+
   return (
     <>
       <SearchBar placeholder="지하철 역을 입력해주세요." onChange={onChange} />
-      <SearchAutoComplete />
+
+      {stationList && (
+        <SearchAutoComplete stationList={stationList.data} type="self" />
+      )}
     </>
   )
 }
