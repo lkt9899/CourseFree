@@ -83,7 +83,7 @@ server:
 
 invite:
   link:
-    start: http://localhost:8081/couple/connect/
+    start: http://localhost:8081/couple/connect/exist/
 
 course:
   recommendation:
