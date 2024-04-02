@@ -17,7 +17,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/save")
-    public ResponseEntity<Integer> savePost(@RequestHeader("Authorization") String accessToken, @RequestBody PostRequestDto requestDto){
+    public ResponseEntity<Integer> savePost(@RequestHeader("Authorization") String accessToken,
+                                            @RequestBody PostRequestDto requestDto){
         return ResponseEntity.ok(postService.save(accessToken, requestDto));
     }
 

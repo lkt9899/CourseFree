@@ -4,8 +4,10 @@ package com.a603.ofcourse.domain.post.domain;
 import com.a603.ofcourse.domain.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 @Getter
 @Entity
@@ -29,4 +31,15 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    public Comment(
+            String content,
+            Post post,
+            Member member
+    ){
+        this.content = content;
+        this.post = post;
+        this.member = member;
+    }
 }

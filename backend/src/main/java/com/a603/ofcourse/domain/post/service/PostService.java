@@ -74,24 +74,27 @@ public class PostService {
     /* 게시물 리스트 조회 - 추천 */
     public List<PostResponseDto> findPostListByRecommend(String accessToken){
 
-        Integer memberId = jwtTokenService.getMemberId(accessToken);
+        return findPostListByWishList(0);
 
-        Member member = memberRepository.findById(memberId).orElseThrow(
-                () -> new MemberException(MEMBER_DOES_NOT_EXISTS)
-        );
-
-        List<Post> postList = new ArrayList<>(); // 게시물 추천 받기(현조형이 해줄거임)
-        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
-
-        postList.forEach(p -> postResponseDtoList.add(PostResponseDto
-                .builder()
-                .postId(p.getId())
-                .title(p.getTitle())
-                .imageUrl(p.getCourse().getImageUrl())
-                .build())
-        );
-
-        return postResponseDtoList;
+//        Integer memberId = jwtTokenService.getMemberId(accessToken);
+//
+//        Member member = memberRepository.findById(memberId).orElseThrow(
+//                () -> new MemberException(MEMBER_DOES_NOT_EXISTS)
+//        );
+//
+//        List<Post> postList = new ArrayList<>(); // 게시물 추천 받기(현조형이 해줄거임)
+//        PageRequest pageRequest = PageRequest.of(0, 10);
+//        List<PostResponseDto> postResponseDtoList = new ArrayList<>();
+//
+//        postList.forEach(p -> postResponseDtoList.add(PostResponseDto
+//                .builder()
+//                .postId(p.getId())
+//                .title(p.getTitle())
+//                .imageUrl(p.getCourse().getImageUrl())
+//                .build())
+//        );
+//
+//        return postResponseDtoList;
     }
 
     /* 게시물 리스트 조회 - 최신순 */

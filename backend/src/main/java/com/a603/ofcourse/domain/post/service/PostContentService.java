@@ -54,6 +54,7 @@ public class PostContentService {
 
         return PostContentResponseDto
                 .builder()
+                .postId(postId)
                 .postTitle(post.getTitle())
                 .memberNickname(memberProfile.getNickname())
                 .memberImageUrl(memberProfile.getImage())
