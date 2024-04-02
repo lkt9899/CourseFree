@@ -17,6 +17,7 @@ public class PostContentResponseDto {
     public static class PostContentInfo{
         private String placeName;
         private String placeImageUrl;
+        private String url;
         private String title;
         private String content;
     }

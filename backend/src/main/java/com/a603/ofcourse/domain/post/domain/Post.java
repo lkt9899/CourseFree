@@ -36,6 +36,7 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<PostContent> postContentList = new ArrayList<>();
 
+    @Builder
     public Post(
             String title,
             Course course,
@@ -44,11 +45,6 @@ public class Post extends BaseEntity {
         this.title = title;
         this.course = course;
         this.member = member;
-    }
-
-    public void addPostContent(PostContent postContent){
-        this.postContentList.add(postContent);
-        postContent.savePost(this);
     }
 
 }

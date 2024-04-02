@@ -1,6 +1,7 @@
 package com.a603.ofcourse.domain.course.domain;
 
 import com.a603.ofcourse.domain.course.enums.CourseCategory;
+import com.a603.ofcourse.domain.post.domain.Post;
 import com.a603.ofcourse.domain.schedule.domain.Schedule;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -59,6 +60,10 @@ public class Course {
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Schedule> scheduleList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private List<Post> postList = new ArrayList<>();
+
 
     @Builder
     public Course(CourseCategory courseCategory,

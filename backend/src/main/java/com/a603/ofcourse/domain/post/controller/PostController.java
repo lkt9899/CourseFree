@@ -27,12 +27,12 @@ public class PostController {
     }
 
     @GetMapping("/recent")
-    public ResponseEntity<List<PostResponseDto>> findPostListByRecent(int offset){
+    public ResponseEntity<List<PostResponseDto>> findPostListByRecent(@RequestParam int offset){
         return ResponseEntity.ok(postService.findPostListByRecent(offset));
     }
 
     @GetMapping("/wish-list")
-    public ResponseEntity<List<PostResponseDto>> findPostListByWishList(int offset){
+    public ResponseEntity<List<PostResponseDto>> findPostListByWishList(@RequestParam int offset){
         return ResponseEntity.ok(postService.findPostListByWishList(offset));
     }
 

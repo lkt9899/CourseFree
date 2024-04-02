@@ -28,6 +28,7 @@ public class PostContent {
     @JoinColumn(name="post_id")
     private Post post;
 
+    @Builder
     public PostContent(
             String title,
             String content
@@ -38,6 +39,7 @@ public class PostContent {
 
     public void savePost(Post post){
         this.post = post;
+        post.getPostContentList().add(this);
     }
 
 }
