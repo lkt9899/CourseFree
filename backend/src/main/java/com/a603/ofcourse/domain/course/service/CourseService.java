@@ -5,8 +5,11 @@ import com.a603.ofcourse.domain.course.domain.CoursePlace;
 import com.a603.ofcourse.domain.course.domain.MyCourse;
 import com.a603.ofcourse.domain.course.dto.request.AddCourseRequestDto;
 import com.a603.ofcourse.domain.course.dto.request.RecommendationRequest;
+import com.a603.ofcourse.domain.course.dto.response.CourseDetailResponseDto;
 import com.a603.ofcourse.domain.course.dto.response.RecommendationApiResponse;
 import com.a603.ofcourse.domain.course.dto.response.RecommendationResponse;
+import com.a603.ofcourse.domain.course.exception.CourseErrorCode;
+import com.a603.ofcourse.domain.course.exception.CourseException;
 import com.a603.ofcourse.domain.course.repository.CoursePlaceRepository;
 import com.a603.ofcourse.domain.course.repository.CourseRepository;
 import com.a603.ofcourse.domain.course.repository.MyCourseRepository;
@@ -26,6 +29,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -113,6 +117,18 @@ public class CourseService {
 
     /**
      * @author 손현조
+     * @date 2024-04-02
+     * @description 코스 세부 사항 제공
+     **/
+    public CourseDetailResponseDto getCourseDetail(Integer courseId) {
+        Course course = findById(courseId);
+        return CourseDetailResponseDto.from(course.getCoursePlaceList().stream()
+                .map(coursePlace -> PlaceDto.of(coursePlace.getPlace()))
+                .collect(Collectors.toList()));
+    }
+
+    /**
+     * @author 손현조
      * @date 2024-03-29
      * @description 추천 코스 제공 함수
      * @Param request : {좌표, 설정 거리, 카테고리 목록}
@@ -161,5 +177,11 @@ public class CourseService {
         bodyMap.put("lng", request.getPoints().getLng());
         bodyMap.put("limit_dist", request.getLimitDist());
         return bodyMap;
+    }
+
+    public Course findById(Integer courseId) {
+        return courseRepository.findById(courseId).orElseThrow(
+                () -> new CourseException(CourseErrorCode.COURSE_NOT_EXIST)
+        );
     }
 }

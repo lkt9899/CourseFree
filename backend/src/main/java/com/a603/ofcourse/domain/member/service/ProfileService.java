@@ -83,49 +83,23 @@ public class ProfileService {
     작성내용 : 내가 찜한 코스 리스트 반환
      * @param memberId
      */
-    public List<MyFavoriteCourse> getMyFavoriteCourseList(Integer memberId){
-            List<MyFavoriteCourse> myFavoriteCourseList = new ArrayList<>();
+    public List<MyFavoriteCourse> getMyFavoriteCourseList(Integer memberId) {
+        List<MyFavoriteCourse> myFavoriteCourseList = new ArrayList<>();
 
-            List<MyCourse> myCourseList = myCourseRepository.findAllByMemberId(memberId);
-            for(MyCourse myCourse : myCourseList){
-                Course course = myCourse.getCourse();
+        List<MyCourse> myCourseList = myCourseRepository.findAllByMemberId(memberId);
+        for(MyCourse myCourse : myCourseList){
+            Course course = myCourse.getCourse();
 
-                myFavoriteCourseList.add(
-                        MyFavoriteCourse.from(
-                                course.getId(),
-                                course.getTitle(),
-                                course.getImageUrl()
-                        )
-                );
-            }
-
-            return myFavoriteCourseList;
-        }
-
-    /*
-    작성자 : 김은비
-    작성내용 : 내가 찜한 코스 상세 내용 리스트 반환
-     * @param courseId
-     */
-    public List<CoursePlaceDetails> getCoursePlaceDetailsList(int courseId){
-        List<CoursePlaceDetails> coursePlaceDetailsList = new ArrayList<>();
-
-        List<CoursePlace> coursePlaceList = coursePlaceRepository.findAllByCourseId(courseId);
-        for(CoursePlace coursePlace : coursePlaceList){
-            Place place = coursePlace.getPlace();
-
-            coursePlaceDetailsList.add(
-                    CoursePlaceDetails.from(
-                            place.getPlaceCategory().getValue(),
-                            place.getName(),
-                            place.getAddress(),
-                            place.getImageUrl(),
-                            place.getUrl()
+            myFavoriteCourseList.add(
+                    MyFavoriteCourse.from(
+                            course.getId(),
+                            course.getTitle(),
+                            course.getImageUrl()
                     )
             );
         }
 
-        return coursePlaceDetailsList;
+        return myFavoriteCourseList;
     }
 
     /**

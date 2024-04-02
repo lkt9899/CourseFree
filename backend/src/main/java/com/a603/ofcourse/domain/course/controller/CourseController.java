@@ -2,6 +2,7 @@ package com.a603.ofcourse.domain.course.controller;
 
 import com.a603.ofcourse.domain.course.dto.request.AddCourseRequestDto;
 import com.a603.ofcourse.domain.course.dto.request.RecommendationRequest;
+import com.a603.ofcourse.domain.course.dto.response.CourseDetailResponseDto;
 import com.a603.ofcourse.domain.course.dto.response.RecommendationResponse;
 import com.a603.ofcourse.domain.course.service.CourseService;
 import com.a603.ofcourse.domain.member.service.MemberService;
@@ -28,4 +29,10 @@ public class CourseController {
             @RequestHeader("Authorization") String token, @RequestBody RecommendationRequest request) {
         return ResponseEntity.ok(courseService.recommendCourse(memberService.getMemberByToken(token), request));
     }
+
+    @GetMapping("/details")
+    public ResponseEntity<CourseDetailResponseDto> getCourseDetail(@RequestParam Integer courseId) {
+        return ResponseEntity.ok(courseService.getCourseDetail(courseId));
+    }
+
 }

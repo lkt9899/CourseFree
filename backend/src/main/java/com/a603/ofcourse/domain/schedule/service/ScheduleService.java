@@ -5,12 +5,7 @@ import com.a603.ofcourse.domain.couple.exception.CoupleErrorCode;
 import com.a603.ofcourse.domain.couple.exception.CoupleException;
 import com.a603.ofcourse.domain.couple.repository.MemberCoupleRepository;
 import com.a603.ofcourse.domain.course.domain.Course;
-import com.a603.ofcourse.domain.course.exception.CourseErrorCode;
-import com.a603.ofcourse.domain.course.exception.CourseException;
-import com.a603.ofcourse.domain.course.repository.CourseRepository;
-import com.a603.ofcourse.domain.member.exception.MemberErrorCode;
-import com.a603.ofcourse.domain.member.exception.MemberException;
-import com.a603.ofcourse.domain.member.repository.MemberRepository;
+import com.a603.ofcourse.domain.course.service.CourseService;
 import com.a603.ofcourse.domain.oauth.exception.OauthErrorCode;
 import com.a603.ofcourse.domain.oauth.exception.OauthException;
 import com.a603.ofcourse.domain.oauth.service.JwtTokenService;
@@ -26,17 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
-    private final MemberRepository memberRepository;
     private final MemberCoupleRepository memberCoupleRepository;
-    private final CourseRepository courseRepository;
+    private final CourseService courseService;
     private final JwtTokenService jwtTokenService;
 
     @Transactional
@@ -52,8 +44,7 @@ public class ScheduleService {
         log.info("couple : {}", couple.getId());
 
         // get course by courseId
-        Course course = courseRepository.findById(addScheduleRequestDto.getCourseId())
-                        .orElseThrow(() -> new CourseException(CourseErrorCode.COURSE_NOT_EXIST));
+        Course course = courseService.findById(addScheduleRequestDto.getCourseId());
         log.info("course : {}", course.getId());
         log.info("코스 추가 완료");
         // save new Schedule
@@ -93,8 +84,7 @@ public class ScheduleService {
 
         // if course is changed
         if(!schedule.getCourse().getId().equals(updateScheduleRequestDto.getCourseId()))
-            schedule.setCourse(courseRepository.findById(updateScheduleRequestDto.getCourseId())
-                    .orElseThrow(() -> new CourseException(CourseErrorCode.COURSE_NOT_EXIST)));
+            schedule.setCourse(courseService.findById(updateScheduleRequestDto.getCourseId()));
 
         // update info
         schedule.update(updateScheduleRequestDto);

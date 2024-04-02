@@ -88,13 +88,4 @@ public class MemberController {
         return ResponseEntity.ok(MyFavoriteCourseListResponse.toResponse(profileService.getMyFavoriteCourseList(memberId)));
     }
 
-    /*
-    작성자 : 김은비
-    작성내용 : 내가 찜한 코스 상세 정보 가져오기
-     * @param courseId
-     */
-    @GetMapping("/myfavcourse/details")
-    public ResponseEntity<CoursePlaceListResponse> getCoursePlaceList(@RequestParam("courseId") int courseId){
-        return ResponseEntity.ok(CoursePlaceListResponse.toResponse(profileService.getCoursePlaceDetailsList(courseId)));
-    }
 }
