@@ -9,6 +9,7 @@ import lombok.*;
 import java.util.Arrays;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "profile")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -55,4 +56,5 @@ public class Profile {
                 .map(Double::parseDouble)
                 .toArray(Double[]::new);
     }
+
 }

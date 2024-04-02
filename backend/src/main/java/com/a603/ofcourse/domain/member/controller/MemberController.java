@@ -1,7 +1,10 @@
 package com.a603.ofcourse.domain.member.controller;
 
 import com.a603.ofcourse.domain.member.domain.Member;
+import com.a603.ofcourse.domain.member.dto.request.CoupleInfoRequest;
+import com.a603.ofcourse.domain.member.dto.request.MemberInfoRequest;
 import com.a603.ofcourse.domain.member.dto.request.ProfileInfoRequest;
+import com.a603.ofcourse.domain.member.dto.response.MemberInfoResponse;
 import com.a603.ofcourse.domain.member.dto.response.MyFavoriteCourseListResponse;
 import com.a603.ofcourse.domain.member.dto.response.CoursePlaceListResponse;
 import com.a603.ofcourse.domain.member.service.MemberService;
@@ -66,6 +69,7 @@ public class MemberController {
     /*
     작성자 : 김은비
     내용 : 프로필 정보 저장
+     * @param accessToken
      * @param Request
      */
     @PostMapping("/profile-info")
@@ -88,4 +92,43 @@ public class MemberController {
         return ResponseEntity.ok(MyFavoriteCourseListResponse.toResponse(profileService.getMyFavoriteCourseList(memberId)));
     }
 
+    /*
+    작성자 : 김은비
+    작성내용 : 프로필 정보 조회
+     * @param : accessToken
+     */
+    @GetMapping("/profile")
+    public ResponseEntity<MemberInfoResponse> getMemberProfile(@RequestHeader(AUTHORIZATION_HEADER) String accessToken){
+        Integer memberId = jwtTokenService.getMemberId(accessToken);
+
+        return ResponseEntity.ok(profileService.getMemberProfile(memberId));
+    }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 커플 프로필 정보 수정
+     * @param accessToken
+     * @param request
+     */
+    @PostMapping("/update/couple-profile")
+    public ResponseEntity<Void> updateCoupleProfile(@RequestHeader(AUTHORIZATION_HEADER) String accessToken, @RequestBody CoupleInfoRequest coupleInfoRequest){
+        Integer memberId = jwtTokenService.getMemberId(accessToken);
+        profileService.updatCoupleProfile(memberId, coupleInfoRequest);
+
+        return ResponseEntity.ok().build();
+    }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 비커플 프로필 정보 수정
+     * @param accessToken
+     * @param request
+     */
+    @PostMapping("/update/profile")
+    public ResponseEntity<Void> updateMemberProfile(@RequestHeader(AUTHORIZATION_HEADER) String accessToken, @RequestBody MemberInfoRequest memberInfoRequest){
+        Integer memberId = jwtTokenService.getMemberId(accessToken);
+        profileService.updatMemberProfile(memberId, memberInfoRequest);
+
+        return ResponseEntity.ok().build();
+    }
 }

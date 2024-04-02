@@ -1,10 +1,14 @@
 package com.a603.ofcourse.domain.member.service;
 
+import com.a603.ofcourse.domain.couple.domain.Couple;
+import com.a603.ofcourse.domain.couple.domain.MemberCouple;
+import com.a603.ofcourse.domain.couple.exception.CoupleErrorCode;
+import com.a603.ofcourse.domain.couple.exception.CoupleException;
+import com.a603.ofcourse.domain.couple.repository.MemberCoupleRepository;
 import com.a603.ofcourse.domain.course.domain.Course;
 import com.a603.ofcourse.domain.course.domain.CoursePlace;
 import com.a603.ofcourse.domain.course.domain.MyCourse;
 import com.a603.ofcourse.domain.course.repository.CoursePlaceRepository;
-import com.a603.ofcourse.domain.course.repository.CourseRepository;
 import com.a603.ofcourse.domain.course.repository.MyCourseRepository;
 import com.a603.ofcourse.domain.member.domain.Member;
 import com.a603.ofcourse.domain.member.domain.NicknameHashMap;
@@ -12,11 +16,14 @@ import com.a603.ofcourse.domain.member.domain.Profile;
 import com.a603.ofcourse.domain.member.domain.enums.Gender;
 import com.a603.ofcourse.domain.member.dto.MyFavoriteCourse;
 import com.a603.ofcourse.domain.member.dto.CoursePlaceDetails;
+import com.a603.ofcourse.domain.member.dto.request.CoupleInfoRequest;
+import com.a603.ofcourse.domain.member.dto.request.MemberInfoRequest;
 import com.a603.ofcourse.domain.member.dto.request.Preference;
 import com.a603.ofcourse.domain.member.dto.request.ProfileInfoRequest;
+import com.a603.ofcourse.domain.member.dto.response.MemberInfoResponse;
 import com.a603.ofcourse.domain.member.repository.ProfileRepository;
 import com.a603.ofcourse.domain.place.domain.Place;
-import com.a603.ofcourse.domain.place.repository.PlaceRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,17 +31,20 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProfileService {
     private final ProfileRepository profileRepository;
     private final NicknameHashMap nicknameHashMap;
     private final MyCourseRepository myCourseRepository;
-    private final CourseRepository courseRepository;
     private final CoursePlaceRepository coursePlaceRepository;
-    private final PlaceRepository placeRepository;
+    private final MemberCoupleRepository memberCoupleRepository;
 
     private static final double HALF_AS_MANY = 1.5;
     private static final double ONCE = 1.0;
@@ -101,6 +111,86 @@ public class ProfileService {
 
         return myFavoriteCourseList;
     }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 회원 정보 조회
+     * @param memberId
+     */
+    public MemberInfoResponse getMemberProfile(Integer memberId){
+        Profile profile = profileRepository.findByMemberId(memberId);
+
+        AtomicBoolean isCouple = new AtomicBoolean(false);
+        AtomicReference<String> coupleNickname = new AtomicReference<>("");
+        AtomicReference<String> partnerNickname = new AtomicReference<>("");
+        memberCoupleRepository.findByMemberId(memberId)
+                .ifPresent(
+                        memberCouple -> {
+                            isCouple.set(true);
+                            //파트너 이름 구하기
+                            Couple couple = memberCouple.getCouple();
+                            List<Optional<MemberCouple>> memberCoupleList = memberCoupleRepository.findMemberCouplesByCoupleId(couple.getId());
+                            for(Optional<MemberCouple> optionalMemberCouple : memberCoupleList){
+                                optionalMemberCouple.ifPresentOrElse(
+                                        //멤버 아이디가 나와 다르면
+                                        mc -> {
+                                            Integer partnerId = mc.getMember().getId();
+                                            if(!partnerId.equals(memberId)){
+                                                //해당 멤버의 이름 셋해주기
+                                                partnerNickname.set(profileRepository.findByMemberId(partnerId).getNickname());
+                                            }
+                                        },
+                                        () -> {
+                                            throw new CoupleException(CoupleErrorCode.NOT_FOUND_ID);
+                                        });
+                            }
+
+                            coupleNickname.set(memberCouple.getCouple().getCoupleNickname());
+
+                        });
+
+        return MemberInfoResponse.toResponse(
+                profile.getNickname(),
+                profile.getImage(),
+                profile.getGender().getValue(),
+                isCouple.get(),
+                coupleNickname.get(),
+                partnerNickname.get()
+        );
+    }
+
+    /*
+        작성자 : 김은비
+        작성내용 : 커플 회원 정보 업데이트
+         * @param coupleinfoRequest
+         */
+    public void updatCoupleProfile(Integer memberId, CoupleInfoRequest coupleInfoRequest){
+        Profile profile = profileRepository.findByMemberId(memberId);
+        Couple couple = memberCoupleRepository.findByMemberId(memberId)
+                        .map(memberCouple -> memberCouple.getCouple())
+                                .orElseThrow(()->new CoupleException(CoupleErrorCode.NOT_FOUND_ID));
+
+        profile.setNickname(coupleInfoRequest.getNickname());
+        profile.setImage(coupleInfoRequest.getImage());
+        profile.setGender(coupleInfoRequest.getGender());
+        couple.setCoupleNickname(coupleInfoRequest.getCoupleNickname());
+    }
+
+    /*
+    작성자 : 김은비
+    작성내용 : 비커플 회원 정보 업데이트
+     * @param memberInfoRequest
+     */
+    public void updatMemberProfile(Integer memberId, MemberInfoRequest memberInfoRequest){
+        Profile profile = profileRepository.findByMemberId(memberId);
+
+        profile.setNickname(memberInfoRequest.getNickname());
+        profile.setImage(memberInfoRequest.getImage());
+        profile.setGender(memberInfoRequest.getGender());
+
+    }
+
+
 
     /**
      * @author 손현조
