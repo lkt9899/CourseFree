@@ -9,6 +9,7 @@ import com.a603.ofcourse.domain.post.domain.Comment;
 import com.a603.ofcourse.domain.post.domain.Post;
 import com.a603.ofcourse.domain.post.dto.CommentRequestDto;
 import com.a603.ofcourse.domain.post.dto.CommentResponseDto;
+import com.a603.ofcourse.domain.post.exception.PostException;
 import com.a603.ofcourse.domain.post.repository.CommentRepository;
 import com.a603.ofcourse.domain.post.repository.PostRepository;
 import com.sun.jdi.InternalException;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.a603.ofcourse.domain.member.exception.MemberErrorCode.MEMBER_DOES_NOT_EXISTS;
+import static com.a603.ofcourse.domain.post.exception.PostErrorCode.POST_NOT_EXIST;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class CommentService {
         );
 
         Post post = postRepository.findById(requestDto.getPostId()).orElseThrow(
-                () -> new InternalException("예외 처리")
+                () -> new PostException(POST_NOT_EXIST)
         );
 
         return commentRepository.save(Comment.builder()

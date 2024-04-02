@@ -7,14 +7,16 @@ import com.a603.ofcourse.domain.place.domain.Place;
 import com.a603.ofcourse.domain.post.domain.Post;
 import com.a603.ofcourse.domain.post.domain.PostContent;
 import com.a603.ofcourse.domain.post.dto.PostContentResponseDto;
+import com.a603.ofcourse.domain.post.exception.PostException;
 import com.a603.ofcourse.domain.post.repository.PostRepository;
-import com.sun.jdi.InternalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.a603.ofcourse.domain.post.exception.PostErrorCode.POST_NOT_EXIST;
 
 
 @Service
@@ -28,7 +30,7 @@ public class PostContentService {
     public PostContentResponseDto findPostContentList(int postId){
 
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new InternalException("예외 처리")
+                () -> new PostException(POST_NOT_EXIST)
         );
 
         List<PostContentResponseDto.PostContentInfo> postContentInfoList = new ArrayList<>();

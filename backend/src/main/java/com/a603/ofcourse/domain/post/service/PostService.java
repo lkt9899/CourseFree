@@ -1,6 +1,7 @@
 package com.a603.ofcourse.domain.post.service;
 
 import com.a603.ofcourse.domain.course.domain.Course;
+import com.a603.ofcourse.domain.course.exception.CourseException;
 import com.a603.ofcourse.domain.course.repository.CourseRepository;
 import com.a603.ofcourse.domain.member.domain.Member;
 import com.a603.ofcourse.domain.member.exception.MemberException;
@@ -12,7 +13,6 @@ import com.a603.ofcourse.domain.post.dto.PostRequestDto;
 import com.a603.ofcourse.domain.post.dto.PostResponseDto;
 import com.a603.ofcourse.domain.post.repository.PostContentRepository;
 import com.a603.ofcourse.domain.post.repository.PostRepository;
-import com.sun.jdi.InternalException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.a603.ofcourse.domain.course.exception.CourseErrorCode.COURSE_NOT_EXIST;
 import static com.a603.ofcourse.domain.member.exception.MemberErrorCode.MEMBER_DOES_NOT_EXISTS;
 
 @Service
@@ -46,7 +47,7 @@ public class PostService {
         );
 
         Course course = courseRepository.findById(requestDto.getCourseId()).orElseThrow(
-                () -> new InternalException("예외 처리 예정")
+                () -> new CourseException(COURSE_NOT_EXIST)
         );
 
         Post post = Post.builder()
