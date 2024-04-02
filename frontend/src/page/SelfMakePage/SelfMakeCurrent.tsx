@@ -17,6 +17,8 @@ import SelectedPlaceList from '@component/pages/SelfMakePage/SelectedPlaceList'
 
 import { requestSubmitDateCourse } from '@api/request/course'
 
+import { requestSubmitDateCourse } from '@api/request/course'
+
 const StickyMap = css`
   position: sticky;
   top: 0px;

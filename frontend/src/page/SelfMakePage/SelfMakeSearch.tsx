@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import SearchAutoComplete from '@component/common/SearchAutoComplete'
 import SearchBar from '@component/common/SearchBar'
 
