@@ -10,10 +10,10 @@ const Container = css`
   padding-bottom: 10px;
 `
 /** @jsxImportSource @emotion/react */
-export default function SearchBar({ placeholder }: any) {
+export default function SearchBar({ placeholder, onChange }: any) {
   return (
     <FlexBox w="100%" a="center" css={Container}>
-      <Input width="90%" placeholder={placeholder} />
+      <Input width="90%" placeholder={placeholder} onChange={onChange} />
       <FontAwesomeIcon icon={faSearch} />
     </FlexBox>
   )

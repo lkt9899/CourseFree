@@ -1,3 +1,3 @@
 export function getJWT(key: string) {
-  return localStorage.getItem(key)
+  return sessionStorage.getItem(key)
 }

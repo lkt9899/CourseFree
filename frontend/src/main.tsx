@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil'
 import App from './App.tsx'
 import './index.css'
 
+import chakraTheme from '@style/chakraTheme.ts'
 import globalStyles from '@style/globalStyles.ts'
 
 const queryClient = new QueryClient()
@@ -16,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
 
   <RecoilRoot>
-    <ChakraProvider>
+    <ChakraProvider theme={chakraTheme}>
       <QueryClientProvider client={queryClient}>
         <Global styles={globalStyles} />
         <App />

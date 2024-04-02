@@ -1,7 +1,7 @@
 import axios from 'axios'
 
+import API_URI from '../../constant/url'
 import interceptor from './interceptor'
-import API_URI from './url'
 
 export const baseAxios = axios.create({
   baseURL: API_URI.BASE,

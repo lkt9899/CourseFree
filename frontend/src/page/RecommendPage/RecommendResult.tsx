@@ -1,4 +1,4 @@
-import LongCourseInfo from '@component/courseInfo/LongCourseInfo'
+import LongCourseInfo from '@component/Course/LongCourseInfo'
 import RecommendTopBar from '@component/layout/RecommendTopBar'
 
 export default function RecommendResult() {

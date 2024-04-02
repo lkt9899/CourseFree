@@ -1,4 +1,4 @@
-import { BaseOnClickType } from '@type/type'
+import { BaseOnClickType } from '@type/eventFunction'
 
 import { ArticleFilterType } from './ArticleViews'
 

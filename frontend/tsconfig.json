@@ -37,6 +37,7 @@
       "@styled/*": ["./src/styled/*"],
       "@mocks/*": ["./src/mocks/*"],
       "@data/*": ["./src/data/*"],
+      "@constant/*": ["./src/constant/*"],
       "@context/*": ["./src/context/*"]
     }
   },

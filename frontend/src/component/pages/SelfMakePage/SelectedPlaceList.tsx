@@ -1,22 +1,42 @@
-import PlaceInfoWithOrder from '@component/courseInfo/PlaceInfoWithOrder'
-import ShortPlaceInfo from '@component/courseInfo/ShortPlaceInfo'
+import { MakingCourseContext } from '@context/index'
+import { Place } from '@type/course'
+import { useContext } from 'react'
+
+import PlaceInfoWithOrder from '@component/Course/PlaceInfoWithOrder'
+import ShortPlaceInfo from '@component/Course/ShortPlaceInfo'
 import FlexBox from '@component/layout/FlexBox'
-import Spacing from '@component/layout/Spacing'
 
-const DUMMY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+type SelectedPlaceList = {
+  placeList: Place[]
+  onClickPlaceBox: (place: Place) => void
+}
+export default (function SelectedPlaceList({
+  placeList,
+  onClickPlaceBox,
+}: SelectedPlaceList) {
+  const { dateCourse, setDateCourse } = useContext(MakingCourseContext)
+  const removePlace = (place: Place) => {
+    const copy = dateCourse.placeList.filter(
+      (currPlace: Place) => currPlace.id != place.id,
+    )
+    setDateCourse({ ...dateCourse, placeList: copy })
+  }
 
-/** @jsxImportSource @emotion/react */
-export default (function SelectedPlaceList() {
   return (
     <FlexBox a="center" d="column">
-      {DUMMY.map((_, i) => {
+      {placeList.map((place, i) => {
         return (
           <PlaceInfoWithOrder key={i} order={i + 1}>
-            <ShortPlaceInfo hasDeleteButton />
+            <ShortPlaceInfo
+              hasButton
+              buttonText="삭제"
+              place={place}
+              onClickButton={removePlace}
+              onClickBox={onClickPlaceBox}
+            />
           </PlaceInfoWithOrder>
         )
       })}
-      <Spacing size="300px" />
     </FlexBox>
   )
 })

@@ -20,4 +20,8 @@ export const addStyle = css`
       background-color: var(--primary);
     }
   }
+  .swiper-slide {
+    opacity: 1 !important;
+    transition: none !important;
+  }
 `

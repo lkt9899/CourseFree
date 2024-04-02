@@ -1,5 +1,4 @@
 import { Circle } from '@chakra-ui/react'
-import { RefObject, forwardRef } from 'react'
 
 import FlexBox from '@component/layout/FlexBox'
 
@@ -8,16 +7,16 @@ interface PlaceInfoWithOrder {
   order: number
 }
 
-export default forwardRef(function PlaceInfoWithOrder(
-  { order, children }: PlaceInfoWithOrder,
-  ref: RefObject<HTMLDivElement>,
-) {
+export default function PlaceInfoWithOrder({
+  order,
+  children,
+}: PlaceInfoWithOrder) {
   return (
-    <FlexBox a="center" j="space-between" w="100%" p={'10px'} ref={ref}>
+    <FlexBox a="center" j="space-between" w="100%" p={'10px'}>
       <Circle size={'25px'} backgroundColor={'hotpink'} color="white">
         {order}
       </Circle>
       {children}
     </FlexBox>
   )
-})
+}

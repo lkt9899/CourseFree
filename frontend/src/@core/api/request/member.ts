@@ -1,7 +1,7 @@
+import API_URI from '@constant/url'
 import { UserData } from '@type/member'
 
 import { authAxios, baseAxios } from '@api/index'
-import API_URI from '@api/url'
 
 /**
  *

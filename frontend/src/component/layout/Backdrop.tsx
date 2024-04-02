@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { BaseOnClickType } from '@type/type'
+import { BaseOnClickType } from '@type/eventFunction'
 import { CSSProperties } from 'react'
 
 interface T_BackDrop {
