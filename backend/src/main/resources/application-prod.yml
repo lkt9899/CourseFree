@@ -85,7 +85,7 @@ server:
 
 invite:
   link:
-    start: http://j10a603.p.ssafy.io/api/couple/connect/exist
+    start: http://j10a603.p.ssafy.io/api/couple/connect/exist/
 
 course:
   recommendation:
