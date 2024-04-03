@@ -28,6 +28,7 @@ import SelfMakePage from '@page/SelfMakePage'
 import SelfMakeCurrent from '@page/SelfMakePage/SelfMakeCurrent'
 import SelfMakePlaceSearch from '@page/SelfMakePage/SelfMakePlaceSearch'
 import SelfMakeSearch from '@page/SelfMakePage/SelfMakeSearch'
+import GenerateLink from '@page/MyPage/generateLink'
 
 // initMockAPI()
 
@@ -108,6 +109,8 @@ function App() {
             <Route path="/mypage/setting" element={<Setting/>}>
             </Route>
             <Route path="/search" element={<Search/>}>
+            </Route>
+            <Route path="/generateLink" element={<GenerateLink/>}>
             </Route>
           </Routes>
         </BrowserRouter>

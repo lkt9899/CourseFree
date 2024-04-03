@@ -4,7 +4,7 @@ import { requestMyFavCourse } from '@api/request/member';
 import { NameContainer, Container, NameWrapper, Image, ContentWrapper, Title, Button } from '@styled/component/pages/FavoritePage/FavoriteList';
 
 const FavoriteList = () => {
-  const [courses, setCourses] = useState([]); // 추가: courses 상태 추가
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     // API 호출하여 코스 목록 가져오기

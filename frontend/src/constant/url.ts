@@ -14,8 +14,8 @@ const API_URI = {
   MY_FAV_COURSE_DETAIL: '/course/details',
   GENERATE_LINK:'/couple/generate-link',
   PROFILE_INFO : '/member/profile',
-  MODIFY_PROFILE_COUPLE: 'member/modify/couple-profile',
-  MODIFY_PROFILE: 'member/modify/profile',
+  MODIFY_PROFILE_COUPLE: 'member/update/couple-profile',
+  MODIFY_PROFILE: 'member/update/profile',
 }
 export default API_URI
 

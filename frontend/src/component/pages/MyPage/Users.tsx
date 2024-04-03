@@ -2,15 +2,17 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Item, InfoContainer, Title,Couplename } from '@styled/component/pages/MyPage/Users';
+import { Container, Item, InfoContainer, Title, Couplename } from '@styled/component/pages/MyPage/Users';
 import { useEffect, useState } from 'react'; // 추가: useState import
 import { requestProfile } from '@api/request/member';
+import { Link } from 'react-router-dom';
 
 const Users = () => {
   const [memberNickname, setmemberNickname] = useState([]);
   const [partnerNickname, setpartnerNickname] = useState([]);
   const [memberimage, setmemberimage] = useState<string | null>(null);
   const [coupleNickname, setcoupleNickname] = useState([]);
+  const [isCouple, setisCouple] = useState([]);
   useEffect(() => {
     requestProfile()
       .then((response) => {
@@ -21,6 +23,7 @@ const Users = () => {
           setmemberimage(response.data.image);
         }
         setcoupleNickname(response.data.coupleNickname);
+        setisCouple(response.data.couple);
       })
       .catch((error) => {
         console.error('API 호출 에러:', error);
@@ -50,13 +53,15 @@ const Users = () => {
           <FontAwesomeIcon icon={faHeart} size='3x' />
         </Item>
         <Item>
-          <FontAwesomeIcon icon={faQuestionCircle} size='5x' />
-          <br />
-          {partnerNickname ? (
-            <p dangerouslySetInnerHTML={{ __html: partnerNickname }} />
-          ) : (
-            <p>상대방을 <br />추가해 주세요</p>
-          )}
+          <Link to={isCouple ? '#' : '/generateLink'}> {/* isCouple이 true일 때는 #으로 설정 */}
+            <FontAwesomeIcon icon={faQuestionCircle} size='5x' />
+            <br />
+            {partnerNickname ? (
+              <p dangerouslySetInnerHTML={{ __html: partnerNickname }} />
+            ) : (
+              <p>상대방을 <br />추가해 주세요</p>
+            )}
+          </Link>
         </Item>
 
       </InfoContainer>

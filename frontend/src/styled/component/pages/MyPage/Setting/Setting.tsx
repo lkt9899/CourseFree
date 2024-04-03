@@ -77,3 +77,16 @@ export const BottomContainer = styled.div`
   color:gray;
   
 `;
+
+export const EditButton = styled.div`
+  
+`;
+export const FormContainer = styled.div`
+  
+`;
+export const FormInput = styled.div`
+  
+`;
+export const SaveButton = styled.div`
+  
+`;
