@@ -1,0 +1,39 @@
+{
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "stationName": {
+      "type": "keyword",
+      "fields": {
+        "jamo": {
+          "type": "text",
+          "analyzer": "jamo_analyzer",
+          "search_analyzer": "jamo_search_analyzer"
+        },
+        "engtohan": {
+          "type": "text",
+          "analyzer": "engtohan_analyzer",
+          "search_analyzer": "engtohan_search_analyzer"
+        },
+        "chosung": {
+          "type": "text",
+          "analyzer": "chosung_analyzer"
+        }
+      }
+    },
+    "line": {
+      "type": "keyword"
+    },
+    "point": {
+      "properties": {
+        "lat": {
+          "type": "double"
+        },
+        "lng": {
+          "type": "double"
+        }
+      }
+    }
+  }
+}
