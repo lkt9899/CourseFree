@@ -27,10 +27,13 @@ export default function ArticleDetailPage() {
   function bottomSheetHandler() {
     setBottomSheetState(!bottomSheetState)
   }
-  const { mutate } = useAddFavoriteCourseQuery(data.courseId)
-  function onClickLikeHandler() {
-    mutate()
+
+  const { mutate } = useAddFavoriteCourseQuery()
+
+  function onClickLikeHandler(id) {
+    mutate(id)
   }
+
   if (isLoading) return <FullPageLoading />
 
   return (
@@ -58,6 +61,7 @@ export default function ArticleDetailPage() {
         onClick={bottomSheetHandler}
         disabled={data.isHave}
         onClickLikeHandler={onClickLikeHandler}
+        courseId={data.courseId}
       />
       {/* BottomSheet */}
       {bottomSheetState && (

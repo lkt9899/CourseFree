@@ -15,13 +15,15 @@ interface ArticleFooter {
   onClick: any
   id?: number
   disabled: boolean
-  onClickLikeHandler: () => void
+  onClickLikeHandler: (id) => void
+  courseId: number
 }
 export default memo(function ArticleFooter({
   onClick,
   id,
   disabled,
   onClickLikeHandler,
+  courseId,
 }: ArticleFooter) {
   return (
     <Container>
@@ -40,7 +42,12 @@ export default memo(function ArticleFooter({
           title="댓글"
         />
         <FooterLinkWithIcon icon={faShare} type="share" id={id} title="공유" />
-        <Button disabled={disabled} onClick={onClickLikeHandler}>
+        <Button
+          disabled={disabled}
+          onClick={() => {
+            onClickLikeHandler(courseId)
+          }}
+        >
           코스찜하기
         </Button>
       </FlexBox>

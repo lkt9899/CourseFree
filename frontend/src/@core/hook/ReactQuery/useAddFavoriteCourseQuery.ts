@@ -4,11 +4,11 @@ import { useMutation } from '@tanstack/react-query'
 
 import { requestAddFavoriteCourse } from '@api/request/course'
 
-export const useAddFavoriteCourseQuery = (courseId: number) => {
+export const useAddFavoriteCourseQuery = () => {
   // 업데이트할 쿼리
 
   const mutation = useMutation({
-    mutationFn: () => {
+    mutationFn: courseId => {
       return requestAddFavoriteCourse(courseId)
     },
 
