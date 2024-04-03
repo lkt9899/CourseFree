@@ -42,10 +42,6 @@ public class Course {
     @Column(name = "hash_key", length = 256)
     private String hashKey;
 
-    @OneToOne
-    @JoinColumn(name = "course_characteristic_id")
-    private CourseCharacteristic courseCharacteristic;
-
     @Column(name="use_count")
     private Integer useCount;
 
