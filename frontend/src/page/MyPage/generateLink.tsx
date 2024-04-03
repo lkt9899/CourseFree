@@ -1,6 +1,6 @@
-import { requestGenerateLink } from '@api/request/member';
+import { requestGenerateLink,requestSendLink } from '@api/request/member';
 import { useEffect, useState } from 'react';
-import { authAxios } from '@api/index'
+// import { authAxios } from '@api/index'
 
 function GenerateLink() {
     const [generatedLink, setGeneratedLink] = useState('');
@@ -31,24 +31,13 @@ function GenerateLink() {
                     <p>생성된 링크: {generatedLink}</p>
                     {/* 생성된 링크가 있을 때만 POST 요청 버튼을 보여줍니다. */}
                     {generatedLink && (
-                        <button onClick={sendPostRequest}>링크로 POST 요청 보내기</button>
-                    )}
+    <button onClick={() => requestSendLink(generatedLink)}>링크로 POST 요청 보내기</button>
+)}
                 </>
             )}
         </>
     );
 
-    // 생성된 링크로 POST 요청을 보내는 함수
-    function sendPostRequest() {
-        // 생성된 링크로 POST 요청을 보냅니다.
-        authAxios.post(generatedLink)
-            .then((response) => {
-                console.log('POST 요청 성공:', response);
-            })
-            .catch((error) => {
-                console.error('POST 요청 에러:', error);
-            });
-    }
 }
 
 export default GenerateLink;

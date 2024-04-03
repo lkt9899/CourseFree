@@ -29,6 +29,9 @@ export const requestUserData = (data: UserData) => {
 export const requestGenerateLink = () => {
   return authAxios.post(`${API_URI.GENERATE_LINK}`)
 }
+export const requestSendLink = (generatedLink:string) => {
+  return authAxios.post(`${API_URI}`,generatedLink)
+}
 
 export const requestMyFavCourse = () => {
   return authAxios.get(`${API_URI.MY_FAV_COURSE}`)
