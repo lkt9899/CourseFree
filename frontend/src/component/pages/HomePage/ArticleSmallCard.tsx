@@ -12,7 +12,7 @@ type Props = {
 export default function ArticleSmallCard({ data }: Props) {
   return (
     <Link to={`/article/${data.postId}`}>
-      <FlexBox d="column" a="center" j="center" w="200px">
+      <FlexBox d="column" a="center" j="center" w="150px">
         <Image
           borderRadius="10px"
           boxSize="150px"
