@@ -8,17 +8,15 @@ from service.recommendation_service import make_recommendations
 
 app = FastAPI()
 
-
 @app.get("/")
 async def hi():
     return "Hi"
 
 
-@app.post("/api/recommendations/")
+@app.post("/data/recommendations")
 async def search(search_place_dto: RecommendRequestDto):
-    logging.info(f"Searching {search_place_dto}")
     return make_recommendations(search_place_dto)
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", reload=True)
+    uvicorn.run("app:app", reload=True, log_config=None)

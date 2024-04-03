@@ -1,4 +1,6 @@
 # Standard Library
+import logging
+import time
 from math import radians, sin, cos, sqrt, atan2
 
 # ThirdParty Library
@@ -8,21 +10,27 @@ import numpy as np
 from domain import points
 from domain.points import Points
 from dto.place_dto import PlaceDto
-from dto.recommend_response_dto import RecommendResponseDto
 from sql.query import QueryExecutor
+from util.logger import getLogger
 
 
 # 지구의 반지름 (단위: km)
 EARTH_RADIUS = 6371.0
 
+logger = getLogger()
+
 
 def make_recommendations(search_place_dto):
+    start_time = time.time()
     nearby_place_list = find_nearby_place_list(search_place_dto)
+    middle_time = time.time()
+
+    logger.info(f"주변 장소 검색 총 시간 : {middle_time - start_time}")
     member_vector = search_place_dto.member_vector
     similarities = []
     for place in nearby_place_list:
         # 문자열 형태의 벡터를 실수(float) 형태의 배열로 변환
-        place_vector = np.array([float(x) for x in place.vector.split(',')], dtype=np.float32)
+        place_vector = np.array([float(x) for x in place.vectors.split(',')], dtype=np.float32)
         similarity = cosine_similarity(member_vector, place_vector)
         similarities.append((similarity, PlaceDto.from_place(place)))
 
@@ -34,16 +42,25 @@ def make_recommendations(search_place_dto):
 
     # 반환 형식을 Dictionary 변환
     similarities_dict = [{"similarity": s[0], "place": s[1]} for s in similarities]
+    end_time = time.time()
+    logger.info(f"코사인 유사도 계산, 정렬 등 변환 완료 시간 : {end_time - middle_time}")
     return similarities_dict
 
 
 def find_nearby_place_list(request):
+    start_time = time.time()
     in_boundary_place_list = find_place_list_in_boundary(request)
+    end_time = time.time()
+    logger.info(f"주변 장소 검색 SQL 시간 : {end_time - start_time}")
+
+    start_time = time.time()
     nearby_place_list = []
     for place in in_boundary_place_list:
         dist = get_distance(Points(request.lat, request.lng), Points(place.latitude, place.longitude))
         if dist <= request.limit_dist:
             nearby_place_list.append(place)
+    end_time = time.time()
+    logger.info(f"거리 계산 시간 : {end_time - start_time}")
     return nearby_place_list
 
 
@@ -77,6 +94,8 @@ def cosine_similarity(vector1, vector2):
     dot_product = np.dot(vector1, vector2)
     norm1 = np.linalg.norm(vector1)
     norm2 = np.linalg.norm(vector2)
+    if norm1 * norm2 == 0:
+        return 0
     return dot_product / (norm1 * norm2)
 
 

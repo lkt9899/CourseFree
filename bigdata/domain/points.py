@@ -1,6 +1,6 @@
 import math
 
-EARTH_RADIUS = 6371.0
+EARTH_RADIUS = 6371000.0
 
 
 class Points:
