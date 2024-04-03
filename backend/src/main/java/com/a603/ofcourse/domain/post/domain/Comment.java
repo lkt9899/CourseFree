@@ -2,6 +2,7 @@ package com.a603.ofcourse.domain.post.domain;
 
 
 import com.a603.ofcourse.domain.member.domain.Member;
+import com.a603.ofcourse.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "comment")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
