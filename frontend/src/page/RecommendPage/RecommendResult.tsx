@@ -1,7 +1,6 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import LongCourseInfo from '@component/Course/LongCourseInfo'
-import Button from '@component/common/Button'
 import FullPageLoading from '@component/common/FullPageLoading'
 import RecommendTopBar from '@component/layout/RecommendTopBar'
 
@@ -17,9 +16,6 @@ export default function RecommendResult() {
     <>
       <RecommendTopBar />
       <LongCourseInfo courseData={data.data} />
-      <Link to="../">
-        <Button>다른 추천 코스 둘러보기</Button>
-      </Link>
     </>
   )
 }
