@@ -1,12 +1,14 @@
 package com.a603.ofcourse.domain.course.controller;
 
 import com.a603.ofcourse.domain.course.dto.request.AddCourseRequestDto;
+import com.a603.ofcourse.domain.course.dto.request.AddMyCourseRequestDto;
 import com.a603.ofcourse.domain.course.dto.request.RecommendationRequest;
 import com.a603.ofcourse.domain.course.dto.response.CourseDetailResponseDto;
 import com.a603.ofcourse.domain.course.dto.response.RecommendationResponse;
 import com.a603.ofcourse.domain.course.service.CourseService;
 import com.a603.ofcourse.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,4 +37,10 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCourseDetail(courseId));
     }
 
+    @PostMapping("/add-mycourse")
+    public ResponseEntity<Void> addMyCourse(
+            @RequestHeader("Authorization") String token, @RequestBody AddMyCourseRequestDto addMyCourseRequestDto) {
+        courseService.addMyCourse(memberService.getMemberByToken(token), addMyCourseRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }

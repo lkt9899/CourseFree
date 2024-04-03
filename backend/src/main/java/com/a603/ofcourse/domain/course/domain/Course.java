@@ -85,4 +85,8 @@ public class Course {
     public void updateUseCount() {
         this.useCount += 1;
     }
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

@@ -4,6 +4,7 @@ import com.a603.ofcourse.domain.course.domain.Course;
 import com.a603.ofcourse.domain.course.domain.CoursePlace;
 import com.a603.ofcourse.domain.course.domain.MyCourse;
 import com.a603.ofcourse.domain.course.dto.request.AddCourseRequestDto;
+import com.a603.ofcourse.domain.course.dto.request.AddMyCourseRequestDto;
 import com.a603.ofcourse.domain.course.dto.request.RecommendationRequest;
 import com.a603.ofcourse.domain.course.dto.response.CourseDetailResponseDto;
 import com.a603.ofcourse.domain.course.dto.response.RecommendationApiResponse;
@@ -108,6 +109,7 @@ public class CourseService {
      * @description 코스에 장소들을 추가한 후 코스를 저장
      **/
     private void addPlaceInCourse(Course course, List<Integer> placeIdList) {
+        course.updateImageUrl(placeService.findById(placeIdList.get(0)).getImageUrl());
         for (Integer placeId : placeIdList) {
             Place place = placeService.findById(placeId);
             CoursePlace coursePlace = new CoursePlace(course, place);
@@ -180,6 +182,12 @@ public class CourseService {
         bodyMap.put("lng", request.getPoints().getLng());
         bodyMap.put("limit_dist", request.getLimitDist());
         return bodyMap;
+    }
+
+    public void addMyCourse(Member member, AddMyCourseRequestDto requestDto) {
+        Course course = findById(requestDto.getCourseId());
+        myCourseRepository.save(new MyCourse(member, course));
+        course.updateUseCount();
     }
 
     public Course findById(Integer courseId) {
