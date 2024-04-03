@@ -4,24 +4,21 @@
       "type": "integer"
     },
     "stationName": {
-      "type": "text",
+      "type": "keyword",
       "fields": {
-        "nori": {
+        "jamo": {
           "type": "text",
-          "analyzer": "nori_analyzer"
+          "analyzer": "jamo_analyzer",
+          "search_analyzer": "jamo_search_analyzer"
         },
-        "ngram": {
+        "engtohan": {
           "type": "text",
-          "analyzer": "ngram_jamo_analyzer",
-          "search_analyzer": "jamo_analyzer"
+          "analyzer": "engtohan_analyzer",
+          "search_analyzer": "engtohan_search_analyzer"
         },
         "chosung": {
           "type": "text",
           "analyzer": "chosung_analyzer"
-        },
-        "engtohan": {
-          "type": "text",
-          "search_analyzer": "engtohan_analyzer"
         }
       }
     },

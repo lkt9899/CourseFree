@@ -2,6 +2,7 @@ package com.a603.ofcourse.domain.search.service;
 
 import com.a603.ofcourse.domain.search.document.Station;
 import com.a603.ofcourse.domain.search.dto.response.SubwayDetailResponseDto;
+import com.a603.ofcourse.domain.search.repository.CustomStationRepository;
 import com.a603.ofcourse.domain.search.repository.StationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class SearchService {
 
     private final StationRepository stationRepository;
     public List<SubwayDetailResponseDto> findSubwayListByKeyword(String searchKeyword) {
-        return stationRepository.findByStationNameContainsIgnoreCase(searchKeyword).stream()
+        return stationRepository.searchWithAutoComplete(searchKeyword).stream()
                 .map(Station::toResponse)
                 .toList();
     }
