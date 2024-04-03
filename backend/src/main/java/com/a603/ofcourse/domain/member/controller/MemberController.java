@@ -46,7 +46,7 @@ public class MemberController {
      * @param accessToken
      * @return 저장 성공하면 OK, 실패하면 CONFLICK
      */
-    @GetMapping("/transient-save/nickname")
+    @PostMapping("/transient-save/nickname")
     public ResponseEntity<Void> saveNicknameToHashMap(@RequestParam("nickname") String nickname, @RequestHeader(AUTHORIZATION_HEADER) String accessToken){
         Integer memberId = jwtTokenService.getMemberId(accessToken);
         if(!profileService.saveNicknameToHashMap(nickname, memberId)){
@@ -60,7 +60,7 @@ public class MemberController {
     작성내용 : 임시 저장한 닉네임 삭제
      * @param nickname
      */
-    @GetMapping("transient-delete/nickname")
+    @PostMapping("/transient-delete/nickname")
     public ResponseEntity<Void> deleteNicknameFromHashMap(@RequestParam("nickname") String nickname){
         profileService.deleteNicknameFromHashMap(nickname);
         return ResponseEntity.ok().build();
