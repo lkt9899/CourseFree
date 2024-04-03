@@ -10,12 +10,14 @@ const API_URI = {
   STATION_AUTOCOMPLETE: '/subway',
   RECOMMEND: '/course/recommendation',
   COURSE_DETAIL: '/course/details',
+  HOT_ARTICLE: '/post/recommend',
+  SEARCH_ARTICLE: '/post',
+  ARTICLE_DETAIL: '/post-content',
   MY_FAV_COURSE: '/member/myfavcourse',
   MY_FAV_COURSE_DETAIL: '/course/details',
-  GENERATE_LINK:'/couple/generate-link',
-  PROFILE_INFO : '/member/profile',
+  GENERATE_LINK: '/couple/generate-link',
+  PROFILE_INFO: '/member/profile',
   MODIFY_PROFILE_COUPLE: 'member/update/couple-profile',
   MODIFY_PROFILE: 'member/update/profile',
 }
 export default API_URI
-

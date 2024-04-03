@@ -1,7 +1,7 @@
 import { LatLng } from './kakaoMap'
 
 export interface Station {
-  line: string
+  line: string[]
   stationName: string
   point: LatLng
 }

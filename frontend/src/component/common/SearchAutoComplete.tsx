@@ -5,8 +5,10 @@ import SearchResult from './SearchResult'
 
 import FlexBox from '@component/layout/FlexBox'
 
+import { filter } from '@util/Subway/filterStation'
+
 const Container = css`
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid #f3f3f3;
   padding: 5px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -22,11 +24,13 @@ export default function SearchAutoComplete({
   type,
   onClick,
 }: Props) {
+  const filteredStationList = filter(stationList)
+  console.log(filteredStationList)
   return (
     <FlexBox d="column" w="100%" css={Container} bgColor="grey">
-      {stationList.map(station => {
+      {filteredStationList.map((station, i) => {
         if (type === 'self')
-          return <SearchResult key={station + i} data={station} type={type} />
+          return <SearchResult key={i} data={station} type={type} />
         else if (type === 'recommend')
           return <SearchResult data={station} type={type} onClick={onClick} />
       })}

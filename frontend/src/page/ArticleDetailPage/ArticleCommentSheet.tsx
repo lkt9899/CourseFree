@@ -8,7 +8,7 @@ interface ArticleCommentSheet {
 }
 export default function ArticleCommentSheet({ handler }: ArticleCommentSheet) {
   return (
-    <BottomSheet title="댓글" handler={handler}>
+    <BottomSheet title="댓글" visibleHandler={handler} backDrop>
       <FlexBox d="column" h="90%">
         <ArticleComments />
         <CommentInput />

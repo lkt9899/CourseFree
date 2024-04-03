@@ -17,7 +17,7 @@ export const Container = styled.div<T_Article>(
     backgroundImage: `url(${img})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'pink',
   }),
 )
 export const Content = styled.div({

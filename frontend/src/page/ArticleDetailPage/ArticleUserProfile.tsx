@@ -1,4 +1,3 @@
-import kiss from '@asset/kiss.jfif'
 import { Avatar, WrapItem } from '@chakra-ui/react'
 import styled from '@emotion/styled'
 
@@ -10,21 +9,29 @@ const Container = styled(FlexBox)({
   // borderTop: '1px solid #f3f3f3',
 })
 
-export default (function ArticleUserProfile() {
+type Props = {
+  memberImage: string
+  memberName: string
+}
+
+export default (function ArticleUserProfile({
+  memberImage,
+  memberName,
+}: Props) {
   return (
     <Container>
       <FlexBox a="center" w="100%" p="10px">
         {/* userprofileimage */}
         <WrapItem>
-          <Avatar name="Dan Abrahmov" src={kiss} />
+          <Avatar name="Dan Abrahmov" src={memberImage} />
         </WrapItem>
         <FlexBox d="column" p="0px 5px 0px 5px">
           <TextBox typography="t7" fontWeight="bold">
-            역삼동정현규
+            {memberName}
           </TextBox>
-          <TextBox typography="t7" color="gray">
+          {/* <TextBox typography="t7" color="gray">
             공간과 분위기가 주는 낭만을 좋아합니다.
-          </TextBox>
+          </TextBox> */}
         </FlexBox>
         {/* userId and comment */}
       </FlexBox>

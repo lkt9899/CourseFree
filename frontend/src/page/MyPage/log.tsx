@@ -1,21 +1,18 @@
-import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import BackDrop from '@component/layout/Backdrop'
-import BottomSheet from '@component/layout/BottomSheet'
+import TitleBar from '@component/common/TitleBar'
 import Footer from '@component/layout/Footer'
 import Section from '@component/layout/Section'
 import Spacing from '@component/layout/Spacing'
-import Calender from '@component/pages/MyPage/Log/Calendar';
-import Schedule from '@component/pages/MyPage/Log/Schedule';
-import TitleBar from '@component/common/TitleBar'
+import Calender from '@component/pages/MyPage/Log/Calendar'
+import Schedule from '@component/pages/MyPage/Log/Schedule'
 
 function MyPage() {
-  const [state, setState] = useState(false)
+  // const [state, setState] = useState(false)
 
-  function onClickBottomSheetHandler() {
-    setState(!state)
-  }
+  // function onClickBottomSheetHandler() {
+  //   setState(!state)
+  // }
   return (
     <>
       <Section>
@@ -26,11 +23,11 @@ function MyPage() {
         <Schedule />
       </Section>
       <Footer />
-      {state && (
+      {/* {state && (
         <BackDrop onClick={onClickBottomSheetHandler}>
           <BottomSheet height="500px" />
         </BackDrop>
-      )}
+      )} */}
     </>
   )
 }

@@ -28,7 +28,9 @@ export default function SearchResult({ data, type, onClick }: Props) {
         >
           <Link to="current">{data.stationName}</Link>
         </TextBox>
-        <SubwayLineIcon line={data.line[0]}>{data.line[0]}</SubwayLineIcon>
+        {data.line.map(metroLine => {
+          return <SubwayLineIcon line={metroLine}>{metroLine}</SubwayLineIcon>
+        })}
       </FlexBox>
     )
   else if (type == 'recommend')
@@ -43,7 +45,9 @@ export default function SearchResult({ data, type, onClick }: Props) {
         >
           <button>{data.stationName}</button>
         </TextBox>
-        <SubwayLineIcon line={data.line[0]}>{data.line[0]}</SubwayLineIcon>
+        {data.line.map(metroLine => {
+          return <SubwayLineIcon line={metroLine}>{metroLine}</SubwayLineIcon>
+        })}
       </FlexBox>
     )
 }

@@ -17,7 +17,7 @@ export default function ArticleFilterNavigation({
 }: ArticleFilterNavigation) {
   return (
     <FlexBox>
-      {filter === 'latest' ? (
+      {filter === 'recent' ? (
         <TextBox
           typography="t6"
           color="black"
@@ -33,7 +33,7 @@ export default function ArticleFilterNavigation({
       )}
 
       <Spacing size="1rem" d="horizontal" />
-      {filter === 'popular' ? (
+      {filter === 'wish-list' ? (
         <TextBox
           typography="t6"
           color="black"

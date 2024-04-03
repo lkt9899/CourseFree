@@ -2,31 +2,18 @@ import ArticleSmallCard from './ArticleSmallCard'
 
 import { ArticleGridContainer } from '@styled/component/pages/HomePage/ArticleGrid'
 
-export default function ArticleGrid() {
+type Props = {
+  pages: any
+}
+
+export default function ArticleGrid({ pages }: Props) {
   return (
     <ArticleGridContainer columns={2} spacing={5}>
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
-      <ArticleSmallCard />
+      {pages.map(page => {
+        return page.data.map(elem => {
+          return <ArticleSmallCard data={elem} />
+        })
+      })}
     </ArticleGridContainer>
   )
 }

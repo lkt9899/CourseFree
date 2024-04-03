@@ -1,18 +1,19 @@
+import { ArticleThumbnail } from '@type/article'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
-import BottomSheet from '@component/layout/BottomSheet'
+import FullPageLoading from '@component/common/FullPageLoading'
 import FlexBox from '@component/layout/FlexBox'
 import ArticleCard from '@component/pages/HomePage/ArticleCard'
 
-import useBottomSheetState from '@hook/useBottomSheetState'
+import { useHotArticleQuery } from '@hook/ReactQuery/useHotArticleQuery'
 
 export default function HotArticle() {
-  const { bottomSheetState, onClickBottomSheetHandler } =
-    useBottomSheetState(-1)
-
+  // get 요청으로 아티클 받아오기
+  const { articleThumbnails, isLoading } = useHotArticleQuery()
+  if (isLoading) return <FullPageLoading />
   return (
     <FlexBox h="90%">
       <Swiper
@@ -22,17 +23,14 @@ export default function HotArticle() {
         slidesPerView={1}
         centeredSlides={true}
       >
-        <SwiperSlide>
-          <ArticleCard onClick={onClickBottomSheetHandler} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ArticleCard onClick={onClickBottomSheetHandler} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ArticleCard onClick={onClickBottomSheetHandler} />
-        </SwiperSlide>
+        {articleThumbnails.data.map((articleThumbnail: ArticleThumbnail) => {
+          return (
+            <SwiperSlide>
+              <ArticleCard data={articleThumbnail} />
+            </SwiperSlide>
+          )
+        })}
       </Swiper>
-      {bottomSheetState && <BottomSheet title="gigi" height="600px" />}
     </FlexBox>
   )
 }

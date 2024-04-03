@@ -1,5 +1,5 @@
 import Logo from '@asset/CourseFree.png'
-import { Image } from '@chakra-ui/react'
+import { Badge, Image } from '@chakra-ui/react'
 import { Place } from '@type/course'
 
 import TextBox from '@component/common/TextBox'
@@ -9,6 +9,7 @@ type Props = {
   place: Place
 }
 
+/** @jsxImportSource @emotion/react */
 export default function PlaceInfo({ place }: Props) {
   console.log(place)
   return (
@@ -18,14 +19,14 @@ export default function PlaceInfo({ place }: Props) {
       {/* 가게 설명 */}
       <FlexBox d="column" p="10px">
         <TextBox
-          color="pink300"
+          color="black"
           fontWeight="bold"
           typography="t4"
           onClick={() => {
             if (place.url !== ' ') window.open(place.url)
           }}
         >
-          {place.name}
+          {place.name} <Badge colorScheme="pink">{place.placeCategory}</Badge>
         </TextBox>
         <TextBox>주소 : {place.address}</TextBox>
       </FlexBox>

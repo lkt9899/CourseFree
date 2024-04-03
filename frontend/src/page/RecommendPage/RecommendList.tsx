@@ -1,3 +1,4 @@
+import { css } from '@emotion/react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 
@@ -6,6 +7,10 @@ import FlexBox from '@component/layout/FlexBox'
 
 import { recommendedCourse } from '@recoil/recommendedCourseAtom'
 
+const courseStyle = css`
+  cursor: pointer;
+`
+/** @jsxImportSource @emotion/react */
 export default function RecommendList() {
   // 리코일에서 코스 불러오기
   const courseList = useRecoilValue(recommendedCourse)
@@ -13,7 +18,9 @@ export default function RecommendList() {
   return (
     <>
       <FlexBox d="column" p="10px" a="center">
+        {/* 코스1 */}
         <FlexBox
+          css={courseStyle}
           d="column"
           p="15px"
           a="center"
@@ -32,8 +39,9 @@ export default function RecommendList() {
             사용자의 성향 유사도를 통해 추천된 코스입니다.
           </TextBox>
         </FlexBox>
-
+        {/* 코스 2 */}
         <FlexBox
+          css={courseStyle}
           d="column"
           p="15px"
           onClick={() => {
@@ -51,7 +59,8 @@ export default function RecommendList() {
             가장 효율적인 동선을 고려해 추천된 코스입니다.
           </TextBox>
         </FlexBox>
-        <FlexBox d="column" p="15px" a="center">
+        {/* 코스3 */}
+        <FlexBox d="column" p="15px" a="center" css={courseStyle}>
           <TextBox typography="t3" fontWeight="bold">
             🔥 핫플은 못참지! 핫플 모음 코스 🔥
           </TextBox>

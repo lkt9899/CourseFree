@@ -1,19 +1,14 @@
-import { useState} from 'react';
-
-import BackDrop from '@component/layout/Backdrop';
-import BottomSheet from '@component/layout/BottomSheet';
-import Footer from '@component/layout/Footer';
-import Section from '@component/layout/Section';
-import TitleBar from '@component/common/TitleBar';
-import Setting from '@component/pages/MyPage/setting/Setting';
-
+import TitleBar from '@component/common/TitleBar'
+import Footer from '@component/layout/Footer'
+import Section from '@component/layout/Section'
+import Setting from '@component/pages/MyPage/setting/Setting'
 
 function MyPage() {
-  const [state, setState] = useState(false);
+  // const [state, setState] = useState(false);
 
-  function onClickBottomSheetHandler() {
-    setState(!state);
-  }
+  // function onClickBottomSheetHandler() {
+  //   setState(!state);
+  // }
 
   return (
     <>
@@ -22,13 +17,13 @@ function MyPage() {
         <Setting />
       </Section>
       <Footer />
-      {state && (
+      {/* {state && (
         <BackDrop onClick={onClickBottomSheetHandler}>
           <BottomSheet height="500px" />
         </BackDrop>
-      )}
+      )} */}
     </>
-  );
+  )
 }
 
-export default MyPage;
+export default MyPage

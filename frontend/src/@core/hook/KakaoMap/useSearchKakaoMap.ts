@@ -1,6 +1,7 @@
 import { Categories } from '@data/category'
-import { Place, Station } from '@type/course'
+import { Place } from '@type/course'
 import { MapInfo } from '@type/kakaoMap'
+import { Station } from '@type/subway'
 import { useState } from 'react'
 
 import { debounce } from '@util/debounce'

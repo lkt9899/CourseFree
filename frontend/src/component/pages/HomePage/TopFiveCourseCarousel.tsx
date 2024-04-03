@@ -1,4 +1,4 @@
-import kiss from '@asset/kiss.jfif'
+import kiss from '@asset/namsan.jfif'
 import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
