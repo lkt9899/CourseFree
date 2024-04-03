@@ -16,6 +16,8 @@ export interface ArticleDetail {
   memberImageUrl: string
   memberNickname: string
   postContentInfoList: PostContentInfo[]
+  courseId: number
+  isHave: boolean
 }
 
 export interface TComment {

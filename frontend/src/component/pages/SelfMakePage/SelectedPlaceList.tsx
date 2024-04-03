@@ -15,6 +15,7 @@ export default (function SelectedPlaceList({
   onClickPlaceBox,
 }: SelectedPlaceList) {
   const { dateCourse, setDateCourse } = useContext(MakingCourseContext)
+
   const removePlace = (place: Place) => {
     const copy = dateCourse.placeList.filter(
       (currPlace: Place) => currPlace.id != place.id,
@@ -32,7 +33,7 @@ export default (function SelectedPlaceList({
               buttonText="삭제"
               place={place}
               onClickButton={removePlace}
-              onClickBox={onClickPlaceBox}
+              onClickPlaceBox={onClickPlaceBox}
             />
           </PlaceInfoWithOrder>
         )

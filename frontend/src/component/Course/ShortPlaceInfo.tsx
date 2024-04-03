@@ -10,7 +10,7 @@ interface ShortPlaceInfo {
   buttonText: string
   onClickButton: (place: Place) => void
   place: Place
-  onClickBox?: (place: Place) => void
+  onClickPlaceBox?: (place: Place) => void
 }
 
 export default function ShortPlaceInfo({
@@ -18,7 +18,7 @@ export default function ShortPlaceInfo({
   buttonText,
   onClickButton,
   place,
-  onClickBox,
+  onClickPlaceBox,
 }: ShortPlaceInfo) {
   return (
     <FlexBox
@@ -27,7 +27,7 @@ export default function ShortPlaceInfo({
       a="center"
       j="space-between"
       onClick={() => {
-        onClickBox ? onClickBox(place) : null
+        onClickPlaceBox ? onClickPlaceBox(place) : null
       }}
     >
       {/* 컨텐츠 부분 */}

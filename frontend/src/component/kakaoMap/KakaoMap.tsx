@@ -42,6 +42,7 @@ export default function KakaoMap({
   hasLine,
   hasMarker,
   setCenterView = null,
+  mode = 'search',
 }: KakaoMap) {
   const [kakaoMap, setKakaoMap] = useState(null)
   const [markers, setMarkers] = useState([])
@@ -87,6 +88,13 @@ export default function KakaoMap({
   // current Mode에서 장소 클릭 시 중심 이동
   useEffect(() => {
     if (!kakaoMap) return
+    if (mode === 'current') {
+      const position = new kakao.maps.LatLng(
+        centerView.center.lat,
+        centerView.center.lng,
+      )
+      kakaoMap.panTo(position)
+    }
   }, [centerView, kakaoMap])
 
   // 마커, 선 등을 지우고 다시 생성하는 Effect

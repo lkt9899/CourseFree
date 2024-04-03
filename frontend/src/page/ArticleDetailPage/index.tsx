@@ -12,6 +12,7 @@ import ArticleUserProfile from '@page/ArticleDetailPage/ArticleUserProfile'
 import FullPageLoading from '@component/common/FullPageLoading'
 import Section from '@component/layout/Section'
 
+import { useAddFavoriteCourseQuery } from '@hook/ReactQuery/useAddFavoriteCourseQuery'
 import { useArticleDetailQuery } from '@hook/ReactQuery/useArticleDetailQuery'
 
 export default function ArticleDetailPage() {
@@ -25,6 +26,10 @@ export default function ArticleDetailPage() {
   }
   function bottomSheetHandler() {
     setBottomSheetState(!bottomSheetState)
+  }
+  const { mutate } = useAddFavoriteCourseQuery(data.courseId)
+  function onClickLikeHandler() {
+    mutate()
   }
   if (isLoading) return <FullPageLoading />
 
@@ -49,7 +54,11 @@ export default function ArticleDetailPage() {
           postContentInfo={data.postContentInfoList[placeIdx]}
         />
       </Section>
-      <ArticleFooter onClick={bottomSheetHandler} />
+      <ArticleFooter
+        onClick={bottomSheetHandler}
+        disabled={data.isHave}
+        onClickLikeHandler={onClickLikeHandler}
+      />
       {/* BottomSheet */}
       {bottomSheetState && (
         <ArticleCommentSheet
