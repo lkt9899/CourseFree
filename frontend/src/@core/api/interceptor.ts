@@ -8,6 +8,7 @@ export default function interceptor(instance: AxiosInstance) {
 }
 
 function addAccessTokenOnRequest(instance: AxiosInstance) {
+  console.log(123)
   instance.interceptors.request.use(
     config => {
       const token = getJWT('jwt_token')

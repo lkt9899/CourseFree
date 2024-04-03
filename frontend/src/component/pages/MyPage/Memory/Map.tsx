@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import KakaoMap from '@component/kakaoMap/KakaoMap'
+import KakaoMap from '@component/kakaoMap/MemoryMap'
 import FlexBox from '@component/layout/FlexBox'
 
 // import { positions } from '@mocks/dummy';

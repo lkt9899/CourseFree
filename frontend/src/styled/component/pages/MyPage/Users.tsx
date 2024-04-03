@@ -32,3 +32,9 @@ margin-left: 3em;
 margin-right: 3em;
 margin-bottom: 1em;
 `;
+
+export const Couplename = styled.div`
+  font-size: 1.5em;
+  margin: 0 auto;
+  padding-bottom: 1em;
+`

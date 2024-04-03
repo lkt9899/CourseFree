@@ -95,18 +95,20 @@ function App() {
               </Route>
             </Route>
 
-            {/* MyPage */}
-            <Route path="/search" element={<Search />}></Route>
-
-            {/* Favorite */}
-            <Route path="/favorite" element={<FavoritePage />}></Route>
+            <Route path="/favorite" element={<FavoritePage/>}>
+            </Route>
             <Route path="/favorite/:courseId" element={<FavoriteDetail />} />
 
-            <Route path="/mypage" element={<MyPage />}></Route>
-            <Route path="/mypage/log" element={<Log />}></Route>
-            <Route path="/mypage/memory" element={<Memory />}></Route>
-            <Route path="/mypage/setting" element={<Setting />}></Route>
-            <Route path="/search" element={<Search />}></Route>
+            <Route path="/mypage" element={<MyPage/>}>
+            </Route>
+            <Route path="/mypage/log" element={<Log/>}>
+            </Route>
+            <Route path="/mypage/memory" element={<Memory/>}>
+            </Route>
+            <Route path="/mypage/setting" element={<Setting/>}>
+            </Route>
+            <Route path="/search" element={<Search/>}>
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>

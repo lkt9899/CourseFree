@@ -3,8 +3,10 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     border: 1px solid #ccc; /* 테두리 추가 */
+    width: 95%;
+    margin-left :10px;
 `;
 
 export const Photo = styled.img`
@@ -13,7 +15,7 @@ export const Photo = styled.img`
     margin-top: 7px;
     margin-bottom:7px;
     height:100px;
-    width:130px;
+    width:30vw;
     background-color: lightgreen;
 `;
 
@@ -48,7 +50,7 @@ export const ResultNavRight = styled.div`
 
 export const ResultBody = styled.div`
     margin-bottom: 2px;
-    width : 180px;
+    width : 50vw;
     display: flex;
     flex-direction: column;
 `;
@@ -77,5 +79,5 @@ export const LinkTo = styled.div`
     width:45%;
     text-align:center;
     border-radius: 8px;
-    margin-left:170px;
+    margin-left:110px;
 `;
