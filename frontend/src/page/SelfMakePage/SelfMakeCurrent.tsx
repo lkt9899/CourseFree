@@ -88,7 +88,7 @@ export default function SelfMakeCurrent() {
       <FlexBox css={StickyMap}>
         <KakaoMap
           width="100%"
-          height="30vh"
+          height="0vh"
           padding="0px"
           onClickMarkerHandler={onClickMarkerHandler} // 마커 클릭 이벤트에 대한 콜백
           placeList={dateCourse.placeList} // 장소 조회 api의 응답값

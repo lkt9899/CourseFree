@@ -33,7 +33,7 @@ export default memo(function ArticleFooter({ onClick, id }: ArticleFooter) {
           title="댓글"
         />
         <FooterLinkWithIcon icon={faShare} type="share" id={id} title="공유" />
-        <Button>코스찜하기</Button>
+        <Button onClick={() => {}}>코스찜하기</Button>
       </FlexBox>
     </Container>
   )

@@ -11,9 +11,12 @@ export default function SelfMakePage() {
     courseTitle: '',
     placeList: [],
   })
+  const [selectPlaceSet, setSelectPlaceSet] = useState(new Set())
   return (
     <>
-      <MakingCourseContext.Provider value={{ dateCourse, setDateCourse }}>
+      <MakingCourseContext.Provider
+        value={{ dateCourse, setDateCourse, selectPlaceSet, setSelectPlaceSet }}
+      >
         <TitleBar hasBackPage hasBottomLine title="직접 만들기" />
         {/* <Spacing size="10px" /> */}
 

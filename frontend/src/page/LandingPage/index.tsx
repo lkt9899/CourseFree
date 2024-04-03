@@ -26,7 +26,7 @@ export default function LandingPage() {
           top: '0',
         }}
       ></Lottie>
-      <FlexBox d="column" p="1.2rem" a="center" j="space-between" h="100vh">
+      <FlexBox d="column" p="1.2rem" a="center" j="space-between" h="70%">
         {/* Header */}
         <FlexBox w="100%" d="column">
           <TextBox typography="t2" fontWeight="bold">

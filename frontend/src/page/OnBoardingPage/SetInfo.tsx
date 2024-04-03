@@ -43,7 +43,7 @@ export default function SetInfo() {
       const { status } = await requestUserData(requestData)
       if (status === 200) {
         setStep(step + 1)
-        navigate('./welcome')
+        navigate('../welcome')
       }
     } catch (error) {
       alert(error)

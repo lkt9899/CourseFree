@@ -51,7 +51,12 @@ export default function ArticleDetailPage() {
       </Section>
       <ArticleFooter onClick={bottomSheetHandler} />
       {/* BottomSheet */}
-      {bottomSheetState && <ArticleCommentSheet handler={bottomSheetHandler}  />}
+      {bottomSheetState && (
+        <ArticleCommentSheet
+          postId={data.postId}
+          handler={bottomSheetHandler}
+        />
+      )}
     </>
   )
 }

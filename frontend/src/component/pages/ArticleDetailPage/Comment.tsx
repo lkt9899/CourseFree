@@ -1,22 +1,26 @@
 import { Avatar } from '@chakra-ui/react'
+import { TComment } from '@type/article'
 
 import TextBox from '@component/common/TextBox'
 import FlexBox from '@component/layout/FlexBox'
 
-export default function Comment() {
+type Props = {
+  comment: TComment
+}
+export default function Comment({ comment }: Props) {
   return (
     <div>
       <FlexBox w="100%" p="10px">
         {/* userprofileimage */}
         <FlexBox d="column">
-          <Avatar name="Dan Abrahmov" size="sm" />
+          <Avatar name="Dan Abrahmov" size="sm" src={comment.memberImageUrl} />
         </FlexBox>
         {/* userName */}
         <FlexBox d="column" p={'0px 5px'}>
           <TextBox typography="t8" fontWeight="bold">
-            역삼동정현규
+            {comment.memberNickname}
           </TextBox>
-          <TextBox typography="t8">재미있어보입니다.</TextBox>
+          <TextBox typography="t8">{comment.content}</TextBox>
         </FlexBox>
 
         {/* userId and comment */}

@@ -16,11 +16,19 @@ export default function PlaceInfoBottomSheet({
   backDrop,
   visibleHandler,
 }: Props) {
-  const { setDateCourse, dateCourse } = useContext(MakingCourseContext)
+  const { setDateCourse, dateCourse, selectPlaceSet, setSelectPlaceSet } =
+    useContext(MakingCourseContext)
   /**
    * 데이트 코스 추가 함수
    */
   function addPlaceInPlan(place: Place) {
+    if (selectPlaceSet.has(place.name)) {
+      alert('이미 등록한 장소입니다.')
+      return
+    }
+    const copy = new Set(selectPlaceSet)
+    copy.add(place.name)
+    setSelectPlaceSet(copy)
     setDateCourse({
       ...dateCourse,
       placeList: [...dateCourse.placeList, place],
@@ -35,7 +43,7 @@ export default function PlaceInfoBottomSheet({
       <ShortPlaceInfo
         place={place}
         hasButton={true}
-        buttonText="찜하기"
+        buttonText="장소 등록"
         onClickButton={addPlaceInPlan}
       />
     </BottomSheet>

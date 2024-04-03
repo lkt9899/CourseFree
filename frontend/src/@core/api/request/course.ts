@@ -26,3 +26,6 @@ export const requestCourseDetail = async (courseId: number) => {
     },
   })
 }
+export const requestAddFavoriteCourse = async courseId => {
+  return await authAxios.post(`${API_URI.ADD_FAVORITE}`, { courseId })
+}

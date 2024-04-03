@@ -23,6 +23,7 @@ export function makeMarker(map, placeList, onClickMarkerHandler) {
       map.panTo(position)
       onClickMarkerHandler(place)
     })
+
     marker.setMap(map)
     arr.push(marker)
   }
@@ -47,4 +48,5 @@ export function makeLine(map, placeList) {
 
   // 지도에 선을 표시합니다
   polyline.setMap(map)
+  return polyline
 }

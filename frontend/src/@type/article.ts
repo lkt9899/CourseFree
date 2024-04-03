@@ -17,3 +17,9 @@ export interface ArticleDetail {
   memberNickname: string
   postContentInfoList: PostContentInfo[]
 }
+
+export interface TComment {
+  memberImageUrl: string
+  memberNickname: string
+  content: string
+}

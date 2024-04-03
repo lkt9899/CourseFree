@@ -52,7 +52,6 @@ export default function SelfMakePlaceSearch() {
       })
       .catch()
   }, [centerView, category])
-
   return (
     <>
       <FlexBox w="100%" j="center" d="column" a="center">

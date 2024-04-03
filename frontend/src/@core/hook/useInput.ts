@@ -19,12 +19,12 @@ function useInput<T>({ data, setDebounce = null }: Params<T>) {
     }
   }
   function reset() {
-    setState('')
+    setState(() => '')
   }
   if (setDebounce) {
     const debounceChange = debounce(onChange, 200)
     return { state, debounceChange, reset }
   }
-  return { state, onChange, reset }
+  return { state, onChange, reset, setState }
 }
 export default useInput

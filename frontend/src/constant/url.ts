@@ -17,8 +17,11 @@ const API_URI = {
   MY_FAV_COURSE_DETAIL: '/course/details',
   GENERATE_LINK: '/couple/generate-link',
   PROFILE_INFO: '/member/profile',
-  MODIFY_PROFILE_COUPLE: 'member/update/couple-profile',
-  MODIFY_PROFILE: 'member/update/profile',
+  MODIFY_PROFILE_COUPLE: '/member/update/couple-profile',
+  MODIFY_PROFILE: '/member/update/profile',
+  ARTICLE_COMMENT: '/comment',
+  SUBMIT_COMMENT: '/comment/save',
+  ADD_FAVORITE: '/course/add-mycourse',
 }
 export default API_URI
 

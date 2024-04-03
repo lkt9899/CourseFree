@@ -2,6 +2,7 @@ import { Place } from '@type/course'
 import { MapInfo } from '@type/kakaoMap'
 import { CSSProperties, useEffect, useRef, useState } from 'react'
 
+import { debounce } from '@util/debounce'
 import { makeLine, makeMarker } from '@util/kakaoMap'
 
 interface KakaoMap {
@@ -41,17 +42,20 @@ export default function KakaoMap({
 }: KakaoMap) {
   const [kakaoMap, setKakaoMap] = useState(null)
   const [markers, setMarkers] = useState([])
+  const [polyLineState, setPolyLine] = useState(null)
+
   const container = useRef(null)
 
   function updateMapInfo(map) {
     const latlng = map.getCenter()
     const level = map.getLevel()
-
+    const [lat, lng] = [latlng.getLat(), latlng.getLng()]
     setCenterView({
-      center: { lat: latlng.getLat(), lng: latlng.getLng() },
+      center: { lat, lng },
       level: level,
     })
   }
+  const debouceUpdateMapInfo = debounce(updateMapInfo, 200)
   const initMap = container => {
     const options = {
       center: new window.kakao.maps.LatLng(
@@ -61,40 +65,48 @@ export default function KakaoMap({
       level: centerView.level,
     }
     const map = new window.kakao.maps.Map(container.current, options)
+    if (setCenterView)
+      kakao.maps.event.addListener(map, 'center_changed', () => {
+        debouceUpdateMapInfo(map)
+      })
     setKakaoMap(map)
 
     // 카카오맵에 중심좌표 변경 감지 이벤트 등록
-    if (setCenterView)
-      kakao.maps.event.addListener(map, 'center_changed', () =>
-        updateMapInfo(map),
-      )
   }
 
   // 카카오맵 최초 생성
   useEffect(() => {
     window.kakao.maps.load(() => initMap(container))
   }, [container])
+
   useEffect(() => {
     if (!kakaoMap) return
-    const position = new kakao.maps.LatLng(
-      centerView.center.lat,
-      centerView.center.lng,
-    )
-    kakaoMap.panTo(position)
-  }, [centerView])
+    // const position = new kakao.maps.LatLng(
+    //   centerView.center.lat,
+    //   centerView.center.lng,
+    // )
+
+    // kakaoMap.panTo(position)
+  }, [centerView, kakaoMap])
+
   useEffect(() => {
     markers.forEach(marker => {
       marker.setMap(null)
     })
+
     // 마커 표시
     if (hasMarker && placeList.length) {
       const arr = makeMarker(kakaoMap, placeList, onClickMarkerHandler)
+
       setMarkers(arr)
     }
     // 선 표시
     if (hasLine && placeList.length) {
-      makeLine(kakaoMap, placeList)
+      polyLineState?.setMap(null)
+      const polyLine = makeLine(kakaoMap, placeList)
+      setPolyLine(polyLine)
     }
+    // 원 표시
   }, [kakaoMap, placeList])
 
   return (

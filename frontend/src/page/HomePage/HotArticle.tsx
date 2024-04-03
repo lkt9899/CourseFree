@@ -14,6 +14,7 @@ export default function HotArticle() {
   // get 요청으로 아티클 받아오기
   const { articleThumbnails, isLoading } = useHotArticleQuery()
   if (isLoading) return <FullPageLoading />
+
   return (
     <FlexBox h="90%">
       <Swiper

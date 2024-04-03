@@ -42,9 +42,10 @@ export function useBottomSheet(handler: () => void) {
     const handleTouchEnd = (e: TouchEvent) => {
       e.stopPropagation()
       const endY = e.changedTouches[0].clientY
-
+      const diff = endY - startY
       // 일정 값 이상으로 스크롤이 안내려가면 다시 원점 복귀
-      if (endY < 400) sheetRef.style.setProperty('transform', `translateY(0px)`)
+      if (diff < initHeight / 2)
+        sheetRef.style.setProperty('transform', `translateY(0px)`)
       // 일정 값 이하로 스크롤이 내려가면 아래로 내려가고 언마운트 처리
       else {
         const unmountAni = sheetRef.animate(

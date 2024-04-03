@@ -1,5 +1,5 @@
 import API_URI from '@constant/url'
-import { ArticleDetail } from '@type/article'
+import { ArticleDetail, TComment } from '@type/article'
 
 import { authAxios } from '..'
 
@@ -21,5 +21,19 @@ export const requestArticleDetail = async (id: number) => {
     params: {
       postId: id,
     },
+  })
+}
+export const requestArticleComment = async (id: number) => {
+  return await authAxios.get<TComment[]>(`${API_URI.ARTICLE_COMMENT}`, {
+    params: {
+      postId: id,
+    },
+  })
+}
+export const requestSubmitComment = async (postId, content) => {
+  console.log(postId, content, '123123')
+  return await authAxios.post(`${API_URI.SUBMIT_COMMENT}`, {
+    postId,
+    content,
   })
 }

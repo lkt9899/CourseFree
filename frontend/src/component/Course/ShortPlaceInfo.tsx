@@ -28,7 +28,6 @@ export default function ShortPlaceInfo({
       a="center"
       j="space-between"
       onClick={() => {
-        alert('지도이동함수')
         onClickBox ? onClickBox(place) : null
       }}
     >
