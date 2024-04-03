@@ -13,7 +13,7 @@ interface Props {
 export const useSearchArticleQuery = ({ articlesPerPage, filter }: Props) => {
   const {
     data: articleCards,
-    isLoading,
+    isFetching,
     isError,
     fetchNextPage,
     isFetchingNextPage,
@@ -24,7 +24,6 @@ export const useSearchArticleQuery = ({ articlesPerPage, filter }: Props) => {
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
-      console.log(allPages.length)
       return lastPage.data.length === 0 ||
         lastPage.data.length < articlesPerPage
         ? undefined
@@ -33,7 +32,7 @@ export const useSearchArticleQuery = ({ articlesPerPage, filter }: Props) => {
   })
   return {
     articleCards,
-    isLoading,
+    isFetching,
     isError,
     fetchNextPage,
     isFetchingNextPage,
