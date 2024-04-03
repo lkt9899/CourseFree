@@ -1,12 +1,22 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react'; // 추가: useState import
-import { requestMyFavCourse } from '@api/request/member';
+import { requestMyFavCourse,requestProfile } from '@api/request/member';
 import { NameContainer, Container, NameWrapper, Image, ContentWrapper, Title, Button } from '@styled/component/pages/FavoritePage/FavoriteList';
+
 
 const FavoriteList = () => {
   const [courses, setCourses] = useState([]);
+  const [memberNickname, setMemberNickname] = useState('');
 
   useEffect(() => {
+    requestProfile()
+      .then((response) => {
+        console.log(response.data)
+        setMemberNickname(response.data.nickname);
+      })
+      .catch((error) => {
+        console.error('API 호출 에러:', error);
+      });
     // API 호출하여 코스 목록 가져오기
     requestMyFavCourse()
       .then((response) => {
@@ -22,7 +32,7 @@ const FavoriteList = () => {
   return (
     <>
       <NameContainer>
-        <NameWrapper><strong>역삼동 정현규</strong> 님의 찜 목록</NameWrapper>
+        <NameWrapper><strong>{memberNickname}</strong> 님의 찜 목록</NameWrapper>
       </NameContainer>
       {courses.map((course, index) => (
         <Container key={index}>

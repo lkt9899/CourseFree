@@ -23,7 +23,7 @@ function MyPage() {
         </BackDrop>
       )} */}
     </>
-  )
+  );
 }
 
-export default MyPage
+export default MyPage;
