@@ -1,5 +1,5 @@
 import { DateCourseDetail, Place } from '@type/course'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import PlaceInfo from './PlaceInfo'
 
@@ -11,6 +11,7 @@ type Props = {
   courseData: DateCourseDetail
 }
 export default function LongCourseInfo({ courseData }: Props) {
+  const navigate = useNavigate()
   return (
     <FlexBox d="column" a="center">
       <TextBox fontWeight="bold" padding="10px" typography="t5">
@@ -19,9 +20,14 @@ export default function LongCourseInfo({ courseData }: Props) {
       {courseData.placeDtoList.map((place: Place) => {
         return <PlaceInfo place={place} />
       })}
-      <Link to="../">
-        <Button>다른 추천 코스 둘러보기</Button>
-      </Link>
+
+      <Button
+        onClick={() => {
+          navigate(-1)
+        }}
+      >
+        다른 코스 둘러보기
+      </Button>
     </FlexBox>
   )
 }
