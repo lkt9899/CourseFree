@@ -1,5 +1,5 @@
 import API_URI from '@constant/url'
-import { UserData,UserProfile,CoupleUserProfile } from '@type/member'
+import { CoupleUserProfile, UserData, UserProfile } from '@type/member'
 
 import { authAxios, baseAxios } from '@api/index'
 
@@ -38,10 +38,10 @@ export const requestMyFavCourse = () => {
 }
 
 export const requestMyFavCourseDetail = (courseId: string) => {
-  return authAxios.get(`${API_URI.MY_FAV_COURSE_DETAIL}`,{
+  return authAxios.get(`${API_URI.MY_FAV_COURSE_DETAIL}`, {
     params: {
       courseId: courseId,
-    }
+    },
   })
 }
 
@@ -49,14 +49,10 @@ export const requestProfile = () => {
   return authAxios.get(`${API_URI.PROFILE_INFO}`)
 }
 
-export const requestModifyProfile = (data:UserProfile) => {
-  return authAxios.post(`${API_URI.MODIFY_PROFILE}`,{
-    CoupleInfoRequest: data
-  })
+export const requestModifyProfile = (data: UserProfile) => {
+  return authAxios.post(`${API_URI.MODIFY_PROFILE}`, data)
 }
 
-export const requestModifyCoupleProfile = (data:CoupleUserProfile) => {
-  return authAxios.post(`${API_URI.MODIFY_PROFILE_COUPLE}`,{
-    MemberInfoRequest: data
-  })
+export const requestModifyCoupleProfile = (data: CoupleUserProfile) => {
+  return authAxios.post(`${API_URI.MODIFY_PROFILE_COUPLE}`, data)
 }

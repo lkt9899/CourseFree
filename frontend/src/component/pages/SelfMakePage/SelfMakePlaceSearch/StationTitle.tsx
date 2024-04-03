@@ -6,7 +6,7 @@ type Props = { name: string }
 
 export default memo(function StationTitle({ name }: Props) {
   return (
-    <TextBox fontWeight="bold" typography="t2">
+    <TextBox fontWeight="bold" typography="t4">
       {name}
     </TextBox>
   )

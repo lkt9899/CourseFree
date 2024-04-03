@@ -81,7 +81,7 @@ export default function RecommendSearch() {
                 onClick={() => {
                   addCategory(e)
                 }}
-                colorScheme={selectedCategory.includes(e) ? 'pink' : ''}
+                colorScheme={selectedCategory.includes(e) ? 'pink' : 'gray'}
               >
                 {categoryKey[e]}
               </Badge>

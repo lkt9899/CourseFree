@@ -1,77 +1,101 @@
-import { faUserCircle, faEdit } from '@fortawesome/free-solid-svg-icons';
+// 추가: modifyCoupleProfile, modifyProfile 함수 import
+import { faEdit, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Title, InfoContainer, Name, NickName, Age, Icon, Couple, MainContainer, BottomContainer, EditButton, FormContainer, SaveButton } from '@styled/component/pages/MyPage/Setting/Setting';
-import { useEffect, useState } from 'react'; // 추가: useState import
-import { requestProfile, requestModifyCoupleProfile, requestModifyProfile } from '@api/request/member'; // 추가: modifyCoupleProfile, modifyProfile 함수 import
+import { useEffect, useState } from 'react'
+
+import {
+  requestModifyCoupleProfile,
+  requestModifyProfile,
+  requestProfile,
+} from '@api/request/member'
+
+import {
+  Age,
+  BottomContainer,
+  Container,
+  Couple,
+  EditButton,
+  FormContainer,
+  Icon,
+  InfoContainer,
+  MainContainer,
+  Name,
+  NickName,
+  SaveButton,
+  Title,
+} from '@styled/component/pages/MyPage/Setting/Setting'
+
+// 추가: useState import
 
 const Setting = () => {
-  const [memberNickname, setMemberNickname] = useState('');
-  const [partnerNickname, setPartnerNickname] = useState('');
-  const [memberImage, setMemberImage] = useState<string | null>(null);
-  const [isCouple, setIsCouple] = useState(false); // 기본값 false로 설정
-  const [gender, setGender] = useState('');
-  const [coupleNickname, setCoupleNickname] = useState('');
-  const [isEditing, setIsEditing] = useState(false); // 수정 상태 여부
-
+  const [memberNickname, setMemberNickname] = useState('')
+  const [partnerNickname, setPartnerNickname] = useState('')
+  const [memberImage, setMemberImage] = useState<string | null>(null)
+  const [isCouple, setIsCouple] = useState(false) // 기본값 false로 설정
+  const [gender, setGender] = useState('')
+  const [coupleNickname, setCoupleNickname] = useState('')
+  const [isEditing, setIsEditing] = useState(false) // 수정 상태 여부
   useEffect(() => {
     requestProfile()
-      .then((response) => {
+      .then(response => {
         console.log(response.data)
-        setMemberNickname(response.data.nickname);
-        setPartnerNickname(response.data.partnerNickname);
+        setMemberNickname(response.data.nickname)
+        setPartnerNickname(response.data.partnerNickname)
         if (typeof response.data.image === 'string') {
-          setMemberImage(response.data.image);
+          setMemberImage(response.data.image)
         }
-        setGender(response.data.gender);
-        setIsCouple(response.data.isCouple);
-        setCoupleNickname(response.data.coupleNickname);
+        setGender(response.data.gender)
+        setIsCouple(response.data.isCouple)
+        setCoupleNickname(response.data.coupleNickname)
       })
-      .catch((error) => {
-        console.error('API 호출 에러:', error);
-      });
-  }, []);
+      .catch(error => {
+        console.error('API 호출 에러:', error)
+      })
+  })
 
   const handleEditToggle = () => {
-    setIsEditing(!isEditing);
-  };
+    setIsEditing(!isEditing)
+  }
 
+  const map = { 남성: 'MALE', 여성: 'FEMALE' }
   // 프로필 수정 함수
   const handleProfileUpdate = () => {
     const requestData = {
       nickname: memberNickname,
       image: memberImage,
-      gender: gender
-    };
+      gender: map[gender],
+    }
+
     const requestCoupleData = {
       nickname: memberNickname,
       image: memberImage,
-      gender: gender,
-      coupleNickname: coupleNickname
-    };
+      gender: map[gender],
+      coupleNickname: coupleNickname,
+    }
 
     // isCouple 값에 따라 다른 API 호출
     if (isCouple) {
       // 커플일 때의 프로필 수정 API 호출
       requestModifyCoupleProfile(requestCoupleData)
-        .then((response) => {
-          console.log('커플 프로필 수정 성공:', response);
+        .then(response => {
+          console.log('커플 프로필 수정 성공:', response)
           // 수정 성공 시 필요한 작업 수행
         })
-        .catch((error) => {
-          console.error('커플 프로필 수정 에러:', error);
-        });
+        .catch(error => {
+          console.error('커플 프로필 수정 에러:', error)
+        })
     } else {
       // 커플이 아닐 때의 프로필 수정 API 호출
       requestModifyProfile(requestData)
-        .then((response) => {
-          console.log('개인 프로필 수정 성공:', response);
+        .then(response => {
+          console.log('개인 프로필 수정 성공:', response)
           // 수정 성공 시 필요한 작업 수행
         })
-        .catch((error) => {
-          console.error('개인 프로필 수정 에러:', error);
-        });
+        .catch(error => {
+          console.error('개인 프로필 수정 에러:', error)
+        })
     }
-  };
+  }
 
   return (
     <Container>
@@ -84,7 +108,7 @@ const Setting = () => {
           {memberImage ? (
             <img src={memberImage} alt="Member Image" />
           ) : (
-            <FontAwesomeIcon icon={faUserCircle} size='5x' />
+            <FontAwesomeIcon icon={faUserCircle} size="5x" />
           )}
           {/* 수정 버튼 추가 */}
           <EditButton onClick={handleEditToggle}>
@@ -94,25 +118,22 @@ const Setting = () => {
         <Name>
           <p>{memberNickname}</p>
         </Name>
-        <NickName>
-        </NickName>
+        <NickName></NickName>
         <Age>
           <p>{gender}</p>
         </Age>
         <Couple>
-          {partnerNickname && (
-            <p>{partnerNickname}님과 커플이예요</p>
-          )}
+          {partnerNickname && <p>{partnerNickname}님과 커플이예요</p>}
         </Couple>
       </InfoContainer>
       {/* 수정 폼 */}
       {isEditing && (
         <FormContainer>
           {/* 폼에 프로필 수정에 필요한 입력 요소들을 추가 */}
-          <input 
+          <input
             type="text"
             value={memberNickname}
-            onChange={(e) => setMemberNickname(e.target.value)}
+            onChange={e => setMemberNickname(e.target.value)}
           />
           {/* 나머지 정보에 대해서도 위와 같은 형태로 추가 */}
           <SaveButton onClick={handleProfileUpdate}>저장</SaveButton>
@@ -132,7 +153,7 @@ const Setting = () => {
         <p>커플 해제</p>
       </BottomContainer>
     </Container>
-  );
-};
+  )
+}
 
-export default Setting;
+export default Setting

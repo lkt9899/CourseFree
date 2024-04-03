@@ -60,7 +60,7 @@ export default memo(function FooterLinkWithIcon({
           <FlexBox d="column" a="center" j="center">
             <FontAwesomeIcon icon={icon} />
             <Spacing size="2px" />
-            <TextBox typography="t8">{title}</TextBox>
+            <TextBox typography="t9">{title}</TextBox>
           </FlexBox>
         </FooterNavLink>
       ) : (
@@ -72,7 +72,7 @@ export default memo(function FooterLinkWithIcon({
           <FlexBox d="column" a="center" j="center">
             <FontAwesomeIcon icon={icon} />
             <Spacing size="2px" />
-            <TextBox typography="t8">{title}</TextBox>
+            <TextBox typography="t9">{title}</TextBox>
           </FlexBox>
         </ArticleFooterNav>
       )}

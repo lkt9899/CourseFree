@@ -44,7 +44,10 @@ export default function PlaceInfoBottomSheet({
         place={place}
         hasButton={true}
         buttonText="장소 등록"
-        onClickButton={addPlaceInPlan}
+        onClickButton={() => {
+          addPlaceInPlan(place)
+          visibleHandler()
+        }}
       />
     </BottomSheet>
   )

@@ -10,6 +10,7 @@ export interface Place {
   placeCategory: Categories
   placeType: string
   points: LatLng
+  imageUrl: string
 }
 
 export interface DateCourse {

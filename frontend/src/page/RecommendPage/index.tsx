@@ -6,7 +6,7 @@ import Spacing from '@component/layout/Spacing'
 export default function RecommendPage() {
   return (
     <>
-      <TitleBar hasBackPage title="추천 받기" />
+      <TitleBar hasBackPage hasBottomLine title="추천 받기" />
       <Spacing size="20px" />
       <Outlet />
     </>

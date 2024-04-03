@@ -1,4 +1,3 @@
-import kiss from '@asset/kiss.jfif'
 import { Image } from '@chakra-ui/react'
 import { Place } from '@type/course'
 
@@ -35,16 +34,16 @@ export default function ShortPlaceInfo({
       <FlexBox>
         {/* 가게 이미지 */}
 
-        <Image src={kiss} boxSize="60px" borderRadius="10px" />
+        <Image src={place.imageUrl} boxSize="60px" borderRadius="10px" />
         {/* 가게 설명 */}
         <FlexBox d="column" p="10px" h="60px" j="center">
           <TextBox color="pink300" fontWeight="bold" typography="t6">
             {place.name}
           </TextBox>
-          <TextBox typography="t7">주소 : {place.address}5</TextBox>
+          <TextBox typography="t8">주소 : {place.address}</TextBox>
         </FlexBox>
       </FlexBox>
-      {/* 삭제 버튼 부분 */}
+      {/* 버튼 부분 */}
       {hasButton ? (
         <Button
           onClick={e => {

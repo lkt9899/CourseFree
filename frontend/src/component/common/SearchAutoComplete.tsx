@@ -25,7 +25,7 @@ export default function SearchAutoComplete({
   onClick,
 }: Props) {
   const filteredStationList = filter(stationList)
-  console.log(filteredStationList)
+
   return (
     <FlexBox d="column" w="100%" css={Container} bgColor="grey">
       {filteredStationList.map((station, i) => {

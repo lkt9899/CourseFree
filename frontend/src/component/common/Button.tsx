@@ -21,7 +21,7 @@ const Button = styled.button<T_Button>(
     cursor: 'pointer',
     fontWeight: 'bold',
     borderRadius: '6px',
-    padding: '10px',
+    padding: '7px',
     minWidth: '50px',
   },
 

@@ -1,3 +1,5 @@
+import { Place } from '@type/course'
+
 /**
  * @summary 지역 정보를 받아 마커를 표시하는 함수입니다
  * @param map 할당할 지도
@@ -5,16 +7,17 @@
  * @param onClickMarkerHandler 마커 클릭 이벤트 콜백 함수
 
  */
-export function makeMarker(map, placeList, onClickMarkerHandler) {
+export function makeMarker(map, placeList: Place[], onClickMarkerHandler) {
   if (!placeList) return
-  // 기존 마커 지우기
   const arr = []
+  const bounds = new kakao.maps.LatLngBounds()
+
   for (let i = 0; i < placeList.length; i++) {
     const place = placeList[i]
-
+    const point = new kakao.maps.LatLng(place.points.lat, place.points.lng)
     const marker = new kakao.maps.Marker({
       map: map,
-      position: new kakao.maps.LatLng(place.points.lat, place.points.lng),
+      position: point,
       title: place.name,
       clickable: true,
     })
@@ -25,9 +28,11 @@ export function makeMarker(map, placeList, onClickMarkerHandler) {
     })
 
     marker.setMap(map)
+    bounds.extend(point)
     arr.push(marker)
   }
-  return arr
+
+  return { arr, bounds }
 }
 
 export function makeLine(map, placeList) {

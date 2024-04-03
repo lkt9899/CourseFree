@@ -15,6 +15,7 @@ interface KakaoMap {
   placeList: Place[]
   setCenterView?: any
   centerView?: MapInfo
+  mode?: 'search' | 'current'
 }
 
 /**
@@ -28,6 +29,8 @@ interface KakaoMap {
  * @param hasMarker : 장소를 표시하는 마커를 띄우는가?
  * @param centerView : 지도의 중심,레벨 데이터
  * @param setCenterView : mapInfo의 debounce setter함수
+ * @param mode : 검색용 지도, 코스 현황 파악용 지도를 나누는 타입입니다
+ *
  */
 export default function KakaoMap({
   width,
@@ -55,7 +58,8 @@ export default function KakaoMap({
       level: level,
     })
   }
-  const debouceUpdateMapInfo = debounce(updateMapInfo, 200)
+  const debouceUpdateMapInfo = debounce(updateMapInfo, 100)
+
   const initMap = container => {
     const options = {
       center: new window.kakao.maps.LatLng(
@@ -69,6 +73,7 @@ export default function KakaoMap({
       kakao.maps.event.addListener(map, 'center_changed', () => {
         debouceUpdateMapInfo(map)
       })
+
     setKakaoMap(map)
 
     // 카카오맵에 중심좌표 변경 감지 이벤트 등록
@@ -79,35 +84,31 @@ export default function KakaoMap({
     window.kakao.maps.load(() => initMap(container))
   }, [container])
 
+  // current Mode에서 장소 클릭 시 중심 이동
   useEffect(() => {
     if (!kakaoMap) return
-    // const position = new kakao.maps.LatLng(
-    //   centerView.center.lat,
-    //   centerView.center.lng,
-    // )
-
-    // kakaoMap.panTo(position)
   }, [centerView, kakaoMap])
 
+  // 마커, 선 등을 지우고 다시 생성하는 Effect
   useEffect(() => {
     markers.forEach(marker => {
       marker.setMap(null)
     })
 
-    // 마커 표시
     if (hasMarker && placeList.length) {
-      const arr = makeMarker(kakaoMap, placeList, onClickMarkerHandler)
-
+      const { arr } = makeMarker(kakaoMap, placeList, onClickMarkerHandler)
       setMarkers(arr)
+      // if (mode == 'current') kakaoMap.setBounds(bounds)
     }
-    // 선 표시
+
     if (hasLine && placeList.length) {
       polyLineState?.setMap(null)
       const polyLine = makeLine(kakaoMap, placeList)
       setPolyLine(polyLine)
     }
-    // 원 표시
   }, [kakaoMap, placeList])
+
+  // 마커 클러스터러를 생성합니다
 
   return (
     <div

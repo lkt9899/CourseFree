@@ -15,7 +15,6 @@ const kakaoMapContainer = css`
   position: relative;
 `
 
-/** @jsxImportSource @emotion/react */
 /**
  * TODO : 최초 페이지 마운트 시 지하철 역이 중심 좌표가 된다 -> ok
  * TODO : 지도가 움직일 때 마다 중심 좌표는 계속 업데이트 된다
@@ -24,6 +23,7 @@ const kakaoMapContainer = css`
  * TODO : bottomSheet는 스크롤을 통해 사용자가 끌 수 있다
  * TODO : 좌표변경 이벤트가 발생할 때 마다 api호출? no 디바운스 기법을 활용해 state 변경 자체를 늦춘다
  */
+/** @jsxImportSource @emotion/react */
 export default function SelfMakePlaceSearch() {
   const station = JSON.parse(sessionStorage.getItem('station'))
   const {
@@ -38,12 +38,20 @@ export default function SelfMakePlaceSearch() {
     centerView,
   } = useSearchKakaoMap(station)
 
+  const distMap = {
+    1: 50,
+    2: 100,
+    3: 250,
+    4: 400,
+    5: 400,
+    6: 400,
+  }
   // api 호출 조건
   useEffect(() => {
     const initLocation = {
       placeCategory: category,
       centerPoints: centerView.center,
-      limitDist: 100,
+      limitDist: distMap[centerView.level],
     }
     requestPlaceInfo(initLocation)
       .then(({ data }) => {
@@ -52,6 +60,7 @@ export default function SelfMakePlaceSearch() {
       })
       .catch()
   }, [centerView, category])
+
   return (
     <>
       <FlexBox w="100%" j="center" d="column" a="center">
@@ -59,7 +68,10 @@ export default function SelfMakePlaceSearch() {
 
         <FlexBox w="100%" css={kakaoMapContainer}>
           {/* 태그 슬라이더 */}
-          <CategorySlider onClick={onClickCategoryHandler} />
+          <CategorySlider
+            onClick={onClickCategoryHandler}
+            selectCategory={category}
+          />
           {/* 카카오맵 */}
 
           <KakaoMap
