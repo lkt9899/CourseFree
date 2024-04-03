@@ -1,31 +1,102 @@
 {
   "analysis": {
+    "char_filter": {
+      "special_character_filter": {
+        "pattern": "[\\p{Alpha}\\p{Digit}]",
+        "type": "pattern_replace",
+        "replacement": ""
+      },
+      "blank_filter": {
+        "pattern": "[\\p{Blank}]",
+        "type": "pattern_replace",
+        "replacement": ""
+      }
+    },
     "tokenizer": {
-      "nori_none": {
-        "type": "nori_tokenizer",
-        "decompound_mode": "none"
-      },
-      "nori_discard": {
-        "type": "nori_tokenizer",
-        "decompound_mode": "discard"
-      },
-      "nori_mixed": {
+      "korean_nori_tokenizer": {
         "type": "nori_tokenizer",
         "decompound_mode": "mixed"
       }
     },
+    "filter": {
+      "nori_posfilter": {
+        "type": "nori_part_of_speech",
+        "stoptags": ["J","E","NNB","MAJ","MM","XSV","XSA","VCP","SE","XSN","VCN","SP","NA","UNA","VSV","XPN","IC","VV"]
+      },
+      "ngram_filter": {
+        "type": "ngram",
+        "min_gram": 2,
+        "max_gram": 3
+      }
+    },
     "analyzer": {
-      "korean_nori_none": {
+      "nori_analyzer": {
         "type": "custom",
-        "tokenizer": "nori_none"
+        "tokenizer": "korean_nori_tokenizer",
+        "filter" : [
+          "lowercase",
+          "nori_posfilter"
+        ]
       },
-      "korean_nori_discard": {
+      "jamo_analyzer": {
         "type": "custom",
-        "tokenizer": "nori_discard"
+        "char_filter": [
+          "special_character_filter"
+        ],
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "hanhinsam_jamo"
+        ]
       },
-      "korean_nori_mixed": {
+      "jamo_search_analyzer": {
         "type": "custom",
-        "tokenizer": "nori_mixed"
+        "char_filter": [
+          "blank_filter",
+          "special_character_filter"
+        ],
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "hanhinsam_jamo"
+        ]
+      },
+      "ngram_jamo_analyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "hanhinsam_jamo",
+          "ngram_filter"
+        ]
+      },
+      "engtohan_analyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "hanhinsam_engtohan"
+        ]
+      },
+      "hantoeng_analyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "hanhinsam_hantoeng"
+        ]
+      },
+      "chosung_analyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "filter": [
+          "lowercase",
+          "hanhinsam_chosung"
+        ]
+      },
+      "number_analyzer" : {
+        "type" : "pattern",
+        "pattern" :"[.]"
       }
     }
   }

@@ -39,7 +39,7 @@ spring:
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
             client-secret: ${KAKAO_CLIENT_SECRET}
-            redirect-uri: "http://localhost:5173/oauth/kakao"
+            redirect-uri: "https://j10a603.p.ssafy.io/oauth/kakao"
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             scope:
@@ -52,6 +52,22 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${S3_ACCESS_KEY}
+        secret-key: ${S3_SECRET_KEY}
+      region:
+        static: ap-northeast-2
+      s3:
+        bucket: lkt9899
+      stack:
+        auto: false
 
 jwt:
   access:

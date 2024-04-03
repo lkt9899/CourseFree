@@ -5,7 +5,25 @@
     },
     "stationName": {
       "type": "text",
-      "analyzer": "korean_nori_mixed"
+      "fields": {
+        "nori": {
+          "type": "text",
+          "analyzer": "nori_analyzer"
+        },
+        "ngram": {
+          "type": "text",
+          "analyzer": "ngram_jamo_analyzer",
+          "search_analyzer": "jamo_analyzer"
+        },
+        "chosung": {
+          "type": "text",
+          "analyzer": "chosung_analyzer"
+        },
+        "engtohan": {
+          "type": "text",
+          "search_analyzer": "engtohan_analyzer"
+        }
+      }
     },
     "line": {
       "type": "keyword"
